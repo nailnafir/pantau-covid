@@ -10,6 +10,19 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      backgroundColor: ColorTheme.primaryColor,
+      body: Stack(
+        children: [
+          Row(
+            children: [Text("Pantau Covid")],
+          ),
+          Container(
+            width: LayoutConfig.deviceWidth,
+            height: 300,
+          ),
+        ],
+      ),
+    );
   }
 }

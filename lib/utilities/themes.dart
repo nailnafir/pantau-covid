@@ -21,7 +21,7 @@ abstract class GradientTheme {
   );
 }
 
-abstract class TextTheme {
+abstract class TypeTheme {
   static TextStyle titleTextFont = TextStyle(
     fontFamily: "Raleway",
     fontSize: 20,
