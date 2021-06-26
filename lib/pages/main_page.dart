@@ -63,6 +63,11 @@ class _MainPageState extends State<MainPage> {
                 ],
               ),
             ),
+            Bubble(
+              color: ColorTheme.secondaryColor,
+              width: 300,
+              height: 300,
+            ),
           ],
         ),
       ),
