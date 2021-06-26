@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_pantau_covid/pages/pages.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,11 +16,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text("Pantau Covid-19"),
-        ),
-      ),
+      home: MainPage(),
     );
   }
 }
