@@ -15,10 +15,23 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
         child: Stack(
           children: [
-            Bubble(
-              color: ColorTheme.secondaryColor,
-              width: 300,
-              height: 300,
+            Positioned(
+              top: -130,
+              left: -130,
+              child: Bubble(
+                color: ColorTheme.secondaryColor,
+                width: 300,
+                height: 300,
+              ),
+            ),
+            Positioned(
+              top: 80,
+              right: -50,
+              child: Bubble(
+                color: ColorTheme.secondaryColor,
+                width: 100,
+                height: 100,
+              ),
             ),
             Container(
               margin: EdgeInsets.symmetric(
@@ -42,25 +55,26 @@ class _MainPageState extends State<MainPage> {
             ),
             Container(
               margin: EdgeInsets.symmetric(
-                vertical: 50,
                 horizontal: SpaceConfig.longSpace,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Kami\nMau Sehat",
-                    style: TypeTheme.titleTextFont.copyWith(
+                    "Hilangkan\nCovid-19",
+                    style: TypeTheme.normalTextFont.copyWith(
                       color: Colors.black.withOpacity(0.5),
+                      fontWeight: FontWeight.w700,
                       fontSize: 24,
                     ),
                   ),
                   Container(
-                    width: 200,
-                    height: 200,
+                    width: 210,
+                    height: 250,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage("assets/images/image-virus.png"),
+                        image:
+                            AssetImage("assets/images/image-fight-virus.png"),
                         fit: BoxFit.cover,
                       ),
                     ),
