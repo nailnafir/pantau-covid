@@ -12,16 +12,23 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorTheme.primaryColor,
-      body: Stack(
-        children: [
-          Row(
-            children: [Text("Pantau Covid")],
-          ),
-          Container(
-            width: LayoutConfig.deviceWidth,
-            height: 300,
-          ),
-        ],
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Row(
+              children: [
+                Text(
+                  "Pantau Covid",
+                  style: TypeTheme.titleTextFont,
+                ),
+              ],
+            ),
+            Container(
+              width: LayoutConfig.deviceWidth,
+              height: 300,
+            ),
+          ],
+        ),
       ),
     );
   }

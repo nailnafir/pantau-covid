@@ -25,10 +25,12 @@ abstract class TypeTheme {
   static TextStyle titleTextFont = TextStyle(
     fontFamily: "Raleway",
     fontSize: 20,
+    fontWeight: FontWeight.w700,
   );
   static TextStyle subTitleTextFont = TextStyle(
     fontFamily: "Raleway",
     fontSize: 18,
+    fontWeight: FontWeight.w600,
   );
   static TextStyle bigTextFont = TextStyle(
     fontFamily: "Poppins",
