@@ -15,6 +15,11 @@ class _MainPageState extends State<MainPage> {
       body: SafeArea(
         child: Stack(
           children: [
+            Bubble(
+              color: ColorTheme.secondaryColor,
+              width: 300,
+              height: 300,
+            ),
             Container(
               margin: EdgeInsets.symmetric(
                 horizontal: SpaceConfig.longSpace,
@@ -62,11 +67,6 @@ class _MainPageState extends State<MainPage> {
                   ),
                 ],
               ),
-            ),
-            Bubble(
-              color: ColorTheme.secondaryColor,
-              width: 300,
-              height: 300,
             ),
           ],
         ),

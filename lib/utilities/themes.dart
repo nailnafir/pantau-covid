@@ -5,6 +5,7 @@ abstract class ColorTheme {
   static Color bgDark = Color(0xFF251500);
   static Color primaryColor = Color(0xFFFFCE81);
   static Color secondaryColor = Color(0xFFFAB266);
+  static Color tertiaryColor = Color(0xFFFDE3C8);
   static Color greenColor = Color(0xFF08AF80);
   static Color blueColor = Color(0xFF01ABE6);
   static Color redColor = Color(0xFFF65D5A);
