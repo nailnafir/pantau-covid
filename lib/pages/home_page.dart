@@ -67,10 +67,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: SpaceConfig.longSpace,
-            vertical: SpaceConfig.shortSpace,
-          ),
+          margin: EdgeInsets.all(SpaceConfig.longSpace),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,7 +85,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 30),
               Text(
                 "Hilangkan\nCovid-19",
                 style: TypeTheme.normalTextFont.copyWith(
@@ -97,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: 30),
             ],
           ),
         ),
@@ -121,7 +118,7 @@ class _HomePageState extends State<HomePage> {
         SizedBox(height: MediaQuery.of(context).size.height / 3.7),
         Container(
           height: MediaQuery.of(context).size.height -
-              (MediaQuery.of(context).size.height / 3.3),
+              (MediaQuery.of(context).size.height / 2.62),
           padding: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
           decoration: BoxDecoration(
             color: ColorTheme.bgLight,
