@@ -1,12 +1,12 @@
 part of 'widgets.dart';
 
-class ListCard extends StatelessWidget {
+class ListCardTwoLines extends StatelessWidget {
   final Color backgroundIconColor;
   final Color tileColor;
   final String title;
   final String? subtitle;
   final IconData icon;
-  const ListCard({
+  const ListCardTwoLines({
     Key? key,
     required this.backgroundIconColor,
     required this.tileColor,

@@ -109,6 +109,7 @@ class _MainPageState extends State<MainPage> {
   _content() {
     return Container(
       height: MediaQuery.of(context).size.height - 300,
+      padding: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
       decoration: BoxDecoration(
         color: ColorTheme.bgLight,
         borderRadius: BorderRadius.only(
@@ -121,20 +122,28 @@ class _MainPageState extends State<MainPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            margin: EdgeInsets.all(SpaceConfig.longSpace),
+            margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
             child: ListCard(
-                icon: Icons.add_box_outlined,
-                backgroundIconColor: ColorTheme.secondaryColor,
-                tileColor: ColorTheme.primaryColor.withOpacity(0.75),
-                title: "Daftar Tes COVID-19",
-                subtitle: "Pastikan kesehatan diri kamu"),
+              backgroundIconColor: ColorTheme.secondaryColor,
+              tileColor: ColorTheme.primaryColor.withOpacity(0.75),
+              title: "Daftar Tes COVID-19",
+              subtitle: "Pastikan kesehatan diri kamu",
+              icon: Icons.add_box_outlined,
+            ),
           ),
           SizedBox(height: SpaceConfig.normalSpace),
           Text(
             "Semua tentang COVID-19",
             style: TypeTheme.subTitleTextFont
-                .copyWith(fontWeight: FontWeight.w700),
-          )
+                .copyWith(fontWeight: FontWeight.w600),
+          ),
+          ListCard(
+            backgroundIconColor: ColorTheme.blueColor,
+            tileColor: Colors.white,
+            title: "Mengenal virus corona",
+            subtitle: "",
+            icon: Icons.adjust,
+          ),
         ],
       ),
     );
