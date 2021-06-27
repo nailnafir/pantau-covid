@@ -102,13 +102,22 @@ class _MainPageState extends State<MainPage> {
 
   _content() {
     return Container(
-      height: double.infinity,
+      height: MediaQuery.of(context).size.height - 300,
       decoration: BoxDecoration(
         color: ColorTheme.bgLight,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(SpaceConfig.longSpace),
           topRight: Radius.circular(SpaceConfig.longSpace),
         ),
+      ),
+      child: Column(
+        children: [
+          ListCard(
+              backgroundIconColor: ColorTheme.secondaryColor,
+              tileColor: ColorTheme.primaryColor,
+              title: "title",
+              subtitle: "subtitle"),
+        ],
       ),
     );
   }
