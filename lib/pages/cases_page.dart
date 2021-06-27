@@ -99,6 +99,15 @@ class _CasesPageState extends State<CasesPage> {
               fontWeight: FontWeight.w500,
             ),
           ),
+          SizedBox(height: SpaceConfig.longSpace),
+          Container(
+            width: 300,
+            height: 150,
+            decoration: BoxDecoration(
+              color: ColorTheme.tertiaryColor,
+              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+            ),
+          ),
         ],
       ),
     );
