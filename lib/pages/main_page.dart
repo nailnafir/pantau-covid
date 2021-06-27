@@ -22,6 +22,7 @@ class _MainPageState extends State<MainPage> {
     return ListView(
       children: [
         _banner(),
+        _content(),
       ],
     );
   }
@@ -96,6 +97,19 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ],
+    );
+  }
+
+  _content() {
+    return Container(
+      height: double.infinity,
+      decoration: BoxDecoration(
+        color: ColorTheme.bgLight,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(SpaceConfig.longSpace),
+          topRight: Radius.circular(SpaceConfig.longSpace),
+        ),
+      ),
     );
   }
 }
