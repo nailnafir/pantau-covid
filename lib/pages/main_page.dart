@@ -13,7 +13,13 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: ColorTheme.primaryColor,
       body: SafeArea(
-        child: _buildBody(),
+        child: Column(
+          children: [
+            Expanded(
+              child: _buildBody(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -113,8 +119,8 @@ class _MainPageState extends State<MainPage> {
       child: Column(
         children: [
           ListCard(
-              backgroundIconColor: ColorTheme.secondaryColor,
-              tileColor: ColorTheme.primaryColor,
+              backgroundIconColor: Colors.red,
+              tileColor: Colors.blue,
               title: "title",
               subtitle: "subtitle"),
         ],
