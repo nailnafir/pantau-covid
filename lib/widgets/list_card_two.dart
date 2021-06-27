@@ -24,7 +24,7 @@ class ListCardTwoLines extends StatelessWidget {
           borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
       child: ListTile(
         leading: Container(
-          padding: EdgeInsets.all(SpaceConfig.normalSpace),
+          padding: EdgeInsets.all(SpaceConfig.shortSpace),
           decoration: BoxDecoration(
             color: backgroundIconColor,
             shape: BoxShape.circle,
