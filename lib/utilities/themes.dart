@@ -24,12 +24,12 @@ abstract class GradientTheme {
 
 abstract class TypeTheme {
   static TextStyle titleTextFont = TextStyle(
-    fontFamily: "Raleway",
+    fontFamily: "Poppins",
     fontSize: 20,
     fontWeight: FontWeight.w700,
   );
   static TextStyle subTitleTextFont = TextStyle(
-    fontFamily: "Raleway",
+    fontFamily: "Poppins",
     fontSize: 18,
     fontWeight: FontWeight.w600,
   );

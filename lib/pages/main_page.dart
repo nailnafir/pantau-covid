@@ -121,12 +121,18 @@ class _MainPageState extends State<MainPage> {
           Container(
             margin: EdgeInsets.all(SpaceConfig.longSpace),
             child: ListCard(
-                icon: MdiIcons.gamepadRoundOutline,
-                backgroundIconColor: Colors.red,
-                tileColor: Colors.blue,
-                title: "title",
-                subtitle: "subtitle"),
+                icon: Icons.add_box_outlined,
+                backgroundIconColor: ColorTheme.secondaryColor,
+                tileColor: ColorTheme.primaryColor.withOpacity(0.75),
+                title: "Daftar Tes COVID-19",
+                subtitle: "Pastikan kesehatan diri kamu"),
           ),
+          SizedBox(height: SpaceConfig.normalSpace),
+          Text(
+            "Semua tentang COVID-19",
+            style: TypeTheme.subTitleTextFont
+                .copyWith(fontWeight: FontWeight.w700),
+          )
         ],
       ),
     );
