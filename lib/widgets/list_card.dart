@@ -5,13 +5,15 @@ class ListCard extends StatelessWidget {
   final Color tileColor;
   final String title;
   final String? subtitle;
-  const ListCard(
-      {Key? key,
-      required this.backgroundIconColor,
-      required this.tileColor,
-      required this.title,
-      required this.subtitle})
-      : super(key: key);
+  final IconData icon;
+  const ListCard({
+    Key? key,
+    required this.backgroundIconColor,
+    required this.tileColor,
+    required this.title,
+    required this.subtitle,
+    required this.icon,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class ListCard extends StatelessWidget {
           ),
         ),
         trailing: Icon(
-          Icons.arrow_forward_ios,
+          icon,
           color: Colors.black.withOpacity(0.75),
         ),
       ),

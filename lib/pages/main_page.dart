@@ -118,11 +118,14 @@ class _MainPageState extends State<MainPage> {
       ),
       child: Column(
         children: [
-          ListCard(
-              backgroundIconColor: Colors.red,
-              tileColor: Colors.blue,
-              title: "title",
-              subtitle: "subtitle"),
+          Container(
+            margin: EdgeInsets.all(SpaceConfig.longSpace),
+            child: ListCard(
+                backgroundIconColor: Colors.red,
+                tileColor: Colors.blue,
+                title: "title",
+                subtitle: "subtitle"),
+          ),
         ],
       ),
     );
