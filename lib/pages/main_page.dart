@@ -123,7 +123,7 @@ class _MainPageState extends State<MainPage> {
         children: [
           Container(
             margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
-            child: ListCard(
+            child: ListCardTwoLines(
               backgroundIconColor: ColorTheme.secondaryColor,
               tileColor: ColorTheme.primaryColor.withOpacity(0.75),
               title: "Daftar Tes COVID-19",
@@ -137,11 +137,11 @@ class _MainPageState extends State<MainPage> {
             style: TypeTheme.subTitleTextFont
                 .copyWith(fontWeight: FontWeight.w600),
           ),
-          ListCard(
+          SizedBox(height: SpaceConfig.shortSpace),
+          ListCardOneLine(
             backgroundIconColor: ColorTheme.blueColor,
             tileColor: Colors.white,
-            title: "Mengenal virus corona",
-            subtitle: "",
+            title: "Kenali virus corona",
             icon: Icons.adjust,
           ),
         ],
