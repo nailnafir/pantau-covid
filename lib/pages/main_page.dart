@@ -117,6 +117,8 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             margin: EdgeInsets.all(SpaceConfig.longSpace),
