@@ -21,12 +21,12 @@ class _MainPageState extends State<MainPage> {
   _buildBody() {
     return ListView(
       children: [
-        _header(),
+        _banner(),
       ],
     );
   }
 
-  _header() {
+  _banner() {
     return Stack(
       children: [
         Positioned(
