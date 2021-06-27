@@ -121,6 +121,7 @@ class _MainPageState extends State<MainPage> {
           Container(
             margin: EdgeInsets.all(SpaceConfig.longSpace),
             child: ListCard(
+                icon: MdiIcons.gamepadRoundOutline,
                 backgroundIconColor: Colors.red,
                 tileColor: Colors.blue,
                 title: "title",

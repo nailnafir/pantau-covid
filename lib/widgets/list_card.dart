@@ -30,7 +30,7 @@ class ListCard extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           child: Icon(
-            Icons.laptop_chromebook,
+            icon,
             color: Colors.white,
           ),
         ),
@@ -49,7 +49,7 @@ class ListCard extends StatelessWidget {
           ),
         ),
         trailing: Icon(
-          icon,
+          Icons.arrow_forward_ios,
           color: Colors.black.withOpacity(0.75),
         ),
       ),
