@@ -131,7 +131,6 @@ class _MainPageState extends State<MainPage> {
               icon: Icons.add_box_outlined,
             ),
           ),
-          SizedBox(height: SpaceConfig.normalSpace),
           Text(
             "Semua tentang COVID-19",
             style: TypeTheme.subTitleTextFont
@@ -142,6 +141,20 @@ class _MainPageState extends State<MainPage> {
             backgroundIconColor: ColorTheme.blueColor,
             tileColor: Colors.white,
             title: "Kenali virus corona",
+            icon: Icons.adjust,
+          ),
+          SizedBox(height: SpaceConfig.normalSpace),
+          ListCardOneLine(
+            backgroundIconColor: ColorTheme.redColor,
+            tileColor: Colors.white,
+            title: "Gejala terinfeksi",
+            icon: Icons.adjust,
+          ),
+          SizedBox(height: SpaceConfig.normalSpace),
+          ListCardOneLine(
+            backgroundIconColor: ColorTheme.greenColor,
+            tileColor: Colors.white,
+            title: "Cara mencegah",
             icon: Icons.adjust,
           ),
         ],

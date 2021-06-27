@@ -1,7 +1,7 @@
 part of 'utilities.dart';
 
 abstract class ColorTheme {
-  static Color bgLight = Color(0xFFE5E5E5);
+  static Color bgLight = Color(0xFFF0F0F0);
   static Color bgDark = Color(0xFF251500);
   static Color primaryColor = Color(0xFFFFCE81);
   static Color secondaryColor = Color(0xFFFAB266);
