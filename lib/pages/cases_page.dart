@@ -319,7 +319,7 @@ class _CasesPageState extends State<CasesPage> {
               ),
             ),
           ),
-          SizedBox(height: SpaceConfig.longSpace),
+          SizedBox(height: SpaceConfig.normalSpace),
         ],
       ),
     );
