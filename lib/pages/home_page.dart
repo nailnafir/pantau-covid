@@ -177,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Cara mencegah",
                 icon: Icons.admin_panel_settings_outlined,
               ),
-              SizedBox(height: SpaceConfig.longSpace),
+              SizedBox(height: SpaceConfig.normalSpace),
             ],
           ),
         ),
