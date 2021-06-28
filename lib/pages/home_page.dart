@@ -11,61 +11,71 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorTheme.primaryColor,
+      backgroundColor: ColorTheme.bgLight,
       body: SafeArea(
-        child: _buildBody(),
+        child: ListView(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 250,
+                  color: ColorTheme.primaryColor,
+                ),
+                Positioned(
+                  top: -150,
+                  left: -150,
+                  child: Bubble(
+                    color: ColorTheme.secondaryColor,
+                    width: 300,
+                    height: 300,
+                  ),
+                ),
+                Positioned(
+                  top: 70,
+                  right: -50,
+                  child: Bubble(
+                    color: ColorTheme.secondaryColor,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+                Positioned(
+                  top: -20,
+                  right: 24,
+                  child: Container(
+                    width: 220,
+                    height: 240,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image:
+                            AssetImage("assets/images/image-fight-virus.png"),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                _buildBody(),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
 
   _buildBody() {
-    return ListView(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Stack(
-          children: [
-            _banner(),
-            _content(),
-          ],
-        )
+        _banner(),
+        _content(),
       ],
     );
   }
 
   _banner() {
-    return Stack(
+    return Column(
       children: [
-        Positioned(
-          top: -150,
-          left: -150,
-          child: Bubble(
-            color: ColorTheme.secondaryColor,
-            width: 300,
-            height: 300,
-          ),
-        ),
-        Positioned(
-          top: 70,
-          right: -50,
-          child: Bubble(
-            color: ColorTheme.secondaryColor,
-            width: 100,
-            height: 100,
-          ),
-        ),
-        Positioned(
-          top: -20,
-          right: 24,
-          child: Container(
-            width: 220,
-            height: 240,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/image-fight-virus.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
         Container(
           margin: EdgeInsets.symmetric(
             horizontal: SpaceConfig.longSpace,
@@ -118,10 +128,7 @@ class _HomePageState extends State<HomePage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: MediaQuery.of(context).size.height / 3.7),
         Container(
-          height: MediaQuery.of(context).size.height -
-              (MediaQuery.of(context).size.height / 2.62),
           padding: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
           decoration: BoxDecoration(
             color: ColorTheme.bgLight,
@@ -170,7 +177,7 @@ class _HomePageState extends State<HomePage> {
                 title: "Cara mencegah",
                 icon: Icons.admin_panel_settings_outlined,
               ),
-              SizedBox(height: SpaceConfig.longSpace),
+              SizedBox(height: SpaceConfig.normalSpace),
             ],
           ),
         ),
