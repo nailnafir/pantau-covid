@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 Positioned(
                   top: -20,
-                  right: 24,
+                  right: 18,
                   child: Container(
                     width: 220,
                     height: 240,
@@ -109,15 +109,6 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 40),
             ],
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: SpaceConfig.longSpace,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [],
           ),
         ),
       ],
