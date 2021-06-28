@@ -270,7 +270,7 @@ class _CasesPageState extends State<CasesPage> {
                   style: TypeTheme.smallTextFont),
             ],
           ),
-          SizedBox(height: SpaceConfig.longSpace),
+          SizedBox(height: SpaceConfig.normalSpace),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -294,6 +294,32 @@ class _CasesPageState extends State<CasesPage> {
               ),
             ],
           ),
+          SizedBox(height: SpaceConfig.longSpace),
+          Text(
+            "Peta Sebaran",
+            style: TypeTheme.subTitleTextFont
+                .copyWith(fontWeight: FontWeight.w600),
+          ),
+          SizedBox(height: SpaceConfig.normalSpace),
+          Container(
+            padding: EdgeInsets.all(SpaceConfig.normalSpace),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+            ),
+            child: Container(
+              width: LayoutConfig.deviceWidth,
+              height: 125,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image:
+                      AssetImage("assets/images/image-map-indonesia-covid.jpg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: SpaceConfig.longSpace),
         ],
       ),
     );
