@@ -17,6 +17,23 @@ class _CasesPageState extends State<CasesPage> {
     "assets/images/banner-four.jpg",
   ];
 
+  List<String> location = [];
+  String? selectedLocation;
+
+  @override
+  void initState() {
+    super.initState();
+    location = [
+      'Indonesia',
+      'DKI Jakarta',
+      'Jawa Barat',
+      'Jawa Tengah',
+      'Jawa Timur',
+    ];
+
+    selectedLocation = location[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,9 +87,11 @@ class _CasesPageState extends State<CasesPage> {
 
   _buildBody() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _greetings(),
         _slider(),
+        _content(),
       ],
     );
   }
@@ -175,6 +194,69 @@ class _CasesPageState extends State<CasesPage> {
           fit: BoxFit.cover,
         ),
         borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+      ),
+    );
+  }
+
+  _content() {
+    return Container(
+      margin: EdgeInsets.symmetric(
+        horizontal: SpaceConfig.longSpace,
+        vertical: SpaceConfig.normalSpace,
+      ),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: LayoutConfig.deviceWidth,
+                padding: EdgeInsets.fromLTRB(
+                  SpaceConfig.longSpace * 2,
+                  SpaceConfig.normalSpace,
+                  SpaceConfig.normalSpace,
+                  SpaceConfig.normalSpace,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+                ),
+                child: DropdownButton(
+                  underline: SizedBox(),
+                  style: TypeTheme.bigTextFont.copyWith(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  isExpanded: true,
+                  elevation: 1,
+                  value: selectedLocation,
+                  icon: Icon(
+                    Icons.arrow_drop_down,
+                    color: ColorTheme.secondaryColor,
+                    size: 30,
+                  ),
+                  items: location.map((i) {
+                    return DropdownMenuItem(value: i, child: Text(i));
+                  }).toList(),
+                  onChanged: (String? item) {
+                    setState(() {
+                      selectedLocation = item;
+                    });
+                  },
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: SpaceConfig.longSpace,
+                  horizontal: SpaceConfig.normalSpace,
+                ),
+                child: Icon(
+                  Icons.location_on,
+                  color: ColorTheme.secondaryColor,
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
