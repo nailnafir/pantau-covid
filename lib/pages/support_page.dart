@@ -109,13 +109,8 @@ class SupportPage extends StatelessWidget {
             children: [
               SizedBox(height: SpaceConfig.longSpace),
               InkWell(
-                onTap: () async {
-                  if (await canLaunch(contactMeURL)) {
-                    await launch(contactMeURL);
-                  } else {
-                    throw 'Gagal menjalankan $contactMeURL';
-                  }
-                },
+                splashColor: Colors.red,
+                onTap: () {},
                 child: ListCardTwoLines(
                   backgroundIconColor: ColorTheme.redColor,
                   tileColor: Colors.white,
@@ -125,20 +120,32 @@ class SupportPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
-              ListCardTwoLines(
-                backgroundIconColor: ColorTheme.greenColor,
-                tileColor: Colors.white,
-                title: "Hubungi Kami",
-                subtitle: "Tersedia Telegram dan Email",
-                icon: Icons.call,
+              InkWell(
+                onTap: () async {
+                  if (await canLaunch(URLShared.contactMeURL)) {
+                    await launch(URLShared.contactMeURL);
+                  } else {
+                    throw 'Gagal menjalankan $URLShared.contactMeURL';
+                  }
+                },
+                child: ListCardTwoLines(
+                  backgroundIconColor: ColorTheme.greenColor,
+                  tileColor: Colors.white,
+                  title: "Hubungi Kami",
+                  subtitle: "Tersedia Telegram dan Email",
+                  icon: Icons.call,
+                ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
-              ListCardTwoLines(
-                backgroundIconColor: ColorTheme.blueColor,
-                tileColor: Colors.white,
-                title: "Tentang Aplikasi",
-                subtitle: "Informasi terkait aplikasi",
-                icon: Icons.admin_panel_settings_outlined,
+              InkWell(
+                onTap: () {},
+                child: ListCardTwoLines(
+                  backgroundIconColor: ColorTheme.blueColor,
+                  tileColor: Colors.white,
+                  title: "Tentang Aplikasi",
+                  subtitle: "Informasi terkait aplikasi",
+                  icon: Icons.admin_panel_settings_outlined,
+                ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
             ],
