@@ -35,6 +35,7 @@ class _MainPageState extends State<MainPage> {
           children: [
             HomePage(),
             CasesPage(),
+            NewsPage(),
           ],
         ),
       ),
