@@ -36,6 +36,7 @@ class _MainPageState extends State<MainPage> {
             HomePage(),
             CasesPage(),
             NewsPage(),
+            SupportPage(),
           ],
         ),
       ),
@@ -54,7 +55,7 @@ class _MainPageState extends State<MainPage> {
             label: "Berita",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.help),
+            icon: Icon(Icons.help_center),
             label: "Bantuan",
           ),
         ],
