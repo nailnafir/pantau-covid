@@ -114,20 +114,20 @@ class _CasesPageState extends State<CasesPage> {
                   Text(
                     "Selamat Pagi,",
                     style: TypeTheme.titleTextFont.copyWith(
-                      color: Colors.white,
+                      color: Colors.black.withOpacity(0.75),
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Icon(
                     Icons.notifications_outlined,
-                    color: Colors.white,
+                    color: Colors.black.withOpacity(0.75),
                   )
                 ],
               ),
               Text(
                 "Selalu jaga kesehatan, ya!",
                 style: TypeTheme.normalTextFont.copyWith(
-                  color: Colors.white,
+                  color: Colors.black.withOpacity(0.75),
                   fontWeight: FontWeight.w500,
                 ),
               ),
