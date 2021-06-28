@@ -8,6 +8,15 @@ class CasesPage extends StatefulWidget {
 }
 
 class _CasesPageState extends State<CasesPage> {
+  int _current = 0;
+
+  List imgBanner = [
+    "assets/images/banner-one.jpg",
+    "assets/images/banner-two.jpg",
+    "assets/images/banner-three.jpg",
+    "assets/images/banner-four.jpg",
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,53 +71,110 @@ class _CasesPageState extends State<CasesPage> {
   _buildBody() {
     return Column(
       children: [
+        _greetings(),
         _slider(),
       ],
     );
   }
 
-  _slider() {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: SpaceConfig.longSpace,
-        vertical: SpaceConfig.normalSpace,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  _greetings() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+            vertical: SpaceConfig.normalSpace,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Selamat Pagi,",
+                    style: TypeTheme.titleTextFont.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Icon(
+                    Icons.notifications_outlined,
+                    color: Colors.white,
+                  )
+                ],
+              ),
               Text(
-                "Selamat Pagi,",
-                style: TypeTheme.titleTextFont.copyWith(
+                "Selalu jaga kesehatan, ya!",
+                style: TypeTheme.normalTextFont.copyWith(
                   color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-              Icon(
-                Icons.notifications_outlined,
-                color: Colors.white,
-              )
             ],
           ),
-          Text(
-            "Selalu jaga kesehatan, ya!",
-            style: TypeTheme.normalTextFont.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(height: SpaceConfig.longSpace),
-          Container(
-            width: 300,
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+      ],
+    );
+  }
+
+  _slider() {
+    List<Widget> list = [];
+    for (int i = 0; i <= 3; i++) {
+      list.add(_singleSlider(i));
+    }
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CarouselSlider(
+          options: CarouselOptions(
+            viewportFraction: 1,
+            autoPlay: true,
+            autoPlayInterval: Duration(seconds: 3),
             height: 150,
-            decoration: BoxDecoration(
-              color: ColorTheme.tertiaryColor,
-              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-            ),
+            scrollDirection: Axis.horizontal,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current = index;
+              });
+            },
           ),
-        ],
+          items: list,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [1, 2, 3, 4].map((i) {
+            int index = [1, 2, 3, 4].indexOf(i);
+            return Container(
+              width: 8,
+              height: 8,
+              margin: EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+              decoration: BoxDecoration(
+                color: _current == index
+                    ? ColorTheme.secondaryColor
+                    : Colors.grey[300],
+                shape: BoxShape.circle,
+              ),
+            );
+          }).toList(),
+        )
+      ],
+    );
+  }
+
+  _singleSlider(int index) {
+    return Container(
+      width: LayoutConfig.deviceWidth,
+      height: 150,
+      margin: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(imgBanner[index]),
+          fit: BoxFit.cover,
+        ),
+        borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
       ),
     );
   }
