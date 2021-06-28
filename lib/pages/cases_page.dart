@@ -205,6 +205,7 @@ class _CasesPageState extends State<CasesPage> {
         vertical: SpaceConfig.normalSpace,
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Stack(
             children: [
@@ -253,7 +254,44 @@ class _CasesPageState extends State<CasesPage> {
                   Icons.location_on,
                   color: ColorTheme.secondaryColor,
                 ),
-              )
+              ),
+            ],
+          ),
+          SizedBox(height: SpaceConfig.longSpace),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Jumlah Kasus",
+                style: TypeTheme.subTitleTextFont
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+              Text("Diperbarui pada 28 Juni 2021 10:00",
+                  style: TypeTheme.smallTextFont),
+            ],
+          ),
+          SizedBox(height: SpaceConfig.longSpace),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              BoxCard(
+                icon: Icons.add_circle_rounded,
+                summary: "380",
+                cases: "Positif",
+                color: ColorTheme.secondaryColor,
+              ),
+              BoxCard(
+                icon: Icons.change_circle_rounded,
+                summary: "100",
+                cases: "Sembuh",
+                color: ColorTheme.greenColor,
+              ),
+              BoxCard(
+                icon: Icons.cancel_rounded,
+                summary: "50",
+                cases: "Meninggal",
+                color: ColorTheme.redColor,
+              ),
             ],
           ),
         ],
