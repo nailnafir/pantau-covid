@@ -62,10 +62,14 @@ class _MainPageState extends State<MainPage> {
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: true,
         showSelectedLabels: true,
-        selectedLabelStyle:
-            TypeTheme.normalTextFont.copyWith(fontWeight: FontWeight.w500),
-        unselectedLabelStyle:
-            TypeTheme.normalTextFont.copyWith(fontWeight: FontWeight.w500),
+        selectedLabelStyle: TypeTheme.normalTextFont.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
+        unselectedLabelStyle: TypeTheme.normalTextFont.copyWith(
+          fontWeight: FontWeight.w500,
+          fontSize: 12,
+        ),
         selectedItemColor: ColorTheme.secondaryColor,
         unselectedItemColor: Colors.grey,
         currentIndex: _selectedPage,
