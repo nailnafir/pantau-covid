@@ -15,13 +15,29 @@ class _NewsPageState extends State<NewsPage> {
         backgroundColor: ColorTheme.bgLight,
         appBar: AppBar(
           backgroundColor: ColorTheme.secondaryColor,
-          leading: Icon(Icons.menu),
-          title: Text(
-            "Berita Terkait COVID-19",
-            style: TypeTheme.titleTextFont.copyWith(
-              fontWeight: FontWeight.w500,
+          leading: Container(
+            margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
+            child: Icon(
+              Icons.menu,
+              color: Colors.black.withOpacity(0.75),
             ),
           ),
+          title: Text(
+            "Berita COVID-19",
+            style: TypeTheme.titleTextFont.copyWith(
+              fontWeight: FontWeight.w500,
+              color: Colors.black.withOpacity(0.75),
+            ),
+          ),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(right: SpaceConfig.longSpace),
+              child: Icon(
+                Icons.star_border_outlined,
+                color: Colors.black.withOpacity(0.75),
+              ),
+            ),
+          ],
         ),
         body: ListView(
           children: [
