@@ -60,7 +60,6 @@ class SupportPage extends StatelessWidget {
 
   _buildBody() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _banner(),
@@ -75,15 +74,37 @@ class SupportPage extends StatelessWidget {
         Container(
           margin: EdgeInsets.symmetric(
             horizontal: SpaceConfig.longSpace,
-            vertical: SpaceConfig.normalSpace * 8.5,
+            vertical: SpaceConfig.normalSpace,
           ),
-          child: Text(
-            "Bantuan\nUntukmu",
-            style: TypeTheme.normalTextFont.copyWith(
-              color: Colors.black.withOpacity(0.5),
-              fontWeight: FontWeight.w700,
-              fontSize: 24,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("PANTAU COVID",
+                      style: TypeTheme.normalTextFont.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  Icon(
+                    Icons.notifications_outlined,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              SizedBox(height: SpaceConfig.longSpace * 3),
+              Text(
+                "Bantuan\nUntukmu",
+                style: TypeTheme.normalTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
+                  fontWeight: FontWeight.w700,
+                  fontSize: 24,
+                ),
+              ),
+              SizedBox(height: SpaceConfig.longSpace * 3),
+            ],
           ),
         ),
       ],
@@ -116,7 +137,7 @@ class SupportPage extends StatelessWidget {
                   tileColor: Colors.white,
                   title: "Pertanyaan Terkait",
                   subtitle: "Kumpulan pertanyaan",
-                  icon: Icons.info,
+                  icon: Icons.question_answer,
                 ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
@@ -144,7 +165,7 @@ class SupportPage extends StatelessWidget {
                   tileColor: Colors.white,
                   title: "Tentang Aplikasi",
                   subtitle: "Informasi terkait aplikasi",
-                  icon: Icons.admin_panel_settings_outlined,
+                  icon: Icons.perm_device_info,
                 ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
