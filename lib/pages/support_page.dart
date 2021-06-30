@@ -35,7 +35,7 @@ class SupportPage extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  top: 18,
+                  top: 4,
                   right: 22,
                   child: Container(
                     width: 220,
@@ -94,7 +94,7 @@ class SupportPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: SpaceConfig.longSpace * 3),
+              SizedBox(height: SpaceConfig.normalSpace * 5),
               Text(
                 "Bantuan\nUntukmu",
                 style: TypeTheme.normalTextFont.copyWith(
@@ -103,7 +103,7 @@ class SupportPage extends StatelessWidget {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(height: SpaceConfig.longSpace * 3),
+              SizedBox(height: SpaceConfig.normalSpace * 5),
             ],
           ),
         ),
