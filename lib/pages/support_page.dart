@@ -36,7 +36,7 @@ class SupportPage extends StatelessWidget {
                 ),
                 Positioned(
                   top: 18,
-                  right: 12,
+                  right: 22,
                   child: Container(
                     width: 220,
                     height: 240,
