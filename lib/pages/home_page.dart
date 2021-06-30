@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Positioned(
-                  top: 18,
+                  top: 4,
                   right: 22,
                   child: Container(
                     width: 220,
@@ -99,9 +99,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              SizedBox(
-                  height:
-                      SpaceConfig.longSpace * 2 + SpaceConfig.normalSpace * 2),
+              SizedBox(height: SpaceConfig.normalSpace * 5),
               Text(
                 "Hilangkan\nCovid-19",
                 style: TypeTheme.normalTextFont.copyWith(
@@ -110,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(height: SpaceConfig.longSpace * 3),
+              SizedBox(height: SpaceConfig.normalSpace * 5),
             ],
           ),
         ),
@@ -157,21 +155,21 @@ class _HomePageState extends State<HomePage> {
                 title: "Kenali virus corona",
                 icon: Icons.adjust,
               ),
-              SizedBox(height: SpaceConfig.normalSpace),
+              SizedBox(height: SpaceConfig.shortSpace),
               ListCardOneLine(
                 backgroundIconColor: ColorTheme.redColor,
                 tileColor: Colors.white,
                 title: "Gejala terinfeksi",
                 icon: Icons.people_outline,
               ),
-              SizedBox(height: SpaceConfig.normalSpace),
+              SizedBox(height: SpaceConfig.shortSpace),
               ListCardOneLine(
                 backgroundIconColor: ColorTheme.greenColor,
                 tileColor: Colors.white,
                 title: "Cara mencegah",
                 icon: Icons.admin_panel_settings_outlined,
               ),
-              SizedBox(height: SpaceConfig.normalSpace),
+              SizedBox(height: SpaceConfig.shortSpace),
             ],
           ),
         ),
