@@ -18,12 +18,12 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: 250,
+                  height: 350,
                   color: ColorTheme.primaryColor,
                 ),
                 Positioned(
-                  top: -150,
-                  left: -150,
+                  top: -130,
+                  left: -130,
                   child: Bubble(
                     color: ColorTheme.secondaryColor,
                     width: 300,
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Positioned(
-                  top: 70,
+                  top: 50,
                   right: -50,
                   child: Bubble(
                     color: ColorTheme.secondaryColor,
@@ -40,8 +40,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 Positioned(
-                  top: -20,
-                  right: 18,
+                  top: 18,
+                  right: 22,
                   child: Container(
                     width: 220,
                     height: 240,
@@ -82,6 +82,7 @@ class _HomePageState extends State<HomePage> {
             vertical: SpaceConfig.normalSpace,
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
@@ -98,7 +99,9 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              SizedBox(height: 40),
+              SizedBox(
+                  height:
+                      SpaceConfig.longSpace * 2 + SpaceConfig.normalSpace * 2),
               Text(
                 "Hilangkan\nCovid-19",
                 style: TypeTheme.normalTextFont.copyWith(
@@ -107,7 +110,7 @@ class _HomePageState extends State<HomePage> {
                   fontSize: 24,
                 ),
               ),
-              SizedBox(height: 40),
+              SizedBox(height: SpaceConfig.longSpace * 3),
             ],
           ),
         ),
