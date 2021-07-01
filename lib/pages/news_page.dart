@@ -10,69 +10,73 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   final webScraperSlider = WebScraper('https://health.detik.com');
 
-  // final webScraperContent = WebScraper('https://www.cnnindonesia.com');
+  final webScraperContent = WebScraper('https://www.merdeka.com');
 
   List<Map<String, dynamic>>? newsTitleSlider;
   late List<Map<String, dynamic>> newsTimeSlider;
   late List<Map<String, dynamic>> newsImageSlider;
   late List<Map<String, dynamic>> newsUrlSlider;
 
-  // List<Map<String, dynamic>>? newsTitleContent;
-  // late List<Map<String, dynamic>> newsTimeContent;
-  // late List<Map<String, dynamic>> newsImageContent;
-  // late List<Map<String, dynamic>> newsUrlContent;
+  List<Map<String, dynamic>>? newsTitleContent;
+  late List<Map<String, dynamic>> newsTimeContent;
+  late List<Map<String, dynamic>> newsImageContent;
+  late List<Map<String, dynamic>> newsUrlContent;
 
   void fetchNewsSlider() async {
     if (await webScraperSlider.loadWebPage('/berita-detikhealth')) {
       setState(() {
         newsTitleSlider = webScraperSlider
             .getElement('li > article > a > div.box_text > h2', ['title']);
-        print(newsTitleSlider);
+        // print(newsTitleSlider);
 
         newsTimeSlider = webScraperSlider.getElement(
             'li > article > a > div.box_text > span.date', ['class']);
-        print(newsTimeSlider);
+        // print(newsTimeSlider);
 
         newsImageSlider = webScraperSlider.getElement(
             'li > article > a > span.box_img > span.ratiobox_content > img',
             ['src']);
-        print(newsImageSlider);
+        // print(newsImageSlider);
 
         newsUrlSlider =
             webScraperSlider.getElement('li > article > a', ['href']);
-        print(newsUrlSlider);
+        // print(newsUrlSlider);
       });
     }
   }
 
-  // void fetchNewsContent() async {
-  //   if (await webScraperContent.loadWebPage('/tag/virus-corona/')) {
-  //     setState(() {
-  //       // NOTE: from cnn
-  //       newsTitleContent = webScraperContent
-  //           .getElement('article > a > span.box_text > h2.title', ['title']);
-  //       print(newsTitleContent);
+  void fetchNewsContent() async {
+    if (await webScraperContent.loadWebPage('/tag/covid-19')) {
+      setState(() {
+        // NOTE: from merdeka
+        newsTitleContent = webScraperContent.getElement(
+            'div.mdk-tag-contg-rb-small > div.meta-content > div.desc > h3 > a',
+            ['title']);
+        // print(newsTitleContent);
 
-  //       newsTimeContent = webScraperContent.getElement(
-  //           'li > div.card > div.wrapper > a.col > span.col', ['class']);
-  //       // print(newsTimeContent);
+        newsTimeContent = webScraperContent.getElement(
+            'div.mdk-tag-contg-rb-small > div.meta-content > div.desc > span.det-news-date',
+            ['class']);
+        // print(newsTimeContent);
 
-  //       newsImageContent = webScraperContent
-  //           .getElement('li > div.card > div.wrapper > a.col > img', ['src']);
-  //       // print(newsImageContent);
+        newsImageContent = webScraperContent.getElement(
+            'div.mdk-tag-contg-rb-small > div.meta-content > div.image > a > img',
+            ['src']);
+        // print(newsImageContent);
 
-  //       newsUrlContent = webScraperContent
-  //           .getElement('li > div.card > div.wrapper > a.col', ['href']);
-  //       // print(newsUrlContent);
-  //     });
-  //   }
-  // }
+        newsUrlContent = webScraperContent.getElement(
+            'div.mdk-tag-contg-rb-small > div.meta-content > div.desc > h3 > a',
+            ['href']);
+        // print(newsUrlContent);
+      });
+    }
+  }
 
   @override
   void initState() {
     super.initState();
     fetchNewsSlider();
-    // fetchNewsContent();
+    fetchNewsContent();
   }
 
   @override
@@ -268,7 +272,7 @@ class _NewsPageState extends State<NewsPage> {
                 .copyWith(fontWeight: FontWeight.w600),
           ),
         ),
-        newsTitleSlider == null
+        newsTitleContent == null
             ? Container(
                 margin: EdgeInsets.only(top: 100),
                 child: SpinKitWave(
@@ -280,12 +284,13 @@ class _NewsPageState extends State<NewsPage> {
                 height: MediaQuery.of(context).size.height / 3 +
                     SpaceConfig.normalSpace,
                 child: ListView.builder(
-                    itemCount: newsTitleSlider!.length,
+                    itemCount: newsTitleContent!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         onTap: () {
                           launch(
-                            newsUrlSlider[index]['attributes']['href'],
+                            webScraperContent.baseUrl! +
+                                newsUrlContent[index]['attributes']['href'],
                             forceWebView: true,
                           );
                         },
@@ -293,7 +298,7 @@ class _NewsPageState extends State<NewsPage> {
                           elevation: 2,
                           margin: EdgeInsets.only(
                             top: 0,
-                            bottom: (index == newsTitleSlider!.length - 1)
+                            bottom: (index == newsTitleContent!.length - 1)
                                 ? SpaceConfig.longSpace
                                 : SpaceConfig.normalSpace,
                             left: SpaceConfig.longSpace,
@@ -322,8 +327,8 @@ class _NewsPageState extends State<NewsPage> {
                                     image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
-                                        newsImageSlider[index]['attributes']
-                                            ['src'],
+                                        newsImageContent[index + 2]
+                                            ['attributes']['src'],
                                       ),
                                     ),
                                   ),
@@ -343,7 +348,7 @@ class _NewsPageState extends State<NewsPage> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        newsTitleSlider![index]['title'],
+                                        newsTitleContent![index]['title'],
                                         maxLines: 3,
                                         textAlign: TextAlign.left,
                                         overflow: TextOverflow.clip,
@@ -353,12 +358,39 @@ class _NewsPageState extends State<NewsPage> {
                                           height: 1.2,
                                         ),
                                       ),
-                                      Text(
-                                        newsTimeSlider[index]['title'],
-                                        style: TypeTheme.smallTextFont.copyWith(
-                                          fontSize: 12,
-                                          color: Colors.grey[700],
-                                        ),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "merdeka.com",
+                                            style: TypeTheme.smallTextFont
+                                                .copyWith(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: ColorTheme.secondaryColor,
+                                            ),
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.access_time,
+                                                color:
+                                                    ColorTheme.secondaryColor,
+                                                size: 18,
+                                              ),
+                                              Text(
+                                                newsTimeContent[index + 2]
+                                                    ['title'],
+                                                style: TypeTheme.smallTextFont
+                                                    .copyWith(
+                                                  fontSize: 12,
+                                                  color: Colors.grey[700],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
