@@ -116,7 +116,6 @@ class SupportPage extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
           decoration: BoxDecoration(
             color: ColorTheme.bgLight,
             borderRadius: BorderRadius.only(
@@ -124,52 +123,55 @@ class SupportPage extends StatelessWidget {
               topRight: Radius.circular(SpaceConfig.longSpace),
             ),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: SpaceConfig.longSpace),
-              InkWell(
-                splashColor: Colors.red,
-                onTap: () {},
-                child: ListCardTwoLines(
-                  backgroundIconColor: ColorTheme.redColor,
-                  tileColor: Colors.white,
-                  title: "Pertanyaan Terkait",
-                  subtitle: "Kumpulan pertanyaan",
-                  icon: Icons.question_answer,
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: SpaceConfig.longSpace),
+                InkWell(
+                  splashColor: Colors.red,
+                  onTap: () {},
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.redColor,
+                    tileColor: Colors.white,
+                    title: "Pertanyaan Terkait",
+                    subtitle: "Kumpulan pertanyaan",
+                    icon: Icons.question_answer,
+                  ),
                 ),
-              ),
-              SizedBox(height: SpaceConfig.normalSpace),
-              InkWell(
-                onTap: () async {
-                  if (await canLaunch(URLShared.contactMeURL)) {
-                    await launch(URLShared.contactMeURL);
-                  } else {
-                    throw 'Gagal menjalankan $URLShared.contactMeURL';
-                  }
-                },
-                child: ListCardTwoLines(
-                  backgroundIconColor: ColorTheme.greenColor,
-                  tileColor: Colors.white,
-                  title: "Hubungi Kami",
-                  subtitle: "Tersedia Telegram dan Email",
-                  icon: Icons.call,
+                SizedBox(height: SpaceConfig.normalSpace),
+                InkWell(
+                  onTap: () async {
+                    if (await canLaunch(URLShared.contactMeURL)) {
+                      await launch(URLShared.contactMeURL);
+                    } else {
+                      throw 'Gagal menjalankan $URLShared.contactMeURL';
+                    }
+                  },
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.greenColor,
+                    tileColor: Colors.white,
+                    title: "Hubungi Kami",
+                    subtitle: "Tersedia Telegram dan Email",
+                    icon: Icons.call,
+                  ),
                 ),
-              ),
-              SizedBox(height: SpaceConfig.normalSpace),
-              InkWell(
-                onTap: () {},
-                child: ListCardTwoLines(
-                  backgroundIconColor: ColorTheme.blueColor,
-                  tileColor: Colors.white,
-                  title: "Tentang Aplikasi",
-                  subtitle: "Informasi terkait aplikasi",
-                  icon: Icons.perm_device_info,
+                SizedBox(height: SpaceConfig.normalSpace),
+                InkWell(
+                  onTap: () {},
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.blueColor,
+                    tileColor: Colors.white,
+                    title: "Tentang Aplikasi",
+                    subtitle: "Informasi terkait aplikasi",
+                    icon: Icons.perm_device_info,
+                  ),
                 ),
-              ),
-              SizedBox(height: SpaceConfig.normalSpace),
-            ],
+                SizedBox(height: SpaceConfig.normalSpace),
+              ],
+            ),
           ),
         ),
       ],
