@@ -16,36 +16,41 @@ class BoxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 100,
-      height: 100,
-      padding: EdgeInsets.all(SpaceConfig.normalSpace),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-        color: color,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(
-            icon,
-            color: Colors.white.withOpacity(0.75),
-          ),
-          Text(
-            summary,
-            style: TypeTheme.subTitleTextFont.copyWith(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Text(
-            cases,
-            style: TypeTheme.smallTextFont.copyWith(
+    return Card(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+      elevation: 2,
+      child: Container(
+        width: 100,
+        height: 100,
+        padding: EdgeInsets.all(SpaceConfig.normalSpace),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+          color: color,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(
+              icon,
               color: Colors.white.withOpacity(0.75),
-              fontWeight: FontWeight.w500,
             ),
-          ),
-        ],
+            Text(
+              summary,
+              style: TypeTheme.subTitleTextFont.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Text(
+              cases,
+              style: TypeTheme.smallTextFont.copyWith(
+                color: Colors.white.withOpacity(0.75),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
