@@ -5,3 +5,4 @@ part 'bubble.dart';
 part 'list_card_one.dart';
 part 'list_card_two.dart';
 part 'box_card.dart';
+part 'welcome.dart';
