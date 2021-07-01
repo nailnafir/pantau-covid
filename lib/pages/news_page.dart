@@ -45,13 +45,92 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: newsTitle == null
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : ListView.builder(
+    return Scaffold(
+      backgroundColor: ColorTheme.bgLight,
+      body: SafeArea(
+        child: ListView(
+          children: [
+            Stack(
+              children: [
+                Container(
+                  height: 250,
+                  color: ColorTheme.primaryColor,
+                ),
+                Positioned(
+                  top: -180,
+                  left: -150,
+                  child: Bubble(
+                    color: ColorTheme.secondaryColor,
+                    width: 300,
+                    height: 300,
+                  ),
+                ),
+                Positioned(
+                  top: 30,
+                  right: -50,
+                  child: Bubble(
+                    color: ColorTheme.secondaryColor,
+                    width: 100,
+                    height: 100,
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 150),
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: ColorTheme.bgLight,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(SpaceConfig.longSpace),
+                      topRight: Radius.circular(SpaceConfig.longSpace),
+                    ),
+                  ),
+                ),
+                _buildBody(),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _greetings(),
+        _slider(),
+        _content(),
+      ],
+    );
+  }
+
+  _greetings() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+            vertical: SpaceConfig.normalSpace,
+          ),
+          child: Welcome(),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+      ],
+    );
+  }
+
+  _slider() {
+    double contentHeight = 280;
+    double contentWidth = 200;
+    return newsTitle == null
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : SizedBox(
+            height: contentHeight,
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
                 itemCount: newsTitle!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return InkWell(
@@ -63,10 +142,13 @@ class _NewsPageState extends State<NewsPage> {
                     },
                     child: Card(
                       elevation: 2,
-                      margin: EdgeInsets.symmetric(
-                        horizontal: SpaceConfig.longSpace,
-                        vertical: SpaceConfig.shortSpace,
-                      ),
+                      margin: EdgeInsets.only(
+                          top: SpaceConfig.shortSpace,
+                          bottom: SpaceConfig.shortSpace,
+                          left: (index == 0) ? SpaceConfig.longSpace : 0,
+                          right: (index == newsTitle!.length - 1)
+                              ? SpaceConfig.longSpace
+                              : 18),
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(SpaceConfig.normalSpace)),
@@ -77,13 +159,13 @@ class _NewsPageState extends State<NewsPage> {
                           borderRadius:
                               BorderRadius.circular(SpaceConfig.normalSpace),
                         ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width: 100,
-                              height: 100,
+                              width: contentWidth,
+                              height:
+                                  contentHeight / 2 - SpaceConfig.shortSpace,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(
                                     SpaceConfig.normalSpace),
@@ -96,13 +178,8 @@ class _NewsPageState extends State<NewsPage> {
                               ),
                             ),
                             Container(
-                              margin:
-                                  EdgeInsets.only(left: SpaceConfig.longSpace),
-                              width: MediaQuery.of(context).size.width -
-                                  3 * SpaceConfig.longSpace -
-                                  2 * SpaceConfig.normalSpace -
-                                  100,
-                              height: 100,
+                              width: contentWidth,
+                              height: contentHeight / 3,
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -134,7 +211,21 @@ class _NewsPageState extends State<NewsPage> {
                     ),
                   );
                 }),
-      ),
+          );
+  }
+
+  _content() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: SpaceConfig.normalSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
+          ),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+      ],
     );
   }
 }
