@@ -121,7 +121,6 @@ class _HomePageState extends State<HomePage> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(
-          padding: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
           decoration: BoxDecoration(
             color: ColorTheme.bgLight,
             borderRadius: BorderRadius.only(
@@ -134,7 +133,10 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
+                margin: EdgeInsets.symmetric(
+                  vertical: SpaceConfig.longSpace,
+                  horizontal: SpaceConfig.longSpace - 4,
+                ),
                 child: ListCardTwoLines(
                   backgroundIconColor: ColorTheme.secondaryColor,
                   tileColor: ColorTheme.primaryColor.withOpacity(0.75),
@@ -143,33 +145,47 @@ class _HomePageState extends State<HomePage> {
                   icon: Icons.add_box_outlined,
                 ),
               ),
-              Text(
-                "Semua tentang COVID-19",
-                style: TypeTheme.subTitleTextFont
-                    .copyWith(fontWeight: FontWeight.w600),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                child: Text(
+                  "Semua tentang COVID-19",
+                  style: TypeTheme.subTitleTextFont
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
               ),
               SizedBox(height: SpaceConfig.shortSpace),
-              ListCardOneLine(
-                backgroundIconColor: ColorTheme.blueColor,
-                tileColor: Colors.white,
-                title: "Kenali virus corona",
-                icon: Icons.adjust,
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace - 4,
+                ),
+                child: Column(
+                  children: [
+                    ListCardOneLine(
+                      backgroundIconColor: ColorTheme.blueColor,
+                      tileColor: Colors.white,
+                      title: "Kenali virus corona",
+                      icon: Icons.adjust,
+                    ),
+                    SizedBox(height: SpaceConfig.shortSpace),
+                    ListCardOneLine(
+                      backgroundIconColor: ColorTheme.redColor,
+                      tileColor: Colors.white,
+                      title: "Gejala terinfeksi",
+                      icon: Icons.people_outline,
+                    ),
+                    SizedBox(height: SpaceConfig.shortSpace),
+                    ListCardOneLine(
+                      backgroundIconColor: ColorTheme.greenColor,
+                      tileColor: Colors.white,
+                      title: "Cara mencegah",
+                      icon: Icons.admin_panel_settings_outlined,
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: SpaceConfig.shortSpace),
-              ListCardOneLine(
-                backgroundIconColor: ColorTheme.redColor,
-                tileColor: Colors.white,
-                title: "Gejala terinfeksi",
-                icon: Icons.people_outline,
-              ),
-              SizedBox(height: SpaceConfig.shortSpace),
-              ListCardOneLine(
-                backgroundIconColor: ColorTheme.greenColor,
-                tileColor: Colors.white,
-                title: "Cara mencegah",
-                icon: Icons.admin_panel_settings_outlined,
-              ),
-              SizedBox(height: SpaceConfig.shortSpace),
+              SizedBox(height: SpaceConfig.normalSpace),
             ],
           ),
         ),
