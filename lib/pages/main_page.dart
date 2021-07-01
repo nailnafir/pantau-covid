@@ -40,46 +40,55 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Beranda",
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.grey,
+            blurRadius: 1.0,
+            spreadRadius: 0.5,
+            offset: Offset(0.0, 1.0),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: "Kasus",
+        ]),
+        child: BottomNavigationBar(
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: "Beranda",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: "Kasus",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.map),
+              label: "Berita",
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.help_center),
+              label: "Bantuan",
+            ),
+          ],
+          type: BottomNavigationBarType.fixed,
+          showUnselectedLabels: true,
+          showSelectedLabels: true,
+          selectedLabelStyle: TypeTheme.normalTextFont.copyWith(
+            fontWeight: FontWeight.w500,
+            fontSize: 12,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.map),
-            label: "Berita",
+          unselectedLabelStyle: TypeTheme.normalTextFont.copyWith(
+            fontWeight: FontWeight.w500,
+            fontSize: 12,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.help_center),
-            label: "Bantuan",
-          ),
-        ],
-        type: BottomNavigationBarType.fixed,
-        showUnselectedLabels: true,
-        showSelectedLabels: true,
-        selectedLabelStyle: TypeTheme.normalTextFont.copyWith(
-          fontWeight: FontWeight.w500,
-          fontSize: 12,
+          selectedItemColor: ColorTheme.secondaryColor,
+          unselectedItemColor: Colors.grey,
+          currentIndex: _selectedPage,
+          onTap: (index) {
+            setState(() {
+              _selectedPage = index;
+            });
+            _pageController.jumpToPage(_selectedPage);
+          },
         ),
-        unselectedLabelStyle: TypeTheme.normalTextFont.copyWith(
-          fontWeight: FontWeight.w500,
-          fontSize: 12,
-        ),
-        selectedItemColor: ColorTheme.secondaryColor,
-        unselectedItemColor: Colors.grey,
-        currentIndex: _selectedPage,
-        elevation: 2,
-        onTap: (index) {
-          setState(() {
-            _selectedPage = index;
-          });
-          _pageController.jumpToPage(_selectedPage);
-        },
       ),
     );
   }
