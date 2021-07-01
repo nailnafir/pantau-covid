@@ -34,6 +34,20 @@ class _CasesPageState extends State<CasesPage> {
     selectedLocation = location[0];
   }
 
+  String greetings() {
+    var hour = DateTime.now().hour;
+
+    if (hour < 10) {
+      return "Pagi";
+    } else if (hour < 15) {
+      return "Siang";
+    } else if (hour < 18) {
+      return "Sore";
+    } else {
+      return "Malam";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -112,7 +126,7 @@ class _CasesPageState extends State<CasesPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Selamat Pagi,",
+                    "Selamat ${greetings()},",
                     style: TypeTheme.titleTextFont.copyWith(
                       color: Colors.black.withOpacity(0.75),
                       fontWeight: FontWeight.w600,
