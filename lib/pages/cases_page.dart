@@ -169,7 +169,7 @@ class _CasesPageState extends State<CasesPage> {
             return Container(
               width: 8,
               height: 8,
-              margin: EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+              margin: EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               decoration: BoxDecoration(
                 color: _current == index
                     ? ColorTheme.secondaryColor
@@ -185,80 +185,100 @@ class _CasesPageState extends State<CasesPage> {
 
   _singleSlider(int index) {
     return Container(
-      width: LayoutConfig.deviceWidth,
-      height: 150,
-      margin: EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(imgBanner[index]),
-          fit: BoxFit.cover,
+      margin: EdgeInsets.symmetric(
+        horizontal: SpaceConfig.longSpace - 4,
+      ),
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+        child: Container(
+          width: LayoutConfig.deviceWidth,
+          height: 150,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(imgBanner[index]),
+              fit: BoxFit.cover,
+            ),
+            borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+          ),
         ),
-        borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
       ),
     );
   }
 
   _content() {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: SpaceConfig.longSpace,
-        vertical: SpaceConfig.normalSpace,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: LayoutConfig.deviceWidth,
-                padding: EdgeInsets.fromLTRB(
-                  SpaceConfig.longSpace * 2,
-                  SpaceConfig.normalSpace,
-                  SpaceConfig.normalSpace,
-                  SpaceConfig.normalSpace,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-                ),
-                child: DropdownButton(
-                  underline: SizedBox(),
-                  style: TypeTheme.bigTextFont.copyWith(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  isExpanded: true,
-                  elevation: 1,
-                  value: selectedLocation,
-                  icon: Icon(
-                    Icons.arrow_drop_down,
-                    color: ColorTheme.secondaryColor,
-                    size: 30,
-                  ),
-                  items: location.map((i) {
-                    return DropdownMenuItem(value: i, child: Text(i));
-                  }).toList(),
-                  onChanged: (String? item) {
-                    setState(() {
-                      selectedLocation = item;
-                    });
-                  },
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: SpaceConfig.longSpace,
-                  horizontal: SpaceConfig.normalSpace,
-                ),
-                child: Icon(
-                  Icons.location_on,
-                  color: ColorTheme.secondaryColor,
-                ),
-              ),
-            ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(height: SpaceConfig.normalSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
           ),
-          SizedBox(height: SpaceConfig.longSpace),
-          Column(
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+            child: Stack(
+              children: [
+                Container(
+                  width: LayoutConfig.deviceWidth,
+                  padding: EdgeInsets.fromLTRB(
+                    SpaceConfig.longSpace * 2,
+                    SpaceConfig.normalSpace,
+                    SpaceConfig.normalSpace,
+                    SpaceConfig.normalSpace,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace),
+                  ),
+                  child: DropdownButton(
+                    underline: SizedBox(),
+                    style: TypeTheme.bigTextFont.copyWith(
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    isExpanded: true,
+                    elevation: 1,
+                    value: selectedLocation,
+                    icon: Icon(
+                      Icons.arrow_drop_down,
+                      color: ColorTheme.secondaryColor,
+                      size: 30,
+                    ),
+                    items: location.map((i) {
+                      return DropdownMenuItem(value: i, child: Text(i));
+                    }).toList(),
+                    onChanged: (String? item) {
+                      setState(() {
+                        selectedLocation = item;
+                      });
+                    },
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: SpaceConfig.longSpace,
+                    horizontal: SpaceConfig.normalSpace,
+                  ),
+                  child: Icon(
+                    Icons.location_on,
+                    color: ColorTheme.secondaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: SpaceConfig.longSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
@@ -270,8 +290,13 @@ class _CasesPageState extends State<CasesPage> {
                   style: TypeTheme.smallTextFont),
             ],
           ),
-          SizedBox(height: SpaceConfig.normalSpace),
-          Row(
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
+          ),
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BoxCard(
@@ -294,34 +319,49 @@ class _CasesPageState extends State<CasesPage> {
               ),
             ],
           ),
-          SizedBox(height: SpaceConfig.longSpace),
-          Text(
+        ),
+        SizedBox(height: SpaceConfig.longSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Text(
             "Peta Sebaran",
             style: TypeTheme.subTitleTextFont
                 .copyWith(fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: SpaceConfig.normalSpace),
-          Container(
-            padding: EdgeInsets.all(SpaceConfig.normalSpace),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-            ),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
+          ),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
             child: Container(
-              width: LayoutConfig.deviceWidth,
-              height: 125,
+              padding: EdgeInsets.all(SpaceConfig.normalSpace),
               decoration: BoxDecoration(
-                image: DecorationImage(
-                  image:
-                      AssetImage("assets/images/image-map-indonesia-covid.jpg"),
-                  fit: BoxFit.cover,
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+              ),
+              child: Container(
+                width: LayoutConfig.deviceWidth,
+                height: 125,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                        "assets/images/image-map-indonesia-covid.jpg"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
           ),
-          SizedBox(height: SpaceConfig.normalSpace),
-        ],
-      ),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+      ],
     );
   }
 }
