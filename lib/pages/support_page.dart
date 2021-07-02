@@ -144,12 +144,84 @@ class SupportPage extends StatelessWidget {
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
                 InkWell(
-                  onTap: () async {
-                    if (await canLaunch(URLShared.contactMeURL)) {
-                      await launch(URLShared.contactMeURL);
-                    } else {
-                      throw 'Gagal menjalankan $URLShared.contactMeURL';
-                    }
+                  onTap: () {
+                    Get.bottomSheet(
+                      BottomSheet(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(SpaceConfig.longSpace)),
+                        ),
+                        onClosing: () {},
+                        builder: (context) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: SpaceConfig.longSpace),
+                            color: ColorTheme.bgLight,
+                            height: MediaQuery.of(context).size.height / 3,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    width: 50,
+                                    height: 6,
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: SpaceConfig.normalSpace),
+                                    decoration: BoxDecoration(
+                                      color: ColorTheme.secondaryColor,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap: () async {
+                                        if (await canLaunch(
+                                            URLShared.emailURL)) {
+                                          await launch(URLShared.emailURL);
+                                        } else {
+                                          Get.snackbar('Gagal',
+                                              'Tidak Dapat Mengalihkan ke Telegram');
+                                        }
+                                      },
+                                      child: ListCardOneLine(
+                                        backgroundIconColor:
+                                            ColorTheme.redColor,
+                                        tileColor: Colors.white,
+                                        title: "Email",
+                                        icon: Icons.email,
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    InkWell(
+                                      onTap: () async {
+                                        if (await canLaunch(
+                                            URLShared.telegramURL)) {
+                                          await launch(URLShared.telegramURL);
+                                        } else {
+                                          Get.snackbar('Gagal',
+                                              'Tidak Dapat Mengalihkan ke Telegram');
+                                        }
+                                      },
+                                      child: ListCardOneLine(
+                                        backgroundIconColor:
+                                            ColorTheme.blueColor,
+                                        tileColor: Colors.white,
+                                        title: "Telegram",
+                                        icon: Icons.call,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    );
                   },
                   child: ListCardTwoLines(
                     backgroundIconColor: ColorTheme.greenColor,
