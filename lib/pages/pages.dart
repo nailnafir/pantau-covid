@@ -14,3 +14,4 @@ part 'cases_page.dart';
 part 'news_page.dart';
 part 'support_page.dart';
 part 'faq_page.dart';
+part 'about_page.dart';

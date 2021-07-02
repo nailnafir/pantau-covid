@@ -161,7 +161,9 @@ class SupportPage extends StatelessWidget {
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(AboutPage());
+                  },
                   child: ListCardTwoLines(
                     backgroundIconColor: ColorTheme.blueColor,
                     tileColor: Colors.white,
