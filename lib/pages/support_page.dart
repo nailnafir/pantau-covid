@@ -131,7 +131,9 @@ class SupportPage extends StatelessWidget {
               children: [
                 SizedBox(height: SpaceConfig.longSpace),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(FaqPage());
+                  },
                   child: ListCardTwoLines(
                     backgroundIconColor: ColorTheme.redColor,
                     tileColor: Colors.white,
