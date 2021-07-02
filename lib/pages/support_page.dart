@@ -131,7 +131,6 @@ class SupportPage extends StatelessWidget {
               children: [
                 SizedBox(height: SpaceConfig.longSpace),
                 InkWell(
-                  splashColor: Colors.red,
                   onTap: () {},
                   child: ListCardTwoLines(
                     backgroundIconColor: ColorTheme.redColor,
