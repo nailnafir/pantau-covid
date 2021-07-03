@@ -8,6 +8,8 @@ class CasesPage extends StatefulWidget {
 }
 
 class _CasesPageState extends State<CasesPage> {
+  CaseTotalModel? caseTotal;
+
   int _current = 0;
 
   List imgBanner = [
@@ -22,7 +24,13 @@ class _CasesPageState extends State<CasesPage> {
 
   @override
   void initState() {
+    CaseTotalModel.fetchTotal('indonesia/confirmed').then((value) {
+      caseTotal = value;
+      setState(() {});
+    });
+
     super.initState();
+
     location = [
       'Indonesia',
       'DKI Jakarta',
@@ -180,6 +188,11 @@ class _CasesPageState extends State<CasesPage> {
   }
 
   _content() {
+    double itemHeight =
+        (MediaQuery.of(context).size.height - SpaceConfig.longSpace) / 2;
+
+    double itemWidth = MediaQuery.of(context).size.height / 2;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -258,34 +271,82 @@ class _CasesPageState extends State<CasesPage> {
                 style: TypeTheme.subTitleTextFont
                     .copyWith(fontWeight: FontWeight.w600),
               ),
-              Text("Diperbarui pada 28 Juni 2021 10:00",
+              Text(
+                  "Diperbarui pada " +
+                      ((caseTotal != null)
+                          ? DateFormat.EEEE()
+                              .add_d()
+                              .add_yMMMM()
+                              .addPattern('•')
+                              .add_Hms()
+                              .format(caseTotal!.lastUpdate)
+                              .replaceAll('Monday', 'Senin,')
+                              .replaceAll('Tuesday', 'Selasa,')
+                              .replaceAll('Wednesday', 'Rabu,')
+                              .replaceAll('Thursday', 'Kamis,')
+                              .replaceAll('Friday', 'Jumat,')
+                              .replaceAll('Saturday', 'Sabtu,')
+                              .replaceAll('Sunday', 'Minggu,')
+                              .replaceAll('January', 'Januari')
+                              .replaceAll('February', 'Februari')
+                              .replaceAll('March', 'Maret')
+                              .replaceAll('April', 'April')
+                              .replaceAll('May', 'Mei')
+                              .replaceAll('June', 'Juni')
+                              .replaceAll('July', 'Juli')
+                              .replaceAll('August', 'Agustus')
+                              .replaceAll('September', 'September')
+                              .replaceAll('October', 'Oktober')
+                              .replaceAll('November', 'November')
+                              .replaceAll('December', 'Desember')
+                          : 'xxx'),
                   style: TypeTheme.smallTextFont),
             ],
           ),
         ),
         SizedBox(height: SpaceConfig.normalSpace),
         Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: SpaceConfig.longSpace - 4,
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          height: MediaQuery.of(context).size.height / 3 -
+              SpaceConfig.longSpace +
+              2,
+          child: GridView.count(
+            padding:
+                EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
+            crossAxisSpacing: SpaceConfig.shortSpace,
+            mainAxisSpacing: SpaceConfig.shortSpace,
+            childAspectRatio: 1.5,
+            crossAxisCount: 2,
+            primary: false,
             children: [
               BoxCard(
                 icon: Icons.add_circle_rounded,
-                summary: "380",
+                summary: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern().format(caseTotal!.confirmed)
+                    : 'Tunggu....'),
                 cases: "Positif",
                 color: ColorTheme.secondaryColor,
               ),
               BoxCard(
+                icon: Icons.remove_circle_rounded,
+                summary: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern().format(caseTotal!.deaths)
+                    : 'Tunggu....'),
+                cases: "Dirawat",
+                color: ColorTheme.blueColor,
+              ),
+              BoxCard(
                 icon: Icons.change_circle_rounded,
-                summary: "100",
+                summary: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern().format(caseTotal!.recovered)
+                    : 'Tunggu....'),
                 cases: "Sembuh",
                 color: ColorTheme.greenColor,
               ),
               BoxCard(
                 icon: Icons.cancel_rounded,
-                summary: "50",
+                summary: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern().format(caseTotal!.deaths)
+                    : 'Tunggu....'),
                 cases: "Meninggal",
                 color: ColorTheme.redColor,
               ),

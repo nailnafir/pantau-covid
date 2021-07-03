@@ -5,6 +5,7 @@ import 'package:flutter_pantau_covid/utilities/utilities.dart';
 import 'package:flutter_pantau_covid/widgets/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:web_scraper/web_scraper.dart';
