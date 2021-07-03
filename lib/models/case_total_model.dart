@@ -2,11 +2,11 @@ part of 'models.dart';
 
 class CaseTotalModel {
   String countryRegion;
-  String confirmed;
-  String recovered;
-  String active;
-  String deaths;
-  String lastUpdate;
+  int confirmed;
+  int recovered;
+  int active;
+  int deaths;
+  DateTime lastUpdate;
 
   CaseTotalModel({
     required this.countryRegion,
@@ -20,11 +20,11 @@ class CaseTotalModel {
   factory CaseTotalModel.fromJson(Map<String, dynamic> object) {
     return CaseTotalModel(
       countryRegion: object['countryRegion'],
-      confirmed: object['confirmed'].toString(),
-      recovered: object['recovered'].toString(),
-      active: object['active'].toString(),
-      deaths: object['deaths'].toString(),
-      lastUpdate: object['lastUpdate'].toString(),
+      confirmed: object['confirmed'],
+      recovered: object['recovered'],
+      active: object['active'],
+      deaths: object['deaths'],
+      lastUpdate: DateTime.fromMillisecondsSinceEpoch(object['lastUpdate']),
     );
   }
 
