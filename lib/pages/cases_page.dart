@@ -24,7 +24,7 @@ class _CasesPageState extends State<CasesPage> {
 
   @override
   void initState() {
-    CaseTotalModel.fetchTotal('indonesia/confirmed').then((value) {
+    CaseTotalModel.fetchTotal('/public/api/update.json').then((value) {
       caseTotal = value;
       setState(() {});
     });
@@ -279,7 +279,7 @@ class _CasesPageState extends State<CasesPage> {
                               .add_yMMMM()
                               .addPattern('•')
                               .add_Hms()
-                              .format(caseTotal!.lastUpdate)
+                              .format((DateTime.parse(caseTotal!.lastUpdate)))
                               .replaceAll('Monday', 'Senin,')
                               .replaceAll('Tuesday', 'Selasa,')
                               .replaceAll('Wednesday', 'Rabu,')
