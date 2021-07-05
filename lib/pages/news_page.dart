@@ -167,12 +167,12 @@ class _NewsPageState extends State<NewsPage> {
               height: contentHeight,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: newsTitleSlider!.length,
+                itemCount: 10,
                 itemBuilder: (BuildContext context, index) {
                   return Container(
                     margin: EdgeInsets.only(
                       left: (index == 0) ? SpaceConfig.longSpace : 0,
-                      right: (index == newsTitleSlider!.length - 1)
+                      right: (index == 10)
                           ? SpaceConfig.longSpace
                           : SpaceConfig.normalSpace,
                       top: SpaceConfig.shortSpace,
@@ -303,12 +303,12 @@ class _NewsPageState extends State<NewsPage> {
                   height: MediaQuery.of(context).size.height / 3 +
                       SpaceConfig.normalSpace,
                   child: ListView.builder(
-                    itemCount: newsTitleContent!.length,
+                    itemCount: 10,
                     itemBuilder: (BuildContext context, index) {
                       return Container(
                         margin: EdgeInsets.only(
                           top: 0,
-                          bottom: (index == newsTitleContent!.length - 1)
+                          bottom: (index == 10)
                               ? SpaceConfig.longSpace
                               : SpaceConfig.normalSpace,
                           left: SpaceConfig.longSpace,
