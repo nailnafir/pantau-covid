@@ -321,7 +321,8 @@ class _CasesPageState extends State<CasesPage> {
               BoxCard(
                 icon: Icons.add_circle_rounded,
                 summary: ((caseTotal != null)
-                    ? NumberFormat.decimalPattern().format(caseTotal!.confirmed)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.confirmedTotal)
                     : 'Tunggu....'),
                 cases: "Positif",
                 color: ColorTheme.secondaryColor,
@@ -329,7 +330,8 @@ class _CasesPageState extends State<CasesPage> {
               BoxCard(
                 icon: Icons.remove_circle_rounded,
                 summary: ((caseTotal != null)
-                    ? NumberFormat.decimalPattern().format(caseTotal!.deaths)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.deathsTotal)
                     : 'Tunggu....'),
                 cases: "Dirawat",
                 color: ColorTheme.blueColor,
@@ -337,7 +339,8 @@ class _CasesPageState extends State<CasesPage> {
               BoxCard(
                 icon: Icons.change_circle_rounded,
                 summary: ((caseTotal != null)
-                    ? NumberFormat.decimalPattern().format(caseTotal!.recovered)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.recoveredTotal)
                     : 'Tunggu....'),
                 cases: "Sembuh",
                 color: ColorTheme.greenColor,
@@ -345,7 +348,8 @@ class _CasesPageState extends State<CasesPage> {
               BoxCard(
                 icon: Icons.cancel_rounded,
                 summary: ((caseTotal != null)
-                    ? NumberFormat.decimalPattern().format(caseTotal!.deaths)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.deathsTotal)
                     : 'Tunggu....'),
                 cases: "Meninggal",
                 color: ColorTheme.redColor,
