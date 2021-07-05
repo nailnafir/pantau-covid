@@ -5,10 +5,10 @@ class CaseTotalModel {
   int recoveredTotal;
   int activeTotal;
   int deathsTotal;
-  int confirmed;
-  int recovered;
-  int active;
-  int deaths;
+  int confirmedUpdate;
+  int recoveredUpdate;
+  int activeUpdate;
+  int deathsUpdate;
   String lastUpdate;
 
   CaseTotalModel({
@@ -16,10 +16,10 @@ class CaseTotalModel {
     required this.recoveredTotal,
     required this.activeTotal,
     required this.deathsTotal,
-    required this.confirmed,
-    required this.recovered,
-    required this.active,
-    required this.deaths,
+    required this.confirmedUpdate,
+    required this.recoveredUpdate,
+    required this.activeUpdate,
+    required this.deathsUpdate,
     required this.lastUpdate,
   });
 
@@ -29,10 +29,10 @@ class CaseTotalModel {
       recoveredTotal: object['update']['total']['jumlah_sembuh'],
       activeTotal: object['update']['total']['jumlah_dirawat'],
       deathsTotal: object['update']['total']['jumlah_meninggal'],
-      confirmed: object['update']['penambahan']['jumlah_positif'],
-      recovered: object['update']['penambahan']['jumlah_sembuh'],
-      active: object['update']['penambahan']['jumlah_dirawat'],
-      deaths: object['update']['penambahan']['jumlah_meninggal'],
+      confirmedUpdate: object['update']['penambahan']['jumlah_positif'],
+      recoveredUpdate: object['update']['penambahan']['jumlah_sembuh'],
+      activeUpdate: object['update']['penambahan']['jumlah_dirawat'],
+      deathsUpdate: object['update']['penambahan']['jumlah_meninggal'],
       lastUpdate: object['update']['penambahan']['created'],
     );
   }
