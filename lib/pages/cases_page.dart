@@ -450,16 +450,116 @@ class _CasesPageState extends State<CasesPage> {
         ),
         SizedBox(height: SpaceConfig.normalSpace),
         Container(
-          height: MediaQuery.of(context).size.height / 3 -
-              SpaceConfig.longSpace +
+          height: MediaQuery.of(context).size.height / 4 -
+              SpaceConfig.normalSpace -
               2,
           child: GridView.count(
             padding:
                 EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
             crossAxisSpacing: SpaceConfig.shortSpace,
             mainAxisSpacing: SpaceConfig.shortSpace,
-            childAspectRatio: 1.5,
+            childAspectRatio: 2.0,
             crossAxisCount: 2,
+            primary: false,
+            children: [
+              SmallBoxCard(
+                icon: Icons.medication,
+                summary: ((localVaccine != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(localVaccine!.totalTarget)
+                    : 'Tunggu....'),
+                cases: "Total Target",
+                color: ColorTheme.blueColor,
+              ),
+              SmallBoxCard(
+                icon: Icons.medication,
+                summary: ((localVaccine != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(localVaccine!.targetMedical)
+                    : 'Tunggu....'),
+                cases: "Tenaga Kesehatan",
+                color: ColorTheme.greenColor,
+              ),
+              SmallBoxCard(
+                icon: Icons.medication,
+                summary: ((localVaccine != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(localVaccine!.targetOfficer)
+                    : 'Tunggu....'),
+                cases: "Petugas Publik",
+                color: ColorTheme.greenColor,
+              ),
+              SmallBoxCard(
+                icon: Icons.medication,
+                summary: ((localVaccine != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(localVaccine!.targetAged)
+                    : 'Tunggu....'),
+                cases: "Lanjut Usia",
+                color: ColorTheme.blueColor,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: SpaceConfig.longSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Pelaksanaan Vaksinasi",
+                style: TypeTheme.subTitleTextFont
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+              Text(
+                  "Diperbarui pada " +
+                      ((localVaccine != null)
+                          ? DateFormat.EEEE()
+                              .add_d()
+                              .add_yMMMM()
+                              .addPattern('•')
+                              .add_Hms()
+                              .format(
+                                  (DateTime.parse(localVaccine!.lastUpdate)))
+                              .replaceAll('Monday', 'Senin,')
+                              .replaceAll('Tuesday', 'Selasa,')
+                              .replaceAll('Wednesday', 'Rabu,')
+                              .replaceAll('Thursday', 'Kamis,')
+                              .replaceAll('Friday', 'Jumat,')
+                              .replaceAll('Saturday', 'Sabtu,')
+                              .replaceAll('Sunday', 'Minggu,')
+                              .replaceAll('January', 'Januari')
+                              .replaceAll('February', 'Februari')
+                              .replaceAll('March', 'Maret')
+                              .replaceAll('April', 'April')
+                              .replaceAll('May', 'Mei')
+                              .replaceAll('June', 'Juni')
+                              .replaceAll('July', 'Juli')
+                              .replaceAll('August', 'Agustus')
+                              .replaceAll('September', 'September')
+                              .replaceAll('October', 'Oktober')
+                              .replaceAll('November', 'November')
+                              .replaceAll('December', 'Desember')
+                          : 'xxx'),
+                  style: TypeTheme.smallTextFont),
+            ],
+          ),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+        Container(
+          height: MediaQuery.of(context).size.height / 3 -
+              SpaceConfig.normalSpace -
+              4,
+          child: GridView.count(
+            padding:
+                EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
+            crossAxisSpacing: SpaceConfig.shortSpace,
+            mainAxisSpacing: SpaceConfig.shortSpace,
+            childAspectRatio: 3.0,
+            crossAxisCount: 1,
             primary: false,
             children: [],
           ),

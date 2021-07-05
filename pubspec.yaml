@@ -30,6 +30,7 @@ dependencies:
   http: ^0.13.3
   intl: ^0.17.0
   lottie: ^1.0.1
+  percent_indicator: ^3.0.1
   url_launcher: ^6.0.7
   web_scraper: ^0.1.4
 
