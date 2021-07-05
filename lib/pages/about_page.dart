@@ -80,7 +80,7 @@ class AboutPage extends StatelessWidget {
                 color: Colors.white,
                 width: double.infinity,
                 child: Text(
-                  "covid19.go.id\nkemkes.go.id\nkawalcorona.com",
+                  "covid19.go.id\nkemkes.go.id",
                   style: TypeTheme.normalTextFont
                       .copyWith(fontWeight: FontWeight.w500),
                 ),
