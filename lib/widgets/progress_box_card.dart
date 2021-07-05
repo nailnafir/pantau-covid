@@ -35,17 +35,30 @@ class ProgressBoxCard extends StatelessWidget {
               color: color,
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              margin: EdgeInsets.only(right: 6),
-              child: Icon(
-                icon,
-                size: MediaQuery.of(context).size.width / 4 - 6,
-                color: Colors.black.withAlpha(50),
-              ),
-            ),
-          ),
+          // Align(
+          //   alignment: Alignment.centerRight,
+          //   child: Container(
+          //     margin: EdgeInsets.all(SpaceConfig.normalSpace),
+          //     child: CircularPercentIndicator(
+          //       radius: MediaQuery.of(context).size.width / 6 -
+          //           SpaceConfig.normalSpace -
+          //           8,
+          //       percent: percent,
+          //       animation: true,
+          //       animationDuration: 1200,
+          //       backgroundColor: ColorTheme.bgLight,
+          //       circularStrokeCap: CircularStrokeCap.round,
+          //       lineWidth: 6.0,
+          //       center: Text(
+          //         update + "%",
+          //         style: TypeTheme.smallTextFont.copyWith(
+          //           color: Colors.white,
+          //           fontWeight: FontWeight.w700,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
           Container(
             width: double.infinity,
             height: double.infinity,
@@ -57,42 +70,44 @@ class ProgressBoxCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                LinearPercentIndicator(
-                  width: MediaQuery.of(context).size.width / 2 -
-                      2 * SpaceConfig.longSpace,
-                  lineHeight: SpaceConfig.normalSpace + SpaceConfig.shortSpace,
-                  backgroundColor: Colors.black.withAlpha(50),
-                  progressColor: ColorTheme.redColor,
-                  percent: percent,
-                  animation: true,
-                  animationDuration: 1200,
-                  center: Text(
-                    update + "%",
-                    style: TypeTheme.normalTextFont.copyWith(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
-                    ),
+                Text(
+                  cases,
+                  style: TypeTheme.normalTextFont.copyWith(
+                    color: Colors.white.withOpacity(0.75),
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
                       summary,
                       style: TypeTheme.subTitleTextFont.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w700,
-                        height: 0.5,
+                        height: 2.2,
                       ),
                     ),
                     Text(
-                      cases,
-                      style: TypeTheme.normalTextFont.copyWith(
-                        color: Colors.white.withOpacity(0.75),
-                        fontWeight: FontWeight.w500,
+                      update + "%",
+                      style: TypeTheme.subTitleTextFont.copyWith(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                        height: 2.2,
                       ),
                     ),
                   ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: SpaceConfig.normalSpace),
+                  child: LinearPercentIndicator(
+                    lineHeight: SpaceConfig.normalSpace,
+                    backgroundColor: Colors.black.withAlpha(50),
+                    progressColor: Colors.white,
+                    percent: percent,
+                    animation: true,
+                    animationDuration: 1200,
+                  ),
                 ),
               ],
             ),
