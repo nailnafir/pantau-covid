@@ -1,13 +1,13 @@
 part of 'widgets.dart';
 
-class BoxCard extends StatelessWidget {
+class BigBoxCard extends StatelessWidget {
   final IconData icon;
   final String summary;
   final String update;
   final String cases;
   final Color color;
 
-  const BoxCard(
+  const BigBoxCard(
       {Key? key,
       required this.icon,
       required this.summary,

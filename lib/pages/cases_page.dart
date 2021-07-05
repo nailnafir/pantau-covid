@@ -346,7 +346,7 @@ class _CasesPageState extends State<CasesPage> {
             crossAxisCount: 2,
             primary: false,
             children: [
-              BoxCard(
+              BigBoxCard(
                 icon: Icons.add_circle_rounded,
                 summary: ((caseTotal != null)
                     ? NumberFormat.decimalPattern()
@@ -359,7 +359,7 @@ class _CasesPageState extends State<CasesPage> {
                 cases: "Positif",
                 color: ColorTheme.secondaryColor,
               ),
-              BoxCard(
+              BigBoxCard(
                 icon: Icons.remove_circle_rounded,
                 summary: ((caseTotal != null)
                     ? NumberFormat.decimalPattern()
@@ -372,7 +372,7 @@ class _CasesPageState extends State<CasesPage> {
                 cases: "Dirawat",
                 color: ColorTheme.blueColor,
               ),
-              BoxCard(
+              BigBoxCard(
                 icon: Icons.change_circle_rounded,
                 summary: ((caseTotal != null)
                     ? NumberFormat.decimalPattern()
@@ -385,7 +385,7 @@ class _CasesPageState extends State<CasesPage> {
                 cases: "Sembuh",
                 color: ColorTheme.greenColor,
               ),
-              BoxCard(
+              BigBoxCard(
                 icon: Icons.cancel_rounded,
                 summary: ((caseTotal != null)
                     ? NumberFormat.decimalPattern()
