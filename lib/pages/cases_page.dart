@@ -324,6 +324,7 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.confirmedTotal)
                     : 'Tunggu....'),
+                update: "100",
                 cases: "Positif",
                 color: ColorTheme.secondaryColor,
               ),
@@ -333,6 +334,7 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.deathsTotal)
                     : 'Tunggu....'),
+                update: "100",
                 cases: "Dirawat",
                 color: ColorTheme.blueColor,
               ),
@@ -342,6 +344,7 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.recoveredTotal)
                     : 'Tunggu....'),
+                update: "100",
                 cases: "Sembuh",
                 color: ColorTheme.greenColor,
               ),
@@ -351,6 +354,7 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.deathsTotal)
                     : 'Tunggu....'),
+                update: "100",
                 cases: "Meninggal",
                 color: ColorTheme.redColor,
               ),
