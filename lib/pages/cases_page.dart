@@ -9,6 +9,7 @@ class CasesPage extends StatefulWidget {
 
 class _CasesPageState extends State<CasesPage> {
   CaseTotalModel? caseTotal;
+  LocalVaccineModel? localVaccine;
 
   int _current = 0;
 
@@ -24,12 +25,17 @@ class _CasesPageState extends State<CasesPage> {
 
   @override
   void initState() {
+    super.initState();
+
     CaseTotalModel.fetchTotal('/public/api/update.json').then((value) {
       caseTotal = value;
       setState(() {});
     });
 
-    super.initState();
+    LocalVaccineModel.fetchVaccine('/api/vaksin').then((value) {
+      localVaccine = value;
+      setState(() {});
+    });
 
     location = [
       'Indonesia',
@@ -188,11 +194,6 @@ class _CasesPageState extends State<CasesPage> {
   }
 
   _content() {
-    double itemHeight =
-        (MediaQuery.of(context).size.height - SpaceConfig.longSpace) / 2;
-
-    double itemWidth = MediaQuery.of(context).size.height / 2;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -240,6 +241,33 @@ class _CasesPageState extends State<CasesPage> {
                     onChanged: (String? item) {
                       setState(() {
                         selectedLocation = item;
+                        Get.rawSnackbar(
+                          titleText: Text(
+                            "Maaf ya",
+                            style: TypeTheme.bigTextFont.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          messageText: Text(
+                            "Fitur sedang dalam perbaikan",
+                            style: TypeTheme.normalTextFont.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          backgroundColor: ColorTheme.redColor,
+                          duration: Duration(seconds: 3),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SpaceConfig.longSpace,
+                            vertical: SpaceConfig.normalSpace,
+                          ),
+                          icon: Icon(
+                            Icons.build_circle,
+                            color: Colors.white,
+                          ),
+                          snackPosition: SnackPosition.TOP,
+                        );
                       });
                     },
                   ),
@@ -324,7 +352,10 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.confirmedTotal)
                     : 'Tunggu....'),
-                update: "100",
+                update: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.confirmedUpdate)
+                    : 'Tunggu....'),
                 cases: "Positif",
                 color: ColorTheme.secondaryColor,
               ),
@@ -332,9 +363,12 @@ class _CasesPageState extends State<CasesPage> {
                 icon: Icons.remove_circle_rounded,
                 summary: ((caseTotal != null)
                     ? NumberFormat.decimalPattern()
-                        .format(caseTotal!.deathsTotal)
+                        .format(caseTotal!.recoveredTotal)
                     : 'Tunggu....'),
-                update: "100",
+                update: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.recoveredUpdate)
+                    : 'Tunggu....'),
                 cases: "Dirawat",
                 color: ColorTheme.blueColor,
               ),
@@ -344,7 +378,10 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.recoveredTotal)
                     : 'Tunggu....'),
-                update: "100",
+                update: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.recoveredUpdate)
+                    : 'Tunggu....'),
                 cases: "Sembuh",
                 color: ColorTheme.greenColor,
               ),
@@ -354,11 +391,77 @@ class _CasesPageState extends State<CasesPage> {
                     ? NumberFormat.decimalPattern()
                         .format(caseTotal!.deathsTotal)
                     : 'Tunggu....'),
-                update: "100",
+                update: ((caseTotal != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(caseTotal!.deathsUpdate)
+                    : 'Tunggu....'),
                 cases: "Meninggal",
                 color: ColorTheme.redColor,
               ),
             ],
+          ),
+        ),
+        SizedBox(height: SpaceConfig.longSpace),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Jumlah Target Vaksinasi",
+                style: TypeTheme.subTitleTextFont
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+              Text(
+                  "Diperbarui pada " +
+                      ((localVaccine != null)
+                          ? DateFormat.EEEE()
+                              .add_d()
+                              .add_yMMMM()
+                              .addPattern('•')
+                              .add_Hms()
+                              .format(
+                                  (DateTime.parse(localVaccine!.lastUpdate)))
+                              .replaceAll('Monday', 'Senin,')
+                              .replaceAll('Tuesday', 'Selasa,')
+                              .replaceAll('Wednesday', 'Rabu,')
+                              .replaceAll('Thursday', 'Kamis,')
+                              .replaceAll('Friday', 'Jumat,')
+                              .replaceAll('Saturday', 'Sabtu,')
+                              .replaceAll('Sunday', 'Minggu,')
+                              .replaceAll('January', 'Januari')
+                              .replaceAll('February', 'Februari')
+                              .replaceAll('March', 'Maret')
+                              .replaceAll('April', 'April')
+                              .replaceAll('May', 'Mei')
+                              .replaceAll('June', 'Juni')
+                              .replaceAll('July', 'Juli')
+                              .replaceAll('August', 'Agustus')
+                              .replaceAll('September', 'September')
+                              .replaceAll('October', 'Oktober')
+                              .replaceAll('November', 'November')
+                              .replaceAll('December', 'Desember')
+                          : 'xxx'),
+                  style: TypeTheme.smallTextFont),
+            ],
+          ),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+        Container(
+          height: MediaQuery.of(context).size.height / 3 -
+              SpaceConfig.longSpace +
+              2,
+          child: GridView.count(
+            padding:
+                EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
+            crossAxisSpacing: SpaceConfig.shortSpace,
+            mainAxisSpacing: SpaceConfig.shortSpace,
+            childAspectRatio: 1.5,
+            crossAxisCount: 2,
+            primary: false,
+            children: [],
           ),
         ),
         SizedBox(height: SpaceConfig.longSpace),
