@@ -550,7 +550,6 @@ class _CasesPageState extends State<CasesPage> {
         ),
         SizedBox(height: SpaceConfig.normalSpace),
         Container(
-          color: Colors.purple,
           height: MediaQuery.of(context).size.height / 3 -
               SpaceConfig.normalSpace -
               4,
@@ -575,7 +574,7 @@ class _CasesPageState extends State<CasesPage> {
                 update:
                     ((localVaccine!.firstVaccine / localVaccine!.totalTarget) *
                             100)
-                        .toStringAsFixed(0),
+                        .toStringAsFixed(2),
                 color: ColorTheme.secondaryColor,
               ),
               ProgressBoxCard(
@@ -589,7 +588,7 @@ class _CasesPageState extends State<CasesPage> {
                 update:
                     ((localVaccine!.secondVaccine / localVaccine!.totalTarget) *
                             100)
-                        .toStringAsFixed(0),
+                        .toStringAsFixed(2),
                 cases: "Vaksin Dosis ke-2",
                 color: ColorTheme.secondaryColor,
               ),

@@ -90,9 +90,9 @@ class ProgressBoxCard extends StatelessWidget {
                     ),
                     Text(
                       update + "%",
-                      style: TypeTheme.subTitleTextFont.copyWith(
+                      style: TypeTheme.normalTextFont.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
+                        fontWeight: FontWeight.w500,
                         height: 2.2,
                       ),
                     ),
