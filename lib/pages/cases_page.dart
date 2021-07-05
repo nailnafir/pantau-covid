@@ -561,7 +561,38 @@ class _CasesPageState extends State<CasesPage> {
             childAspectRatio: 3.0,
             crossAxisCount: 1,
             primary: false,
-            children: [],
+            children: [
+              ProgressBoxCard(
+                icon: Icons.medication,
+                summary: ((localVaccine != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(localVaccine!.firstVaccine)
+                    : 'Tunggu....'),
+                cases: "Vaksin Dosis ke-1",
+                percent:
+                    (localVaccine!.firstVaccine / localVaccine!.totalTarget),
+                update:
+                    ((localVaccine!.firstVaccine / localVaccine!.totalTarget) *
+                            100)
+                        .toStringAsFixed(2),
+                color: ColorTheme.secondaryColor,
+              ),
+              ProgressBoxCard(
+                icon: Icons.medication,
+                summary: ((localVaccine != null)
+                    ? NumberFormat.decimalPattern()
+                        .format(localVaccine!.secondVaccine)
+                    : 'Tunggu....'),
+                percent:
+                    (localVaccine!.secondVaccine / localVaccine!.totalTarget),
+                update:
+                    ((localVaccine!.secondVaccine / localVaccine!.totalTarget) *
+                            100)
+                        .toStringAsFixed(2),
+                cases: "Vaksin Dosis ke-2",
+                color: ColorTheme.secondaryColor,
+              ),
+            ],
           ),
         ),
         SizedBox(height: SpaceConfig.longSpace),
