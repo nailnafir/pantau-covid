@@ -159,12 +159,35 @@ class _NewsPageState extends State<NewsPage> {
   _slider() {
     double contentHeight = 280;
     double contentWidth = 200;
-    return newsTitleSlider == null
-        ? Container(
-            margin: EdgeInsets.only(top: 100),
-            child: SpinKitWave(
-              color: ColorTheme.secondaryColor,
-              size: 100,
+    return (newsTitleSlider == null)
+        ? Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: SizedBox(
+              height: contentHeight,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: newsTitleSlider!.length,
+                itemBuilder: (BuildContext context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(
+                      left: (index == 0) ? SpaceConfig.longSpace : 0,
+                      right: (index == newsTitleSlider!.length - 1)
+                          ? SpaceConfig.longSpace
+                          : SpaceConfig.normalSpace,
+                      top: SpaceConfig.shortSpace,
+                      bottom: SpaceConfig.shortSpace,
+                    ),
+                    width: contentWidth + SpaceConfig.longSpace,
+                    height: contentHeight,
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(SpaceConfig.normalSpace),
+                      color: ColorTheme.bgLight,
+                    ),
+                  );
+                },
+              ),
             ),
           )
         : SizedBox(
@@ -272,12 +295,35 @@ class _NewsPageState extends State<NewsPage> {
                 .copyWith(fontWeight: FontWeight.w600),
           ),
         ),
-        newsTitleContent == null
-            ? Container(
-                margin: EdgeInsets.only(top: 100),
-                child: SpinKitWave(
-                  color: ColorTheme.secondaryColor,
-                  size: 100,
+        (newsTitleContent == null)
+            ? Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height / 3 +
+                      SpaceConfig.normalSpace,
+                  child: ListView.builder(
+                    itemCount: newsTitleContent!.length,
+                    itemBuilder: (BuildContext context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                          top: 0,
+                          bottom: (index == newsTitleContent!.length - 1)
+                              ? SpaceConfig.longSpace
+                              : SpaceConfig.normalSpace,
+                          left: SpaceConfig.longSpace,
+                          right: SpaceConfig.longSpace,
+                        ),
+                        width: LayoutConfig.deviceWidth,
+                        height: 100 + SpaceConfig.longSpace,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(SpaceConfig.normalSpace),
+                          color: ColorTheme.bgLight,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               )
             : SizedBox(
