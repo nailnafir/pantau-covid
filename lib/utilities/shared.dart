@@ -6,4 +6,5 @@ abstract class URLShared {
   static String apiLocalURL = 'https://data.covid19.go.id';
   static String apiVaccineURL = 'https://vaksincovid19-api.vercel.app';
   static String apiGlobalURL = 'https://covid19.mathdro.id/api/countries/';
+  static String onlineMedical = 'https://www.alodokter.com';
 }

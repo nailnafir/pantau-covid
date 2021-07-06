@@ -137,12 +137,28 @@ class _HomePageState extends State<HomePage> {
                   vertical: SpaceConfig.longSpace,
                   horizontal: SpaceConfig.longSpace - 4,
                 ),
-                child: ListCardTwoLines(
-                  backgroundIconColor: ColorTheme.secondaryColor,
-                  tileColor: ColorTheme.primaryColor.withOpacity(0.75),
-                  title: "Daftar Tes COVID-19",
-                  subtitle: "Pastikan kesehatan diri kamu",
-                  icon: Icons.add_box_outlined,
+                child: InkWell(
+                  onTap: () async {
+                    if (await canLaunch(URLShared.onlineMedical +
+                        '/cari-rumah-sakit/kedokteran-umum/swab-antigen')) {
+                      await launch(
+                        URLShared.onlineMedical +
+                            '/cari-rumah-sakit/kedokteran-umum/swab-antigen',
+                        enableJavaScript: true,
+                        forceWebView: true,
+                        enableDomStorage: true,
+                      );
+                    } else {
+                      throw Exception('Tidak dapat mengalihkan ke tujuan');
+                    }
+                  },
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.secondaryColor,
+                    tileColor: ColorTheme.primaryColor.withOpacity(0.75),
+                    title: "Daftar Tes COVID-19",
+                    subtitle: "Pastikan kesehatan diri kamu",
+                    icon: Icons.add_box_outlined,
+                  ),
                 ),
               ),
               Container(
