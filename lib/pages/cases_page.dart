@@ -183,7 +183,12 @@ class _CasesPageState extends State<CasesPage> {
     return InkWell(
       onTap: () async {
         if (await canLaunch(bannerURL[index])) {
-          await launch(bannerURL[index], forceWebView: true);
+          await launch(
+            bannerURL[index],
+            forceWebView: true,
+            enableJavaScript: true,
+            enableDomStorage: true,
+          );
         } else {
           throw Exception('Tidak dapat mengalihkan URL');
         }
