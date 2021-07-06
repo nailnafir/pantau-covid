@@ -14,6 +14,7 @@ class _CasesPageState extends State<CasesPage> {
   int _current = 0;
 
   List imgBanner = [];
+  List bannerURL = [];
 
   List<String> location = [];
   String? selectedLocation;
@@ -37,6 +38,13 @@ class _CasesPageState extends State<CasesPage> {
       'assets/images/banner-two.jpg',
       'assets/images/banner-three.jpg',
       'assets/images/banner-four.jpg',
+    ];
+
+    bannerURL = [
+      'https://promkes.kemkes.go.id/cegah-virus-corona-jaga-kesehatan-dengan-germas',
+      'https://covid19.go.id/berita/mekanisme-pendaftaran-vaksinasi-masyarakat-lanjut-usia-60-tahun-ke-atas',
+      'https://sehatnegeriku.kemkes.go.id/baca/umum/20200125/2832840/wni-wuhan-tak-ada-terjangkit-ncov/',
+      'https://linktr.ee/covid19.go.id',
     ];
 
     location = [
@@ -172,39 +180,48 @@ class _CasesPageState extends State<CasesPage> {
   }
 
   _singleSlider(int index) {
-    return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: SpaceConfig.longSpace - 4,
-      ),
-      child: Card(
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
-        child: Stack(
-          children: [
-            Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[100]!,
-              child: Container(
+    return InkWell(
+      onTap: () async {
+        if (await canLaunch(bannerURL[index])) {
+          await launch(bannerURL[index], forceWebView: true);
+        } else {
+          throw Exception('Tidak dapat mengalihkan URL');
+        }
+      },
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: SpaceConfig.longSpace - 4,
+        ),
+        child: Card(
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+          child: Stack(
+            children: [
+              Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  height: 150,
+                  decoration: BoxDecoration(
+                      color: ColorTheme.bgLight,
+                      borderRadius:
+                          BorderRadius.circular(SpaceConfig.normalSpace)),
+                ),
+              ),
+              Container(
+                width: LayoutConfig.deviceWidth,
                 height: 150,
                 decoration: BoxDecoration(
-                    color: ColorTheme.bgLight,
-                    borderRadius:
-                        BorderRadius.circular(SpaceConfig.normalSpace)),
-              ),
-            ),
-            Container(
-              width: LayoutConfig.deviceWidth,
-              height: 150,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imgBanner[index]),
-                  fit: BoxFit.cover,
+                  image: DecorationImage(
+                    image: AssetImage(imgBanner[index]),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
                 ),
-                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -245,7 +262,7 @@ class _CasesPageState extends State<CasesPage> {
                       fontWeight: FontWeight.w500,
                     ),
                     isExpanded: true,
-                    elevation: 1,
+                    elevation: 2,
                     value: selectedLocation,
                     icon: Icon(
                       Icons.arrow_drop_down,
