@@ -201,6 +201,8 @@ class _NewsPageState extends State<NewsPage> {
                       launch(
                         newsUrlSlider[index]['attributes']['href'],
                         forceWebView: true,
+                        enableJavaScript: true,
+                        enableDomStorage: true,
                       );
                     },
                     child: Card(
@@ -338,6 +340,8 @@ class _NewsPageState extends State<NewsPage> {
                             webScraperContent.baseUrl! +
                                 newsUrlContent[index]['attributes']['href'],
                             forceWebView: true,
+                            enableJavaScript: true,
+                            enableDomStorage: true,
                           );
                         },
                         child: Card(
