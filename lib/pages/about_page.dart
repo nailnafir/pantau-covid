@@ -42,103 +42,223 @@ class AboutPage extends StatelessWidget {
                 child:
                     Lottie.asset('assets/images/illustration-developer.json'),
               ),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
-                child: Text("Keterangan",
-                    style: TypeTheme.bigTextFont.copyWith(
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
+              Card(
+                margin: EdgeInsets.symmetric(
                   horizontal: SpaceConfig.longSpace,
-                  vertical: SpaceConfig.normalSpace,
                 ),
-                color: Colors.white,
-                width: double.infinity,
-                child: Text(
-                  "Aplikasi untuk memberikan informasi terkait COVID-19 di Indonesia dengan bebearpa sumber data.",
-                  style: TypeTheme.normalTextFont
-                      .copyWith(fontWeight: FontWeight.w500),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Keterangan",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "Aplikasi untuk memberikan informasi terkait COVID-19 di Indonesia dengan bebearpa sumber data.",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
-                child: Text("Kasus COVID-19",
-                    style: TypeTheme.bigTextFont.copyWith(
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
+              Card(
+                margin: EdgeInsets.symmetric(
                   horizontal: SpaceConfig.longSpace,
-                  vertical: SpaceConfig.normalSpace,
                 ),
-                color: Colors.white,
-                width: double.infinity,
-                child: Text(
-                  "covid19.go.id\nkemkes.go.id",
-                  style: TypeTheme.normalTextFont
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-              ),
-              SizedBox(height: SpaceConfig.shortSpace),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
-                child: Text("Kabar Berita",
-                    style: TypeTheme.bigTextFont.copyWith(
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SpaceConfig.longSpace,
-                  vertical: SpaceConfig.normalSpace,
-                ),
-                color: Colors.white,
-                width: double.infinity,
-                child: Text(
-                  "detik.com\nmerdeka.com",
-                  style: TypeTheme.normalTextFont
-                      .copyWith(fontWeight: FontWeight.w500),
-                ),
-              ),
-              SizedBox(height: SpaceConfig.shortSpace),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
-                child: Text("Ilustrasi",
-                    style: TypeTheme.bigTextFont.copyWith(
-                      fontWeight: FontWeight.w600,
-                    )),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: SpaceConfig.longSpace,
-                  vertical: SpaceConfig.normalSpace,
-                ),
-                color: Colors.white,
-                width: double.infinity,
-                child: Text(
-                  "freepik.com\nlottiefiles.com",
-                  style: TypeTheme.normalTextFont
-                      .copyWith(fontWeight: FontWeight.w500),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Data COVID-19",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "covid19.go.id",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "kemkes.go.id",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      )
+                    ],
+                  ),
                 ),
               ),
               SizedBox(height: SpaceConfig.normalSpace),
-              Container(
-                padding:
-                    EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
-                width: double.infinity,
-                child: Text(
-                  "Versi 1.0.0 \nHak Cipta ©${DateTime.now().year}. Nailul Firdaus",
-                  style: TypeTheme.normalTextFont.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: Colors.grey,
+              Card(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Kabar Berita",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "detik.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "merdeka.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: SpaceConfig.normalSpace),
+              Card(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Kesehatan",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "halodoc.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "alodokter.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: SpaceConfig.normalSpace),
+              Card(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Ilustrasi",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "freepik.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                      Text(
+                        "lottiefiles.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: SpaceConfig.normalSpace),
+              Card(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Pantau COVID-19",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "Versi 1.0.0",
+                        style: TypeTheme.normalTextFont.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                        ),
+                      ),
+                      Text(
+                        "Hak Cipta ©${DateTime.now().year}. Nailul Firdaus",
+                        style: TypeTheme.normalTextFont.copyWith(
+                          fontWeight: FontWeight.w400,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
