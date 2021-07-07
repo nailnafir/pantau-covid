@@ -34,7 +34,7 @@ class _MainPageState extends State<MainPage> {
           },
           children: [
             HomePage(),
-            CasesPage(),
+            DataPage(),
             NewsPage(),
             SupportPage(),
           ],
@@ -56,8 +56,8 @@ class _MainPageState extends State<MainPage> {
               label: "Beranda",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: "Kasus",
+              icon: Icon(Icons.list_alt),
+              label: "Data",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.map),
