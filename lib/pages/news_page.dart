@@ -196,7 +196,7 @@ class _NewsPageState extends State<NewsPage> {
                 scrollDirection: Axis.horizontal,
                 itemCount: newsTitleSlider!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
+                  return GestureDetector(
                     onTap: () {
                       launch(
                         newsUrlSlider[index]['attributes']['href'],
@@ -334,7 +334,7 @@ class _NewsPageState extends State<NewsPage> {
                 child: ListView.builder(
                     itemCount: newsTitleContent!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
+                      return GestureDetector(
                         onTap: () {
                           launch(
                             webScraperContent.baseUrl! +
