@@ -9,3 +9,4 @@ part 'big_box_card.dart';
 part 'small_box_card.dart';
 part 'welcome.dart';
 part 'progress_box_card.dart';
+part 'normal_box_card.dart';

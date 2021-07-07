@@ -30,15 +30,12 @@ class SymptompsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: SpaceConfig.longSpace,
-          horizontal: SpaceConfig.longSpace,
-        ),
-        child: Column(
+      body: SafeArea(
+        child: ListView(
           children: [
             Card(
               color: ColorTheme.secondaryColor,
+              margin: EdgeInsets.all(SpaceConfig.longSpace),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
               ),
@@ -93,7 +90,36 @@ class SymptompsPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: SpaceConfig.longSpace),
+            Container(
+              height: MediaQuery.of(context).size.height / 2.2,
+              child: GridView.count(
+                padding:
+                    EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
+                crossAxisCount: 2,
+                crossAxisSpacing: SpaceConfig.shortSpace,
+                mainAxisSpacing: SpaceConfig.shortSpace,
+                childAspectRatio: 1.0,
+                primary: false,
+                children: [
+                  NormalBoxCard(
+                    imagePath: 'assets/images/symptomp_headache.png',
+                    title: 'Sakit Kepala',
+                  ),
+                  NormalBoxCard(
+                    imagePath: 'assets/images/symptomp_cough.png',
+                    title: 'Batuk',
+                  ),
+                  NormalBoxCard(
+                    imagePath: 'assets/images/symptomp_fever.png',
+                    title: 'Demam',
+                  ),
+                  NormalBoxCard(
+                    imagePath: 'assets/images/symptomp_pain.png',
+                    title: 'Nyeri Otot',
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),
