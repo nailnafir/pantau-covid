@@ -1,13 +1,13 @@
 part of 'pages.dart';
 
-class CasesPage extends StatefulWidget {
-  const CasesPage({Key? key}) : super(key: key);
+class DataPage extends StatefulWidget {
+  const DataPage({Key? key}) : super(key: key);
 
   @override
-  _CasesPageState createState() => _CasesPageState();
+  _DataPageState createState() => _DataPageState();
 }
 
-class _CasesPageState extends State<CasesPage> {
+class _DataPageState extends State<DataPage> {
   CaseTotalModel? caseTotal;
   LocalVaccineModel? localVaccine;
 
