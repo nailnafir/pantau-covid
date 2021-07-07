@@ -553,28 +553,28 @@ class _DataPageState extends State<DataPage> {
                   primary: false,
                   children: [
                     SmallBoxCard(
-                      icon: Icons.medication,
+                      icon: Icons.timelapse,
                       summary: NumberFormat.decimalPattern()
                           .format(localVaccine!.totalTarget),
                       cases: "Total Target",
                       color: ColorTheme.blueColor,
                     ),
                     SmallBoxCard(
-                      icon: Icons.medication,
+                      icon: Icons.medical_services,
                       summary: NumberFormat.decimalPattern()
                           .format(localVaccine!.targetMedical),
                       cases: "Tenaga Kesehatan",
                       color: ColorTheme.greenColor,
                     ),
                     SmallBoxCard(
-                      icon: Icons.medication,
+                      icon: Icons.apartment,
                       summary: NumberFormat.decimalPattern()
                           .format(localVaccine!.targetOfficer),
                       cases: "Petugas Publik",
                       color: ColorTheme.greenColor,
                     ),
                     SmallBoxCard(
-                      icon: Icons.medication,
+                      icon: Icons.elderly,
                       summary: NumberFormat.decimalPattern()
                           .format(localVaccine!.targetAged),
                       cases: "Lanjut Usia",
