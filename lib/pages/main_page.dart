@@ -56,11 +56,11 @@ class _MainPageState extends State<MainPage> {
               label: "Beranda",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.list_alt),
+              icon: Icon(Icons.article),
               label: "Data",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.map),
+              icon: Icon(Icons.ballot),
               label: "Berita",
             ),
             BottomNavigationBarItem(
