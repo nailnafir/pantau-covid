@@ -189,7 +189,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SizedBox(height: SpaceConfig.shortSpace),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(SymptompsPage());
+                      },
                       child: ListCardOneLine(
                         backgroundIconColor: ColorTheme.redColor,
                         tileColor: Colors.white,
