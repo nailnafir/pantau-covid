@@ -178,25 +178,34 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Column(
                   children: [
-                    ListCardOneLine(
-                      backgroundIconColor: ColorTheme.blueColor,
-                      tileColor: Colors.white,
-                      title: "Kenali virus corona",
-                      icon: Icons.adjust,
+                    InkWell(
+                      onTap: () {},
+                      child: ListCardOneLine(
+                        backgroundIconColor: ColorTheme.blueColor,
+                        tileColor: Colors.white,
+                        title: "Kenali virus corona",
+                        icon: Icons.adjust,
+                      ),
                     ),
                     SizedBox(height: SpaceConfig.shortSpace),
-                    ListCardOneLine(
-                      backgroundIconColor: ColorTheme.redColor,
-                      tileColor: Colors.white,
-                      title: "Gejala terinfeksi",
-                      icon: Icons.people_outline,
+                    InkWell(
+                      onTap: () {},
+                      child: ListCardOneLine(
+                        backgroundIconColor: ColorTheme.redColor,
+                        tileColor: Colors.white,
+                        title: "Gejala terinfeksi",
+                        icon: Icons.people_outline,
+                      ),
                     ),
                     SizedBox(height: SpaceConfig.shortSpace),
-                    ListCardOneLine(
-                      backgroundIconColor: ColorTheme.greenColor,
-                      tileColor: Colors.white,
-                      title: "Cara mencegah",
-                      icon: Icons.admin_panel_settings_outlined,
+                    InkWell(
+                      onTap: () {},
+                      child: ListCardOneLine(
+                        backgroundIconColor: ColorTheme.greenColor,
+                        tileColor: Colors.white,
+                        title: "Cara mencegah",
+                        icon: Icons.admin_panel_settings_outlined,
+                      ),
                     ),
                   ],
                 ),
