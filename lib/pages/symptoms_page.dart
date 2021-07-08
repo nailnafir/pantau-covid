@@ -98,7 +98,7 @@ class SymptompsPage extends StatelessWidget {
                 ),
                 SizedBox(height: SpaceConfig.longSpace),
                 Container(
-                  width: LayoutConfig.deviceWidth,
+                  width: MediaQuery.of(context).size.width,
                   height: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -109,21 +109,20 @@ class SymptompsPage extends StatelessWidget {
                       primary: ColorTheme.redColor,
                     ),
                     onPressed: () async {
-                      if (await canLaunch("tel:119")) {
-                        await launch("tel:119");
+                      if (await canLaunch(
+                          "https://covid19.go.id/pelaporan-mandiri")) {
+                        await launch(
+                          "https://covid19.go.id/pelaporan-mandiri",
+                          enableDomStorage: true,
+                          enableJavaScript: true,
+                          forceWebView: true,
+                        );
                       } else {
                         throw Exception("Gagal mengalihkan ke telepon");
                       }
                     },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.call),
-                        SizedBox(width: SpaceConfig.shortSpace),
-                        Text("Kontak Darurat",
-                            style: TypeTheme.subTitleTextFont),
-                      ],
-                    ),
+                    child: Text("Lapor Mandiri",
+                        style: TypeTheme.subTitleTextFont),
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
