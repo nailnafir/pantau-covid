@@ -37,7 +37,6 @@ class AboutPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: LayoutConfig.deviceWidth,
                 height: 300,
                 child:
                     Lottie.asset('assets/images/illustration-developer.json'),
