@@ -179,20 +179,19 @@ class SupportPage extends StatelessWidget {
                                   children: [
                                     InkWell(
                                       onTap: () async {
-                                        if (await canLaunch(
-                                            URLShared.emailURL)) {
-                                          await launch(URLShared.emailURL);
+                                        if (await canLaunch("tel:119")) {
+                                          await launch("tel:119");
                                         } else {
-                                          Get.snackbar('Gagal',
-                                              'Tidak Dapat Mengalihkan ke Telegram');
+                                          throw Exception(
+                                              'Gagal mengalihkan ke tujuan');
                                         }
                                       },
                                       child: ListCardOneLine(
                                         backgroundIconColor:
                                             ColorTheme.redColor,
                                         tileColor: Colors.white,
-                                        title: "Email",
-                                        icon: Icons.email,
+                                        title: "Kontak Darurat",
+                                        icon: Icons.call,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.normalSpace),
@@ -202,15 +201,15 @@ class SupportPage extends StatelessWidget {
                                             URLShared.telegramURL)) {
                                           await launch(URLShared.telegramURL);
                                         } else {
-                                          Get.snackbar('Gagal',
-                                              'Tidak Dapat Mengalihkan ke Telegram');
+                                          throw Exception(
+                                              'Gagal mengalihkan ke tujuan');
                                         }
                                       },
                                       child: ListCardOneLine(
                                         backgroundIconColor:
                                             ColorTheme.blueColor,
                                         tileColor: Colors.white,
-                                        title: "Telegram",
+                                        title: "Kontak Saya",
                                         icon: Icons.call,
                                       ),
                                     ),
@@ -227,7 +226,7 @@ class SupportPage extends StatelessWidget {
                     backgroundIconColor: ColorTheme.greenColor,
                     tileColor: Colors.white,
                     title: "Hubungi Kami",
-                    subtitle: "Tersedia Telegram dan Email",
+                    subtitle: "Bantuan lebih lanjut",
                     icon: Icons.call,
                   ),
                 ),
