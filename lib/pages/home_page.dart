@@ -201,7 +201,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     SizedBox(height: SpaceConfig.shortSpace),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(PreventionPage());
+                      },
                       child: ListCardOneLine(
                         backgroundIconColor: ColorTheme.greenColor,
                         tileColor: Colors.white,

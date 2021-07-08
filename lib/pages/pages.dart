@@ -18,3 +18,4 @@ part 'support_page.dart';
 part 'faq_page.dart';
 part 'about_page.dart';
 part 'symptoms_page.dart';
+part 'prevention_page.dart';
