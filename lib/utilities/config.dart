@@ -3,10 +3,12 @@ part of 'utilities.dart';
 abstract class LayoutConfig {
   static double? deviceHeight;
   static double? deviceWidth;
+  static MediaQueryData? mediaQueryData;
 
   void init(BuildContext context) {
-    deviceWidth = MediaQuery.of(context).size.width;
-    deviceHeight = MediaQuery.of(context).size.height;
+    mediaQueryData = MediaQuery.of(context);
+    deviceWidth = mediaQueryData!.size.width;
+    deviceHeight = mediaQueryData!.size.height;
   }
 }
 
