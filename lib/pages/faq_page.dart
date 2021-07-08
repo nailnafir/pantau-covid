@@ -62,37 +62,53 @@ class FaqPage extends StatelessWidget {
               child: ListView.builder(
                 itemCount: title.length,
                 itemBuilder: (context, index) {
-                  return ExpansionTile(
-                    leading: Container(
-                      padding: EdgeInsets.symmetric(
-                        vertical: SpaceConfig.normalSpace,
-                        horizontal: SpaceConfig.normalSpace - 5,
-                      ),
-                      child: Icon(Icons.help),
+                  return Card(
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(SpaceConfig.normalSpace)),
+                    margin: EdgeInsets.fromLTRB(
+                      SpaceConfig.longSpace,
+                      0,
+                      SpaceConfig.longSpace,
+                      SpaceConfig.normalSpace,
                     ),
-                    childrenPadding: EdgeInsets.symmetric(
-                      vertical: SpaceConfig.shortSpace,
-                      horizontal: SpaceConfig.longSpace,
-                    ),
-                    iconColor: Colors.black,
-                    collapsedIconColor: ColorTheme.secondaryColor,
-                    backgroundColor: ColorTheme.primaryColor,
-                    title: Text(
-                      title[index],
-                      style: TypeTheme.normalTextFont.copyWith(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    children: [
-                      Text(
-                        subtitle[index],
-                        style: TypeTheme.normalTextFont.copyWith(
-                          color: Colors.black.withOpacity(0.75),
-                          fontWeight: FontWeight.w400,
+                    child: ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(SpaceConfig.normalSpace),
+                      child: ExpansionTile(
+                        leading: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: SpaceConfig.normalSpace,
+                            horizontal: SpaceConfig.normalSpace - 5,
+                          ),
+                          child: Icon(Icons.help),
                         ),
+                        childrenPadding: EdgeInsets.symmetric(
+                          vertical: SpaceConfig.shortSpace,
+                          horizontal: SpaceConfig.longSpace,
+                        ),
+                        iconColor: Colors.black,
+                        collapsedIconColor: ColorTheme.secondaryColor,
+                        backgroundColor: ColorTheme.primaryColor,
+                        title: Text(
+                          title[index],
+                          style: TypeTheme.normalTextFont.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        children: [
+                          Text(
+                            subtitle[index],
+                            style: TypeTheme.normalTextFont.copyWith(
+                              color: Colors.black.withOpacity(0.75),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
+                    ),
                   );
                 },
               ),
