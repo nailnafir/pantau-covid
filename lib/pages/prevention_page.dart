@@ -9,7 +9,7 @@ class PreventionPage extends StatelessWidget {
       backgroundColor: ColorTheme.bgLight,
       appBar: AppBar(
         elevation: 2,
-        backgroundColor: ColorTheme.secondaryColor,
+        backgroundColor: ColorTheme.primaryColor,
         leading: Container(
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
@@ -34,8 +34,26 @@ class PreventionPage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              color: ColorTheme.secondaryColor,
+              color: ColorTheme.primaryColor,
               height: 350,
+            ),
+            Positioned(
+              top: -150,
+              left: -150,
+              child: Bubble(
+                color: ColorTheme.secondaryColor,
+                width: 300,
+                height: 300,
+              ),
+            ),
+            Positioned(
+              top: 50,
+              right: -50,
+              child: Bubble(
+                color: ColorTheme.secondaryColor,
+                width: 100,
+                height: 100,
+              ),
             ),
             _buildBody(),
           ],
@@ -66,13 +84,17 @@ class PreventionPage extends StatelessWidget {
                   "Patuhi Protokol Kesehatan!",
                   style: TypeTheme.subTitleTextFont.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: Colors.black.withOpacity(0.5),
                   ),
                 ),
                 SizedBox(height: SpaceConfig.shortSpace),
                 Text(
                   "Lindungi diri Anda dan orang lain di sekitar Anda dengan mengetahui fakta-fakta terkait virus ini dan mengambil langkah pencegahan yang sesuai. Ikuti saran yang diberikan oleh otoritas kesehatan setempat.",
-                  style: TypeTheme.normalTextFont.copyWith(color: Colors.white),
+                  style: TypeTheme.normalTextFont.copyWith(
+                    color: Colors.black.withOpacity(0.5),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.justify,
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
               ],
