@@ -215,7 +215,6 @@ class _DataPageState extends State<DataPage> {
                 ),
               ),
               Container(
-                width: LayoutConfig.deviceWidth,
                 height: 150,
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -248,7 +247,6 @@ class _DataPageState extends State<DataPage> {
             child: Stack(
               children: [
                 Container(
-                  width: LayoutConfig.deviceWidth,
                   padding: EdgeInsets.fromLTRB(
                     SpaceConfig.longSpace * 2,
                     SpaceConfig.normalSpace,
@@ -782,7 +780,6 @@ class _DataPageState extends State<DataPage> {
                 borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
               ),
               child: Container(
-                width: LayoutConfig.deviceWidth,
                 height: 125,
                 decoration: BoxDecoration(
                   image: DecorationImage(
