@@ -198,6 +198,38 @@ class AboutPage extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text("Bantuan Sosial",
+                          style: TypeTheme.bigTextFont.copyWith(
+                            fontWeight: FontWeight.w600,
+                          )),
+                      Divider(
+                        color: Colors.grey,
+                        height: SpaceConfig.longSpace,
+                      ),
+                      Text(
+                        "kitabisa.com",
+                        style: TypeTheme.normalTextFont
+                            .copyWith(fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: SpaceConfig.normalSpace),
+              Card(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                child: Container(
+                  padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                       Text("Ilustrasi",
                           style: TypeTheme.bigTextFont.copyWith(
                             fontWeight: FontWeight.w600,
