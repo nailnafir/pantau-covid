@@ -86,12 +86,21 @@ class SymptompsPage extends StatelessWidget {
                       elevation: 2,
                       primary: ColorTheme.redColor,
                     ),
-                    onPressed: () {
-                      launch("tel:119");
+                    onPressed: () async {
+                      if (await canLaunch("tel:119")) {
+                        await launch("tel:119");
+                      } else {
+                        throw Exception("Gagal mengalihkan ke telepon");
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [],
+                      children: [
+                        Icon(Icons.call),
+                        SizedBox(width: SpaceConfig.shortSpace),
+                        Text("Kontak Darurat",
+                            style: TypeTheme.subTitleTextFont),
+                      ],
                     ),
                   ),
                 ),
