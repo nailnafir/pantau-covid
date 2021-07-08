@@ -179,7 +179,9 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(DefinitionPage());
+                      },
                       child: ListCardOneLine(
                         backgroundIconColor: ColorTheme.blueColor,
                         tileColor: Colors.white,

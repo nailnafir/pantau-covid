@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pantau_covid/models/models.dart';
 import 'package:flutter_pantau_covid/utilities/utilities.dart';
@@ -17,5 +18,6 @@ part 'news_page.dart';
 part 'support_page.dart';
 part 'faq_page.dart';
 part 'about_page.dart';
+part 'definition_page.dart';
 part 'symptoms_page.dart';
 part 'prevention_page.dart';
