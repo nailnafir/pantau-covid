@@ -9,7 +9,7 @@ class SymptompsPage extends StatelessWidget {
       backgroundColor: ColorTheme.bgLight,
       appBar: AppBar(
         elevation: 2,
-        backgroundColor: ColorTheme.secondaryColor,
+        backgroundColor: ColorTheme.primaryColor,
         leading: Container(
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
@@ -34,8 +34,26 @@ class SymptompsPage extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              color: ColorTheme.secondaryColor,
+              color: ColorTheme.primaryColor,
               height: 350,
+            ),
+            Positioned(
+              top: -150,
+              left: -150,
+              child: Bubble(
+                color: ColorTheme.secondaryColor,
+                width: 300,
+                height: 300,
+              ),
+            ),
+            Positioned(
+              top: 50,
+              right: -50,
+              child: Bubble(
+                color: ColorTheme.secondaryColor,
+                width: 100,
+                height: 100,
+              ),
             ),
             _buildBody(),
           ],
@@ -66,13 +84,16 @@ class SymptompsPage extends StatelessWidget {
                   "Apa kamu merasa sakit?",
                   style: TypeTheme.subTitleTextFont.copyWith(
                     fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    color: Colors.black.withOpacity(0.5),
                   ),
                 ),
                 SizedBox(height: SpaceConfig.shortSpace),
                 Text(
                   "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
-                  style: TypeTheme.normalTextFont.copyWith(color: Colors.white),
+                  style: TypeTheme.normalTextFont.copyWith(
+                    color: Colors.black.withOpacity(0.5),
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 SizedBox(height: SpaceConfig.longSpace),
                 Container(
