@@ -94,6 +94,7 @@ class SymptompsPage extends StatelessWidget {
                     color: Colors.black.withOpacity(0.5),
                     fontWeight: FontWeight.w500,
                   ),
+                  textAlign: TextAlign.justify,
                 ),
                 SizedBox(height: SpaceConfig.longSpace),
                 Container(
