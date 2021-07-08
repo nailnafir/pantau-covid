@@ -50,7 +50,6 @@ class FaqPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Container(
-            width: LayoutConfig.deviceWidth,
             height: 300,
             child: Lottie.asset('assets/images/illustration-faq.json'),
           ),
