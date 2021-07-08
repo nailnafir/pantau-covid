@@ -316,7 +316,6 @@ class _NewsPageState extends State<NewsPage> {
                           left: SpaceConfig.longSpace,
                           right: SpaceConfig.longSpace,
                         ),
-                        width: LayoutConfig.deviceWidth,
                         height: 100 + SpaceConfig.longSpace,
                         decoration: BoxDecoration(
                           borderRadius:
