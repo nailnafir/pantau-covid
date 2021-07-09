@@ -83,7 +83,7 @@ class SupportPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("PANTAU COVID",
+                  Text("PANTAU COVID-19",
                       style: TypeTheme.normalTextFont.copyWith(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
