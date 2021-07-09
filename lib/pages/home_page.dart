@@ -146,33 +146,65 @@ class _HomePageState extends State<HomePage> {
                   primary: false,
                   childAspectRatio: 1.58,
                   children: [
-                    NormalBoxCard(
-                      iconImage: Container(
-                        margin: EdgeInsets.only(top: 4),
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/images/icon-swab.png")),
+                    InkWell(
+                      onTap: () async {
+                        if (await canLaunch(
+                            'https://alodokter.com/cari-rumah-sakit/kedokteran-umum/swab-antigen')) {
+                          await launch(
+                            'https://alodokter.com/cari-rumah-sakit/kedokteran-umum/swab-antigen',
+                            enableJavaScript: true,
+                            forceWebView: true,
+                            enableDomStorage: true,
+                          );
+                        } else {
+                          throw Exception('Tidak dapat mengalihkan ke tujuan');
+                        }
+                      },
+                      child: NormalBoxCard(
+                        iconImage: Container(
+                          margin: EdgeInsets.only(top: 4),
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage("assets/images/icon-swab.png")),
+                          ),
                         ),
+                        title: "Swab Antigen",
+                        backgroundColor: ColorTheme.blueColor,
+                        textColor: Colors.white,
                       ),
-                      title: "Swab Antigen",
-                      backgroundColor: ColorTheme.blueColor,
-                      textColor: Colors.white,
                     ),
-                    NormalBoxCard(
-                      iconImage: Container(
-                        margin: EdgeInsets.only(top: 4),
-                        width: 30,
-                        height: 30,
-                        decoration: BoxDecoration(
+                    InkWell(
+                      onTap: () async {
+                        if (await canLaunch(
+                            'https://vaksinasi-corona.jakarta.go.id/')) {
+                          await launch(
+                            'https://vaksinasi-corona.jakarta.go.id/',
+                            enableJavaScript: true,
+                            forceWebView: true,
+                            enableDomStorage: true,
+                          );
+                        } else {
+                          throw Exception('Tidak dapat mengalihkan ke tujuan');
+                        }
+                      },
+                      child: NormalBoxCard(
+                        iconImage: Container(
+                          margin: EdgeInsets.only(top: 4),
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: AssetImage(
-                                    "assets/images/icon-syringe.png"))),
+                                    "assets/images/icon-syringe.png")),
+                          ),
+                        ),
+                        title: "Vaksinasi",
+                        backgroundColor: ColorTheme.greenColor,
+                        textColor: Colors.white,
                       ),
-                      title: "Vaksinasi",
-                      backgroundColor: ColorTheme.greenColor,
-                      textColor: Colors.white,
                     ),
                   ],
                 ),
