@@ -83,11 +83,20 @@ class SupportPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("PANTAU COVID-19",
-                      style: TypeTheme.normalTextFont.copyWith(
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.coronavirus_outlined,
                         color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      )),
+                      ),
+                      SizedBox(width: 4),
+                      Text("PANTAU COVID-19",
+                          style: TypeTheme.normalTextFont.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w500,
+                          )),
+                    ],
+                  ),
                   Icon(
                     Icons.notifications_outlined,
                     color: Colors.white,
