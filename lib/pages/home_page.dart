@@ -133,32 +133,48 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
+                height: MediaQuery.of(context).size.height / 8 +
+                    SpaceConfig.normalSpace,
                 margin: EdgeInsets.symmetric(
                   vertical: SpaceConfig.longSpace,
                   horizontal: SpaceConfig.longSpace - 4,
                 ),
-                child: InkWell(
-                  onTap: () async {
-                    if (await canLaunch(URLShared.onlineMedical +
-                        '/cari-rumah-sakit/kedokteran-umum/swab-antigen')) {
-                      await launch(
-                        URLShared.onlineMedical +
-                            '/cari-rumah-sakit/kedokteran-umum/swab-antigen',
-                        enableJavaScript: true,
-                        forceWebView: true,
-                        enableDomStorage: true,
-                      );
-                    } else {
-                      throw Exception('Tidak dapat mengalihkan ke tujuan');
-                    }
-                  },
-                  child: ListCardTwoLines(
-                    backgroundIconColor: ColorTheme.secondaryColor,
-                    tileColor: ColorTheme.primaryColor.withOpacity(0.75),
-                    title: "Daftar Tes COVID-19",
-                    subtitle: "Pastikan kesehatan diri kamu",
-                    icon: Icons.add_box_outlined,
-                  ),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: SpaceConfig.shortSpace,
+                  mainAxisSpacing: SpaceConfig.shortSpace,
+                  primary: false,
+                  childAspectRatio: 1.58,
+                  children: [
+                    NormalBoxCard(
+                      iconImage: Container(
+                        margin: EdgeInsets.only(top: 4),
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/images/icon-swab.png")),
+                        ),
+                      ),
+                      title: "Swab Antigen",
+                      backgroundColor: ColorTheme.blueColor,
+                      textColor: Colors.white,
+                    ),
+                    NormalBoxCard(
+                      iconImage: Container(
+                        margin: EdgeInsets.only(top: 4),
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/icon-syringe.png"))),
+                      ),
+                      title: "Vaksinasi",
+                      backgroundColor: ColorTheme.greenColor,
+                      textColor: Colors.white,
+                    ),
+                  ],
                 ),
               ),
               Container(

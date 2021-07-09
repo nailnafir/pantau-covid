@@ -3,11 +3,15 @@ part of 'widgets.dart';
 class NormalBoxCard extends StatelessWidget {
   final Widget iconImage;
   final String title;
+  final Color textColor;
+  final Color backgroundColor;
 
   const NormalBoxCard({
     Key? key,
     required this.iconImage,
     required this.title,
+    required this.textColor,
+    required this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -22,7 +26,7 @@ class NormalBoxCard extends StatelessWidget {
         padding: EdgeInsets.all(SpaceConfig.normalSpace),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-          color: Colors.white,
+          color: backgroundColor,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -32,7 +36,7 @@ class NormalBoxCard extends StatelessWidget {
               title,
               style: TypeTheme.subTitleTextFont.copyWith(
                 fontWeight: FontWeight.w700,
-                color: Colors.black,
+                color: textColor,
               ),
             ),
           ],

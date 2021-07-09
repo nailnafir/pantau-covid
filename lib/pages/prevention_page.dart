@@ -139,6 +139,8 @@ class PreventionPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Masker',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                     NormalBoxCard(
                       iconImage: Container(
@@ -153,6 +155,8 @@ class PreventionPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Cuci Tangan',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                     NormalBoxCard(
                       iconImage: Container(
@@ -167,6 +171,8 @@ class PreventionPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Jaga Jarak',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                     NormalBoxCard(
                       iconImage: Container(
@@ -181,6 +187,8 @@ class PreventionPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Disinfektan',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                   ],
                 ),

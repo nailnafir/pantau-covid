@@ -168,6 +168,8 @@ class SymptompsPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Sakit Kepala',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                     NormalBoxCard(
                       iconImage: Container(
@@ -182,6 +184,8 @@ class SymptompsPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Batuk',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                     NormalBoxCard(
                       iconImage: Container(
@@ -196,6 +200,8 @@ class SymptompsPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Demam',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                     NormalBoxCard(
                       iconImage: Container(
@@ -210,6 +216,8 @@ class SymptompsPage extends StatelessWidget {
                         ),
                       ),
                       title: 'Nyeri Otot',
+                      backgroundColor: Colors.white,
+                      textColor: Colors.black,
                     ),
                   ],
                 ),

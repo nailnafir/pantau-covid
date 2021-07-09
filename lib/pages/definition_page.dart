@@ -203,6 +203,8 @@ class DefinitionPage extends StatelessWidget {
                               ),
                             ),
                             title: 'Dokter',
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black,
                           ),
                         ),
                         InkWell(
@@ -230,6 +232,8 @@ class DefinitionPage extends StatelessWidget {
                               ),
                             ),
                             title: 'Obat',
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black,
                           ),
                         ),
                         InkWell(
@@ -257,6 +261,8 @@ class DefinitionPage extends StatelessWidget {
                               ),
                             ),
                             title: 'Rumah Sakit',
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black,
                           ),
                         ),
                         InkWell(
@@ -284,6 +290,8 @@ class DefinitionPage extends StatelessWidget {
                               ),
                             ),
                             title: 'Donasi',
+                            backgroundColor: Colors.white,
+                            textColor: Colors.black,
                           ),
                         ),
                       ],
