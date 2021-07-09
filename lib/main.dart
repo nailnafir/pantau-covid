@@ -17,7 +17,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: MainPage(initialPage: 0),
+      home: SplashPage(),
     );
   }
 }
