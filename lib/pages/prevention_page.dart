@@ -127,19 +127,59 @@ class PreventionPage extends StatelessWidget {
                   primary: false,
                   children: [
                     NormalBoxCard(
-                      imagePath: 'assets/images/prevention_mask.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/prevention-mask.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Masker',
                     ),
                     NormalBoxCard(
-                      imagePath: 'assets/images/prevention_wash.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/prevention-wash.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Cuci Tangan',
                     ),
                     NormalBoxCard(
-                      imagePath: 'assets/images/prevention_distance.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/prevention-distance.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Jaga Jarak',
                     ),
                     NormalBoxCard(
-                      imagePath: 'assets/images/prevention_disinfectant.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/prevention-disinfectant.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Disinfektan',
                     ),
                   ],

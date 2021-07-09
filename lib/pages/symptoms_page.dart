@@ -156,19 +156,59 @@ class SymptompsPage extends StatelessWidget {
                   primary: false,
                   children: [
                     NormalBoxCard(
-                      imagePath: 'assets/images/symptomp_headache.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/symptomp-headache.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Sakit Kepala',
                     ),
                     NormalBoxCard(
-                      imagePath: 'assets/images/symptomp_cough.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/symptomp-cough.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Batuk',
                     ),
                     NormalBoxCard(
-                      imagePath: 'assets/images/symptomp_fever.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/symptomp-fever.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Demam',
                     ),
                     NormalBoxCard(
-                      imagePath: 'assets/images/symptomp_pain.png',
+                      iconImage: Container(
+                        width: 120,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image:
+                                AssetImage('assets/images/symptomp-pain.png'),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
                       title: 'Nyeri Otot',
                     ),
                   ],

@@ -191,7 +191,17 @@ class DefinitionPage extends StatelessWidget {
                             }
                           },
                           child: NormalBoxCard(
-                            imagePath: 'assets/images/illustration-doctor.png',
+                            iconImage: Container(
+                              width: 120,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/illustration-doctor.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
                             title: 'Dokter',
                           ),
                         ),
@@ -208,8 +218,17 @@ class DefinitionPage extends StatelessWidget {
                             }
                           },
                           child: NormalBoxCard(
-                            imagePath:
-                                'assets/images/illustration-medicine.png',
+                            iconImage: Container(
+                              width: 120,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/illustration-medicine.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
                             title: 'Obat',
                           ),
                         ),
@@ -226,8 +245,17 @@ class DefinitionPage extends StatelessWidget {
                             }
                           },
                           child: NormalBoxCard(
-                            imagePath:
-                                'assets/images/illustration-hospital.png',
+                            iconImage: Container(
+                              width: 120,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/illustration-hospital.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
                             title: 'Rumah Sakit',
                           ),
                         ),
@@ -244,8 +272,17 @@ class DefinitionPage extends StatelessWidget {
                             }
                           },
                           child: NormalBoxCard(
-                            imagePath:
-                                'assets/images/illustration-donation.png',
+                            iconImage: Container(
+                              width: 120,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/illustration-donation.png'),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
                             title: 'Donasi',
                           ),
                         ),

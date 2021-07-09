@@ -1,12 +1,12 @@
 part of 'widgets.dart';
 
 class NormalBoxCard extends StatelessWidget {
-  final String imagePath;
+  final Widget iconImage;
   final String title;
 
   const NormalBoxCard({
     Key? key,
-    required this.imagePath,
+    required this.iconImage,
     required this.title,
   }) : super(key: key);
 
@@ -27,16 +27,7 @@ class NormalBoxCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              width: 120,
-              height: 100,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
+            iconImage,
             Text(
               title,
               style: TypeTheme.subTitleTextFont.copyWith(
