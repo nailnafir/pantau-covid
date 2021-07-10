@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_pantau_covid/models/models.dart';
 import 'package:flutter_pantau_covid/utilities/utilities.dart';
 import 'package:flutter_pantau_covid/widgets/widgets.dart';
