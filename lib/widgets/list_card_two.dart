@@ -47,9 +47,9 @@ class ListCardTwoLines extends StatelessWidget {
           ),
           subtitle: Text(
             subtitle!,
-            style: TypeTheme.smallTextFont.copyWith(
+            style: TypeTheme.normalTextFont.copyWith(
               color: Colors.black.withOpacity(0.75),
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w400,
             ),
           ),
           trailing: Icon(
