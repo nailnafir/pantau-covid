@@ -223,7 +223,7 @@ class _HomePageState extends State<HomePage> {
                   horizontal: SpaceConfig.longSpace,
                 ),
                 child: Text(
-                  "Semua tentang COVID-19",
+                  "Semua Tentang COVID-19",
                   style: TypeTheme.subTitleTextFont
                       .copyWith(fontWeight: FontWeight.w600),
                 ),
