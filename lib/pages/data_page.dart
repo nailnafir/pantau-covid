@@ -16,9 +16,6 @@ class _DataPageState extends State<DataPage> {
   List imgBanner = [];
   List bannerURL = [];
 
-  List<String> location = [];
-  String? selectedLocation;
-
   @override
   void initState() {
     super.initState();
@@ -46,16 +43,6 @@ class _DataPageState extends State<DataPage> {
       'https://sehatnegeriku.kemkes.go.id/baca/umum/20200125/2832840/wni-wuhan-tak-ada-terjangkit-ncov/',
       'https://linktr.ee/covid19.go.id',
     ];
-
-    location = [
-      'Indonesia',
-      'DKI Jakarta',
-      'Jawa Barat',
-      'Jawa Tengah',
-      'Jawa Timur',
-    ];
-
-    selectedLocation = location[0];
   }
 
   @override
@@ -244,82 +231,44 @@ class _DataPageState extends State<DataPage> {
             elevation: 2,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
-            child: Stack(
-              children: [
-                Container(
-                  padding: EdgeInsets.fromLTRB(
-                    SpaceConfig.longSpace * 2,
-                    SpaceConfig.normalSpace,
-                    SpaceConfig.normalSpace,
-                    SpaceConfig.normalSpace,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius:
-                        BorderRadius.circular(SpaceConfig.normalSpace),
-                  ),
-                  child: DropdownButton(
-                    underline: SizedBox(),
-                    style: TypeTheme.bigTextFont.copyWith(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    isExpanded: true,
-                    elevation: 2,
-                    value: selectedLocation,
-                    icon: Icon(
-                      Icons.arrow_drop_down,
+            child: InkWell(
+              onTap: () {},
+              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+              child: Container(
+                width: Get.width,
+                padding: EdgeInsets.symmetric(
+                  vertical: SpaceConfig.longSpace,
+                  horizontal: SpaceConfig.normalSpace,
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.location_on,
                       color: ColorTheme.secondaryColor,
-                      size: 30,
                     ),
-                    items: location.map((i) {
-                      return DropdownMenuItem(value: i, child: Text(i));
-                    }).toList(),
-                    onChanged: (String? item) {
-                      setState(() {
-                        selectedLocation = item;
-                        Get.rawSnackbar(
-                          titleText: Text(
-                            "Maaf ya",
-                            style: TypeTheme.bigTextFont.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          messageText: Text(
-                            "Fitur sedang dalam perbaikan",
-                            style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          backgroundColor: ColorTheme.redColor,
-                          duration: Duration(seconds: 3),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: SpaceConfig.longSpace,
-                            vertical: SpaceConfig.normalSpace,
-                          ),
-                          icon: Icon(
-                            Icons.build_circle,
-                            color: Colors.white,
-                          ),
-                          snackPosition: SnackPosition.TOP,
-                        );
-                      });
-                    },
-                  ),
+                    SizedBox(width: SpaceConfig.shortSpace),
+                    Text(
+                      "Indonesia",
+                      style: TypeTheme.subTitleTextFont,
+                    ),
+                    Spacer(),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: SpaceConfig.shortSpace,
+                        vertical: SpaceConfig.shortSpace / 2,
+                      ),
+                      decoration: BoxDecoration(
+                          color: ColorTheme.secondaryColor.withOpacity(0.3),
+                          borderRadius: BorderRadius.circular(4)),
+                      child: Text(
+                        "Detail Provinsi",
+                        style: TypeTheme.smallTextFont
+                            .copyWith(fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                  ],
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: SpaceConfig.longSpace,
-                    horizontal: SpaceConfig.normalSpace,
-                  ),
-                  child: Icon(
-                    Icons.location_on,
-                    color: ColorTheme.secondaryColor,
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
