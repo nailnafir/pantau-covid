@@ -232,8 +232,64 @@ class _DataPageState extends State<DataPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
             child: InkWell(
-              onTap: () {},
               borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+              onTap: () {
+                Get.bottomSheet(
+                  BottomSheet(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(SpaceConfig.longSpace)),
+                    ),
+                    onClosing: () {},
+                    builder: (context) {
+                      return Container(
+                        color: ColorTheme.bgLight,
+                        height: MediaQuery.of(context).size.height / 2,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                width: 50,
+                                height: 6,
+                                margin: EdgeInsets.symmetric(
+                                    vertical: SpaceConfig.normalSpace),
+                                decoration: BoxDecoration(
+                                  color: ColorTheme.secondaryColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                            ),
+                            Card(
+                              margin: EdgeInsets.symmetric(
+                                vertical: SpaceConfig.normalSpace,
+                                horizontal: SpaceConfig.longSpace - 4,
+                              ),
+                              elevation: 1,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                              color: Colors.white,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                    border: OutlineInputBorder(
+                                        borderSide: BorderSide.none),
+                                    suffixIcon: Icon(
+                                      Icons.search,
+                                      color: ColorTheme.secondaryColor,
+                                    ),
+                                    hintText: "Temukan Provinsi...."),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                );
+              },
               child: Container(
                 width: Get.width,
                 padding: EdgeInsets.symmetric(
@@ -261,7 +317,7 @@ class _DataPageState extends State<DataPage> {
                           color: ColorTheme.secondaryColor.withOpacity(0.3),
                           borderRadius: BorderRadius.circular(4)),
                       child: Text(
-                        "Detail Provinsi",
+                        "Selengkapnya",
                         style: TypeTheme.smallTextFont
                             .copyWith(fontWeight: FontWeight.w400),
                       ),
