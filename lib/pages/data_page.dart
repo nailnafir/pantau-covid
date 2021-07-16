@@ -267,7 +267,7 @@ class _DataPageState extends State<DataPage> {
                                 vertical: SpaceConfig.normalSpace,
                                 horizontal: SpaceConfig.longSpace - 4,
                               ),
-                              elevation: 1,
+                              elevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(
                                       SpaceConfig.normalSpace)),
@@ -276,11 +276,11 @@ class _DataPageState extends State<DataPage> {
                                 decoration: InputDecoration(
                                     border: OutlineInputBorder(
                                         borderSide: BorderSide.none),
-                                    suffixIcon: Icon(
+                                    prefixIcon: Icon(
                                       Icons.search,
                                       color: ColorTheme.secondaryColor,
                                     ),
-                                    hintText: "Temukan Provinsi...."),
+                                    hintText: "Cari Kota atau Provinsi...."),
                               ),
                             ),
                           ],
