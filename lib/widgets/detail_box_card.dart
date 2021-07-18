@@ -1,7 +1,6 @@
 part of 'widgets.dart';
 
 class DetailBoxCard extends StatelessWidget {
-  final IconData icon;
   final String summaryPositive;
   final String updatePositive;
   final String summaryActive;
@@ -10,11 +9,9 @@ class DetailBoxCard extends StatelessWidget {
   final String updateRecovered;
   final String summaryDeaths;
   final String updateDeaths;
-  final Color color;
 
   const DetailBoxCard({
     Key? key,
-    required this.icon,
     required this.summaryPositive,
     required this.updatePositive,
     required this.summaryActive,
@@ -23,7 +20,6 @@ class DetailBoxCard extends StatelessWidget {
     required this.updateRecovered,
     required this.summaryDeaths,
     required this.updateDeaths,
-    required this.color,
   }) : super(key: key);
 
   @override
