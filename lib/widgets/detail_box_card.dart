@@ -9,6 +9,8 @@ class DetailBoxCard extends StatelessWidget {
   final String updateRecovered;
   final String summaryDeaths;
   final String updateDeaths;
+  final String provinceName;
+  final String lastUpdate;
 
   const DetailBoxCard({
     Key? key,
@@ -20,6 +22,8 @@ class DetailBoxCard extends StatelessWidget {
     required this.updateRecovered,
     required this.summaryDeaths,
     required this.updateDeaths,
+    required this.provinceName,
+    required this.lastUpdate,
   }) : super(key: key);
 
   @override
