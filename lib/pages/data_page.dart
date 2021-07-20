@@ -283,6 +283,18 @@ class _DataPageState extends State<DataPage> {
                                     hintText: "Cari Kota atau Provinsi...."),
                               ),
                             ),
+                            DetailBoxCard(
+                              summaryPositive: "500",
+                              updatePositive: "100",
+                              summaryActive: "800",
+                              updateActive: "300",
+                              summaryRecovered: "700",
+                              updateRecovered: "200",
+                              summaryDeaths: "400",
+                              updateDeaths: "50",
+                              provinceName: "DKI Jakarta",
+                              lastUpdate: "12 Agustus 2021",
+                            ),
                           ],
                         ),
                       );

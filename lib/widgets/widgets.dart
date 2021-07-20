@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_pantau_covid/utilities/utilities.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 part 'bubble.dart';
