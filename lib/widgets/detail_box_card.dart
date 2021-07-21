@@ -99,7 +99,7 @@ class DetailBoxCard extends StatelessWidget {
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
-                              height: 0.8,
+                              height: 0.85,
                             ),
                           ),
                         ],
@@ -153,7 +153,7 @@ class DetailBoxCard extends StatelessWidget {
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
-                              height: 0.8,
+                              height: 0.85,
                             ),
                           ),
                         ],
@@ -213,7 +213,7 @@ class DetailBoxCard extends StatelessWidget {
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
-                              height: 0.8,
+                              height: 0.85,
                             ),
                           ),
                         ],
@@ -267,7 +267,7 @@ class DetailBoxCard extends StatelessWidget {
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
-                              height: 0.8,
+                              height: 0.85,
                             ),
                           ),
                         ],
