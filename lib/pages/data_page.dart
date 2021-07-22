@@ -245,9 +245,8 @@ class _DataPageState extends State<DataPage> {
                     builder: (context) {
                       return Container(
                         color: ColorTheme.bgLight,
-                        height: MediaQuery.of(context).size.height / 2,
+                        height: MediaQuery.of(context).size.height / 1.85,
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Align(
                               alignment: Alignment.topCenter,
@@ -280,20 +279,31 @@ class _DataPageState extends State<DataPage> {
                                       Icons.search,
                                       color: ColorTheme.secondaryColor,
                                     ),
-                                    hintText: "Cari Kota atau Provinsi...."),
+                                    hintText: "Temukan Provinsi...."),
                               ),
                             ),
-                            DetailBoxCard(
-                              summaryPositive: "500",
-                              updatePositive: "100",
-                              summaryActive: "800",
-                              updateActive: "300",
-                              summaryRecovered: "700",
-                              updateRecovered: "200",
-                              summaryDeaths: "400",
-                              updateDeaths: "50",
-                              provinceName: "DKI Jakarta",
-                              lastUpdate: "12 Agustus 2021",
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: 5,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: SpaceConfig.normalSpace),
+                                    child: DetailBoxCard(
+                                      summaryPositive: "500",
+                                      updatePositive: "100",
+                                      summaryActive: "800",
+                                      updateActive: "300",
+                                      summaryRecovered: "700",
+                                      updateRecovered: "200",
+                                      summaryDeaths: "400",
+                                      updateDeaths: "50",
+                                      provinceName: "DKI Jakarta",
+                                      lastUpdate: "12 Agustus 2021",
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ],
                         ),
