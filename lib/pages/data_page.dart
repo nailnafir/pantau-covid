@@ -245,7 +245,7 @@ class _DataPageState extends State<DataPage> {
                     builder: (context) {
                       return Container(
                         color: ColorTheme.bgLight,
-                        height: MediaQuery.of(context).size.height / 1.85,
+                        height: MediaQuery.of(context).size.height / 1.8,
                         child: Column(
                           children: [
                             Align(
