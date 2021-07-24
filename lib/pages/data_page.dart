@@ -245,7 +245,8 @@ class _DataPageState extends State<DataPage> {
                     builder: (context) {
                       return Container(
                         color: ColorTheme.bgLight,
-                        height: MediaQuery.of(context).size.height / 1.8,
+                        height: MediaQuery.of(context).size.height / 2 +
+                            SpaceConfig.longSpace,
                         child: Column(
                           children: [
                             Align(
@@ -287,8 +288,13 @@ class _DataPageState extends State<DataPage> {
                                 itemCount: 5,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: SpaceConfig.normalSpace),
+                                    margin: EdgeInsets.only(
+                                        top: (index == 0
+                                            ? SpaceConfig.normalSpace
+                                            : SpaceConfig.normalSpace),
+                                        bottom: (index == 4
+                                            ? SpaceConfig.normalSpace
+                                            : 0)),
                                     child: DetailBoxCard(
                                       summaryPositive: "500",
                                       updatePositive: "100",
