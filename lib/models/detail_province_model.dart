@@ -13,6 +13,20 @@ class AllProvinceModel {
           json['list_data'].map((x) => DetailProvinceModel.fromJson(x))),
     );
   }
+
+  static Future<AllProvinceModel> fetchAll(String name) async {
+    String apiURL = URLShared.apiLocalURL + name;
+    var url = Uri.parse(apiURL);
+
+    var apiResult = await http.get(url);
+    var jsonObject = json.decode(apiResult.body);
+
+    if (apiResult.statusCode == 200) {
+      return AllProvinceModel.fromJson(jsonObject);
+    } else {
+      throw Exception('Gagal menyambungkan ke server');
+    }
+  }
 }
 
 class DetailProvinceModel {
