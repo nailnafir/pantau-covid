@@ -10,6 +10,7 @@ class DataPage extends StatefulWidget {
 class _DataPageState extends State<DataPage> {
   CaseTotalModel? caseTotal;
   LocalVaccineModel? localVaccine;
+  AllProvinceModel? allProvinceModel;
 
   int _current = 0;
 
@@ -22,6 +23,11 @@ class _DataPageState extends State<DataPage> {
 
     CaseTotalModel.fetchTotal('/public/api/update.json').then((value) {
       caseTotal = value;
+      setState(() {});
+    });
+
+    AllProvinceModel.fetchAll('/public/api/prov.json').then((value) {
+      allProvinceModel = value;
       setState(() {});
     });
 
