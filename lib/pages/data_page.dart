@@ -291,14 +291,17 @@ class _DataPageState extends State<DataPage> {
                             ),
                             Expanded(
                               child: ListView.builder(
-                                itemCount: 5,
+                                itemCount: allProvinceModel!.listData.length,
                                 itemBuilder: (context, index) {
                                   return Container(
                                     margin: EdgeInsets.only(
                                         top: (index == 0
                                             ? SpaceConfig.normalSpace
                                             : SpaceConfig.normalSpace),
-                                        bottom: (index == 4
+                                        bottom: (index ==
+                                                allProvinceModel!
+                                                        .listData.length -
+                                                    1
                                             ? SpaceConfig.normalSpace
                                             : 0)),
                                     child: DetailBoxCard(
