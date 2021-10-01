@@ -312,16 +312,37 @@ class _DataPageState extends State<DataPage> {
                                             : 0)),
                                     child: DetailBoxCard(
                                       summaryPositive:
-                                          detailProvinceModel![index]
-                                              .confirmedTotal
-                                              .toString(),
-                                      updatePositive: "100",
-                                      summaryActive: "800",
-                                      updateActive: "300",
-                                      summaryRecovered: "700",
-                                      updateRecovered: "200",
-                                      summaryDeaths: "400",
-                                      updateDeaths: "50",
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .confirmedTotal),
+                                      updatePositive:
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .update
+                                                  .confirmedUpdate),
+                                      summaryActive:
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .activeTotal),
+                                      updateActive: "0",
+                                      summaryRecovered:
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .recoveredTotal),
+                                      updateRecovered:
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .update
+                                                  .recoveredUpdate),
+                                      summaryDeaths:
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .deathsTotal),
+                                      updateDeaths:
+                                          NumberFormat.decimalPattern().format(
+                                              detailProvinceModel![index]
+                                                  .update
+                                                  .deathsUpdate),
                                       provinceName: detailProvinceModel![index]
                                           .provinceName,
                                       lastUpdate: DateFormat.EEEE()
