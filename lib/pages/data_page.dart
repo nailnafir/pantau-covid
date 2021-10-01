@@ -311,7 +311,10 @@ class _DataPageState extends State<DataPage> {
                                             ? SpaceConfig.normalSpace
                                             : 0)),
                                     child: DetailBoxCard(
-                                      summaryPositive: "30",
+                                      summaryPositive:
+                                          detailProvinceModel![index]
+                                              .confirmedTotal
+                                              .toString(),
                                       updatePositive: "100",
                                       summaryActive: "800",
                                       updateActive: "300",

@@ -48,9 +48,6 @@ class DetailProvinceModel {
     required this.update,
   });
 
-  @override
-  toString() => '$provinceName, $confirmedTotal';
-
   factory DetailProvinceModel.fromJson(Map<String, dynamic> json) {
     return DetailProvinceModel(
       provinceName: json['key'],
