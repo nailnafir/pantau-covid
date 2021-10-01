@@ -10,6 +10,7 @@ class DataPage extends StatefulWidget {
 class _DataPageState extends State<DataPage> {
   CaseTotalModel? caseTotal;
   LocalVaccineModel? localVaccine;
+  List<MonitoringVaccine>? monitoringVaccine;
   AllProvinceModel? allProvinceModel;
   List<DetailProvinceModel>? detailProvinceModel;
 
@@ -37,8 +38,13 @@ class _DataPageState extends State<DataPage> {
       setState(() {});
     });
 
-    LocalVaccineModel.fetchVaccine('/api/vaksin').then((value) {
+    LocalVaccineModel.fetchVaccine('/vaksinasi').then((value) {
       localVaccine = value;
+      setState(() {});
+    });
+
+    MonitoringVaccine.fetchVaccine('/vaksinasi').then((value) {
+      monitoringVaccine = value;
       setState(() {});
     });
 
@@ -580,7 +586,7 @@ class _DataPageState extends State<DataPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Jumlah Target Vaksinasi",
+                "Target Vaksinasi",
                 style: TypeTheme.subTitleTextFont
                     .copyWith(fontWeight: FontWeight.w600),
               ),
@@ -649,29 +655,43 @@ class _DataPageState extends State<DataPage> {
                     SmallBoxCard(
                       icon: Icons.timelapse,
                       summary: NumberFormat.decimalPattern()
-                          .format(localVaccine!.totalTarget),
+                          .format(monitoringVaccine![0].totalTarget),
                       cases: "Total Target",
                       color: ColorTheme.blueColor,
                     ),
                     SmallBoxCard(
                       icon: Icons.medical_services,
                       summary: NumberFormat.decimalPattern()
-                          .format(localVaccine!.targetMedical),
+                          .format(monitoringVaccine![0].targetMedical),
                       cases: "Tenaga Kesehatan",
                       color: ColorTheme.greenColor,
                     ),
                     SmallBoxCard(
                       icon: Icons.apartment,
                       summary: NumberFormat.decimalPattern()
-                          .format(localVaccine!.targetOfficer),
+                          .format(monitoringVaccine![0].targetOfficer),
                       cases: "Petugas Publik",
                       color: ColorTheme.greenColor,
                     ),
                     SmallBoxCard(
                       icon: Icons.elderly,
                       summary: NumberFormat.decimalPattern()
-                          .format(localVaccine!.targetAged),
+                          .format(monitoringVaccine![0].targetAged),
                       cases: "Lanjut Usia",
+                      color: ColorTheme.blueColor,
+                    ),
+                    SmallBoxCard(
+                      icon: Icons.people_sharp,
+                      summary: NumberFormat.decimalPattern()
+                          .format(monitoringVaccine![0].targetGeneralPublic),
+                      cases: "Masyarakat Umum",
+                      color: ColorTheme.greenColor,
+                    ),
+                    SmallBoxCard(
+                      icon: Icons.accessibility_new,
+                      summary: NumberFormat.decimalPattern()
+                          .format(monitoringVaccine![0].targetTeenAge),
+                      cases: "Anak Remaja",
                       color: ColorTheme.blueColor,
                     ),
                   ],
@@ -796,12 +816,12 @@ class _DataPageState extends State<DataPage> {
                     ProgressBoxCard(
                       icon: Icons.medication,
                       summary: NumberFormat.decimalPattern()
-                          .format(localVaccine!.firstVaccine),
+                          .format(monitoringVaccine![0].firstVaccine),
                       cases: "Vaksin Dosis ke-1",
-                      percent: (localVaccine!.firstVaccine /
-                          localVaccine!.totalTarget),
-                      update: ((localVaccine!.firstVaccine /
-                                  localVaccine!.totalTarget) *
+                      percent: (monitoringVaccine![0].firstVaccine /
+                          monitoringVaccine![0].totalTarget),
+                      update: ((monitoringVaccine![0].firstVaccine /
+                                  monitoringVaccine![0].totalTarget) *
                               100)
                           .toStringAsFixed(2),
                       color: ColorTheme.secondaryColor,
@@ -809,11 +829,11 @@ class _DataPageState extends State<DataPage> {
                     ProgressBoxCard(
                       icon: Icons.medication,
                       summary: NumberFormat.decimalPattern()
-                          .format(localVaccine!.secondVaccine),
-                      percent: (localVaccine!.secondVaccine /
-                          localVaccine!.totalTarget),
-                      update: ((localVaccine!.secondVaccine /
-                                  localVaccine!.totalTarget) *
+                          .format(monitoringVaccine![0].secondVaccine),
+                      percent: (monitoringVaccine![0].secondVaccine /
+                          monitoringVaccine![0].totalTarget),
+                      update: ((monitoringVaccine![0].secondVaccine /
+                                  monitoringVaccine![0].totalTarget) *
                               100)
                           .toStringAsFixed(2),
                       cases: "Vaksin Dosis ke-2",
