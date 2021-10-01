@@ -180,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                                     AssetImage("assets/images/icon-swab.png")),
                           ),
                         ),
-                        title: "Swab Antigen",
+                        title: "Swab Test",
                         backgroundColor: ColorTheme.blueColor,
                         textColor: Colors.white,
                       ),
@@ -188,9 +188,9 @@ class _HomePageState extends State<HomePage> {
                     InkWell(
                       onTap: () async {
                         if (await canLaunch(
-                            'https://vaksinasi-corona.jakarta.go.id/')) {
+                            'https://covid19.go.id/faskesvaksin/')) {
                           await launch(
-                            'https://vaksinasi-corona.jakarta.go.id/',
+                            'https://covid19.go.id/faskesvaksin/',
                             enableJavaScript: true,
                             forceWebView: true,
                             enableDomStorage: true,
