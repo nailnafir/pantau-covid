@@ -11,6 +11,7 @@ class _DataPageState extends State<DataPage> {
   CaseTotalModel? caseTotal;
   LocalVaccineModel? localVaccine;
   AllProvinceModel? allProvinceModel;
+  List<DetailProvinceModel>? detailProvinceModel;
 
   int _current = 0;
 
@@ -28,6 +29,11 @@ class _DataPageState extends State<DataPage> {
 
     AllProvinceModel.fetchAll('/public/api/prov.json').then((value) {
       allProvinceModel = value;
+      setState(() {});
+    });
+
+    DetailProvinceModel.fetchDetail('/public/api/prov.json').then((value) {
+      detailProvinceModel = value;
       setState(() {});
     });
 
@@ -305,7 +311,7 @@ class _DataPageState extends State<DataPage> {
                                             ? SpaceConfig.normalSpace
                                             : 0)),
                                     child: DetailBoxCard(
-                                      summaryPositive: "500",
+                                      summaryPositive: "30",
                                       updatePositive: "100",
                                       summaryActive: "800",
                                       updateActive: "300",
@@ -313,8 +319,32 @@ class _DataPageState extends State<DataPage> {
                                       updateRecovered: "200",
                                       summaryDeaths: "400",
                                       updateDeaths: "50",
-                                      provinceName: "DKI Jakarta",
-                                      lastUpdate: "12 Agustus 2021",
+                                      provinceName: detailProvinceModel![index]
+                                          .provinceName,
+                                      lastUpdate: DateFormat.EEEE()
+                                          .add_d()
+                                          .add_yMMMM()
+                                          .format((DateTime.parse(
+                                              allProvinceModel!.lastUpdate)))
+                                          .replaceAll('Monday', 'Senin,')
+                                          .replaceAll('Tuesday', 'Selasa,')
+                                          .replaceAll('Wednesday', 'Rabu,')
+                                          .replaceAll('Thursday', 'Kamis,')
+                                          .replaceAll('Friday', 'Jumat,')
+                                          .replaceAll('Saturday', 'Sabtu,')
+                                          .replaceAll('Sunday', 'Minggu,')
+                                          .replaceAll('January', 'Januari')
+                                          .replaceAll('February', 'Februari')
+                                          .replaceAll('March', 'Maret')
+                                          .replaceAll('April', 'April')
+                                          .replaceAll('May', 'Mei')
+                                          .replaceAll('June', 'Juni')
+                                          .replaceAll('July', 'Juli')
+                                          .replaceAll('August', 'Agustus')
+                                          .replaceAll('September', 'September')
+                                          .replaceAll('October', 'Oktober')
+                                          .replaceAll('November', 'November')
+                                          .replaceAll('December', 'Desember'),
                                     ),
                                   );
                                 },

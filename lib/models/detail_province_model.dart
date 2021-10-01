@@ -48,6 +48,9 @@ class DetailProvinceModel {
     required this.update,
   });
 
+  @override
+  toString() => '$provinceName, $confirmedTotal';
+
   factory DetailProvinceModel.fromJson(Map<String, dynamic> json) {
     return DetailProvinceModel(
       provinceName: json['key'],
@@ -58,6 +61,23 @@ class DetailProvinceModel {
       location: Lokasi.fromJson(json['lokasi']),
       update: Penambahan.fromJson(json['penambahan']),
     );
+  }
+
+  static Future<List<DetailProvinceModel>> fetchDetail(String name) async {
+    String apiURL = URLShared.apiLocalURL + name;
+    var url = Uri.parse(apiURL);
+
+    var response = await http.get(url);
+    var data = json.decode(response.body);
+
+    List<DetailProvinceModel> provinces = (data['list_data'] as Iterable)
+        .map((e) => DetailProvinceModel.fromJson(e))
+        .toList();
+    if (response.statusCode == 200) {
+      return provinces;
+    } else {
+      throw Exception('Gagal menyambungkan ke server');
+    }
   }
 }
 
