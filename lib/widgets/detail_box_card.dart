@@ -80,7 +80,7 @@ class DetailBoxCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "+$updatePositive",
+                            "$updatePositive",
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -134,7 +134,7 @@ class DetailBoxCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "+$updateActive",
+                            "$updateActive",
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -194,7 +194,7 @@ class DetailBoxCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "+$updateRecovered",
+                            "$updateRecovered",
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -248,7 +248,7 @@ class DetailBoxCard extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "+$updateDeaths",
+                            "$updateDeaths",
                             style: TypeTheme.normalTextFont.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
