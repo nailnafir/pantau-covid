@@ -42,6 +42,16 @@ class MonitoringVaccine {
   int targetTeenAge;
   int firstVaccine;
   int secondVaccine;
+  int doneVaccine1Medical;
+  int doneVaccine2Medical;
+  int doneVaccine1Officer;
+  int doneVaccine2Officer;
+  int doneVaccine1Aged;
+  int doneVaccine2Aged;
+  int doneVaccine1GeneralPublic;
+  int doneVaccine2GeneralPublic;
+  int doneVaccine1TeenAge;
+  int doneVaccine2TeenAge;
 
   MonitoringVaccine({
     required this.totalTarget,
@@ -52,6 +62,16 @@ class MonitoringVaccine {
     required this.targetTeenAge,
     required this.firstVaccine,
     required this.secondVaccine,
+    required this.doneVaccine1Medical,
+    required this.doneVaccine2Medical,
+    required this.doneVaccine1Officer,
+    required this.doneVaccine2Officer,
+    required this.doneVaccine1Aged,
+    required this.doneVaccine2Aged,
+    required this.doneVaccine1GeneralPublic,
+    required this.doneVaccine2GeneralPublic,
+    required this.doneVaccine1TeenAge,
+    required this.doneVaccine2TeenAge,
   });
 
   factory MonitoringVaccine.fromJson(Map<String, dynamic> json) {
@@ -64,6 +84,24 @@ class MonitoringVaccine {
       targetTeenAge: json['sasaran_vaksinasi_kelompok_1217'],
       firstVaccine: json['vaksinasi1'],
       secondVaccine: json['vaksinasi2'],
+      doneVaccine1Medical: json['tahapan_vaksinasi']['sdm_kesehatan']
+          ['sudah_vaksin1'],
+      doneVaccine2Medical: json['tahapan_vaksinasi']['sdm_kesehatan']
+          ['sudah_vaksin2'],
+      doneVaccine1Officer: json['tahapan_vaksinasi']['petugas_publik']
+          ['sudah_vaksin1'],
+      doneVaccine2Officer: json['tahapan_vaksinasi']['petugas_publik']
+          ['sudah_vaksin2'],
+      doneVaccine1Aged: json['tahapan_vaksinasi']['lansia']['sudah_vaksin1'],
+      doneVaccine2Aged: json['tahapan_vaksinasi']['lansia']['sudah_vaksin2'],
+      doneVaccine1GeneralPublic: json['tahapan_vaksinasi']['masyarakat_umum']
+          ['sudah_vaksin1'],
+      doneVaccine2GeneralPublic: json['tahapan_vaksinasi']['masyarakat_umum']
+          ['sudah_vaksin2'],
+      doneVaccine1TeenAge: json['tahapan_vaksinasi']['kelompok_usia_12_17']
+          ['sudah_vaksin1'],
+      doneVaccine2TeenAge: json['tahapan_vaksinasi']['kelompok_usia_12_17']
+          ['sudah_vaksin2'],
     );
   }
 

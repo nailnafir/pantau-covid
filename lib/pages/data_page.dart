@@ -311,29 +311,32 @@ class _DataPageState extends State<DataPage> {
                                   summaryPositive: NumberFormat.decimalPattern()
                                       .format(detailProvinceModel![index]
                                           .confirmedTotal),
-                                  updatePositive: NumberFormat.decimalPattern()
-                                      .format(detailProvinceModel![index]
-                                          .update
-                                          .confirmedUpdate),
+                                  updatePositive: "+" +
+                                      NumberFormat.decimalPattern().format(
+                                          detailProvinceModel![index]
+                                              .update
+                                              .confirmedUpdate),
                                   summaryActive: NumberFormat.decimalPattern()
                                       .format(detailProvinceModel![index]
                                           .activeTotal),
-                                  updateActive: "0",
+                                  updateActive: "-0",
                                   summaryRecovered:
                                       NumberFormat.decimalPattern().format(
                                           detailProvinceModel![index]
                                               .recoveredTotal),
-                                  updateRecovered: NumberFormat.decimalPattern()
-                                      .format(detailProvinceModel![index]
-                                          .update
-                                          .recoveredUpdate),
+                                  updateRecovered: "+" +
+                                      NumberFormat.decimalPattern().format(
+                                          detailProvinceModel![index]
+                                              .update
+                                              .recoveredUpdate),
                                   summaryDeaths: NumberFormat.decimalPattern()
                                       .format(detailProvinceModel![index]
                                           .deathsTotal),
-                                  updateDeaths: NumberFormat.decimalPattern()
-                                      .format(detailProvinceModel![index]
-                                          .update
-                                          .deathsUpdate),
+                                  updateDeaths: "+" +
+                                      NumberFormat.decimalPattern().format(
+                                          detailProvinceModel![index]
+                                              .update
+                                              .deathsUpdate),
                                   provinceName:
                                       detailProvinceModel![index].provinceName,
                                   lastUpdate: DateFormat.EEEE()
@@ -436,11 +439,15 @@ class _DataPageState extends State<DataPage> {
                           style: TypeTheme.subTitleTextFont
                               .copyWith(fontWeight: FontWeight.w600),
                         ),
-                        Text(
-                          "Selengkapnya",
-                          style: TypeTheme.smallTextFont.copyWith(
-                            color: ColorTheme.secondaryColor,
-                            fontWeight: FontWeight.w700,
+                        Shimmer.fromColors(
+                          baseColor: ColorTheme.secondaryColor,
+                          highlightColor: ColorTheme.tertiaryColor,
+                          child: Text(
+                            "Lihat Semua",
+                            style: TypeTheme.smallTextFont.copyWith(
+                              color: ColorTheme.secondaryColor,
+                              fontWeight: FontWeight.w700,
+                            ),
                           ),
                         ),
                       ],
@@ -592,296 +599,377 @@ class _DataPageState extends State<DataPage> {
           ),
         ),
         SizedBox(height: SpaceConfig.longSpace),
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: SpaceConfig.longSpace,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Target Vaksinasi",
-                style: TypeTheme.subTitleTextFont
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-              (localVaccine != null)
-                  ? Text(
-                      "Diperbarui pada " +
-                          DateFormat.EEEE()
-                              .add_d()
-                              .add_yMMMM()
-                              .addPattern('•')
-                              .add_Hms()
-                              .format(
-                                  (DateTime.parse(localVaccine!.lastUpdate)))
-                              .replaceAll('Monday', 'Senin,')
-                              .replaceAll('Tuesday', 'Selasa,')
-                              .replaceAll('Wednesday', 'Rabu,')
-                              .replaceAll('Thursday', 'Kamis,')
-                              .replaceAll('Friday', 'Jumat,')
-                              .replaceAll('Saturday', 'Sabtu,')
-                              .replaceAll('Sunday', 'Minggu,')
-                              .replaceAll('January', 'Januari')
-                              .replaceAll('February', 'Februari')
-                              .replaceAll('March', 'Maret')
-                              .replaceAll('April', 'April')
-                              .replaceAll('May', 'Mei')
-                              .replaceAll('June', 'Juni')
-                              .replaceAll('July', 'Juli')
-                              .replaceAll('August', 'Agustus')
-                              .replaceAll('September', 'September')
-                              .replaceAll('October', 'Oktober')
-                              .replaceAll('November', 'November')
-                              .replaceAll('December', 'Desember'),
-                      style: TypeTheme.smallTextFont)
-                  : Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Container(
-                        height: 18,
-                        width: (MediaQuery.of(context).size.width -
-                                2 * SpaceConfig.longSpace) -
-                            80,
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
+        //NOTE: VACCINE
+        InkWell(
+          onTap: () {
+            Get.bottomSheet(
+              BottomSheet(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(SpaceConfig.longSpace)),
+                ),
+                onClosing: () {},
+                builder: (context) {
+                  return Container(
+                    color: ColorTheme.bgLight,
+                    height: MediaQuery.of(context).size.height / 2 +
+                        SpaceConfig.longSpace,
+                    child: ListView(
+                      padding:
+                          EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                            horizontal: SpaceConfig.longSpace,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Pelaksanaan Vaksinasi",
+                                style: TypeTheme.subTitleTextFont
+                                    .copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              (localVaccine != null)
+                                  ? Text(
+                                      "Diperbarui pada " +
+                                          DateFormat.EEEE()
+                                              .add_d()
+                                              .add_yMMMM()
+                                              .addPattern('•')
+                                              .add_Hms()
+                                              .format((DateTime.parse(
+                                                  localVaccine!.lastUpdate)))
+                                              .replaceAll('Monday', 'Senin,')
+                                              .replaceAll('Tuesday', 'Selasa,')
+                                              .replaceAll('Wednesday', 'Rabu,')
+                                              .replaceAll('Thursday', 'Kamis,')
+                                              .replaceAll('Friday', 'Jumat,')
+                                              .replaceAll('Saturday', 'Sabtu,')
+                                              .replaceAll('Sunday', 'Minggu,')
+                                              .replaceAll('January', 'Januari')
+                                              .replaceAll(
+                                                  'February', 'Februari')
+                                              .replaceAll('March', 'Maret')
+                                              .replaceAll('April', 'April')
+                                              .replaceAll('May', 'Mei')
+                                              .replaceAll('June', 'Juni')
+                                              .replaceAll('July', 'Juli')
+                                              .replaceAll('August', 'Agustus')
+                                              .replaceAll(
+                                                  'September', 'September')
+                                              .replaceAll('October', 'Oktober')
+                                              .replaceAll(
+                                                  'November', 'November')
+                                              .replaceAll(
+                                                  'December', 'Desember'),
+                                      style: TypeTheme.smallTextFont)
+                                  : Shimmer.fromColors(
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                      child: Container(
+                                        height: 18,
+                                        width:
+                                            (MediaQuery.of(context).size.width -
+                                                    2 * SpaceConfig.longSpace) -
+                                                80,
+                                        decoration: BoxDecoration(
+                                            color: ColorTheme.bgLight,
+                                            borderRadius: BorderRadius.circular(
+                                                SpaceConfig.normalSpace)),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: SpaceConfig.normalSpace),
+                        Container(
+                          height: MediaQuery.of(context).size.height / 3 -
+                              SpaceConfig.normalSpace -
+                              4,
+                          child: (localVaccine != null)
+                              ? GridView.count(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: SpaceConfig.longSpace - 4),
+                                  crossAxisSpacing: SpaceConfig.shortSpace,
+                                  mainAxisSpacing: SpaceConfig.shortSpace,
+                                  childAspectRatio: 3.0,
+                                  crossAxisCount: 1,
+                                  primary: false,
+                                  children: [
+                                    ProgressBoxCard(
+                                      icon: Icons.medication,
+                                      summary: NumberFormat.decimalPattern()
+                                          .format(monitoringVaccine![
+                                                  monitoringVaccine!.length - 1]
+                                              .firstVaccine),
+                                      cases: "Vaksinasi Nasional Dosis ke-1",
+                                      percent: (monitoringVaccine![
+                                                  monitoringVaccine!.length - 1]
+                                              .firstVaccine /
+                                          monitoringVaccine![
+                                                  monitoringVaccine!.length - 1]
+                                              .totalTarget),
+                                      update: ((monitoringVaccine![
+                                                          monitoringVaccine!
+                                                                  .length -
+                                                              1]
+                                                      .firstVaccine /
+                                                  monitoringVaccine![
+                                                          monitoringVaccine!
+                                                                  .length -
+                                                              1]
+                                                      .totalTarget) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      color: ColorTheme.secondaryColor,
+                                    ),
+                                    ProgressBoxCard(
+                                      icon: Icons.medication,
+                                      summary: NumberFormat.decimalPattern()
+                                          .format(monitoringVaccine![
+                                                  monitoringVaccine!.length - 1]
+                                              .secondVaccine),
+                                      percent: (monitoringVaccine![
+                                                  monitoringVaccine!.length - 1]
+                                              .secondVaccine /
+                                          monitoringVaccine![
+                                                  monitoringVaccine!.length - 1]
+                                              .totalTarget),
+                                      update: ((monitoringVaccine![
+                                                          monitoringVaccine!
+                                                                  .length -
+                                                              1]
+                                                      .secondVaccine /
+                                                  monitoringVaccine![
+                                                          monitoringVaccine!
+                                                                  .length -
+                                                              1]
+                                                      .totalTarget) *
+                                              100)
+                                          .toStringAsFixed(2),
+                                      cases: "Vaksinasi Nasional Dosis ke-2",
+                                      color: ColorTheme.secondaryColor,
+                                    ),
+                                  ],
+                                )
+                              : Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: GridView.count(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: SpaceConfig.longSpace,
+                                        vertical: 1),
+                                    crossAxisSpacing: SpaceConfig.normalSpace,
+                                    mainAxisSpacing: SpaceConfig.normalSpace,
+                                    childAspectRatio: 3.0,
+                                    crossAxisCount: 1,
+                                    primary: false,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: ColorTheme.bgLight,
+                                            borderRadius: BorderRadius.circular(
+                                                SpaceConfig.normalSpace)),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: ColorTheme.bgLight,
+                                            borderRadius: BorderRadius.circular(
+                                                SpaceConfig.normalSpace)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                        ),
+                      ],
                     ),
+                  );
+                },
+              ),
+            );
+          },
+          child: Column(
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Target Vaksinasi",
+                          style: TypeTheme.subTitleTextFont
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        Shimmer.fromColors(
+                          baseColor: ColorTheme.secondaryColor,
+                          highlightColor: ColorTheme.tertiaryColor,
+                          child: Text(
+                            "Lihat Semua",
+                            style: TypeTheme.smallTextFont.copyWith(
+                              color: ColorTheme.secondaryColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    (localVaccine != null)
+                        ? Text(
+                            "Diperbarui pada " +
+                                DateFormat.EEEE()
+                                    .add_d()
+                                    .add_yMMMM()
+                                    .addPattern('•')
+                                    .add_Hms()
+                                    .format((DateTime.parse(
+                                        localVaccine!.lastUpdate)))
+                                    .replaceAll('Monday', 'Senin,')
+                                    .replaceAll('Tuesday', 'Selasa,')
+                                    .replaceAll('Wednesday', 'Rabu,')
+                                    .replaceAll('Thursday', 'Kamis,')
+                                    .replaceAll('Friday', 'Jumat,')
+                                    .replaceAll('Saturday', 'Sabtu,')
+                                    .replaceAll('Sunday', 'Minggu,')
+                                    .replaceAll('January', 'Januari')
+                                    .replaceAll('February', 'Februari')
+                                    .replaceAll('March', 'Maret')
+                                    .replaceAll('April', 'April')
+                                    .replaceAll('May', 'Mei')
+                                    .replaceAll('June', 'Juni')
+                                    .replaceAll('July', 'Juli')
+                                    .replaceAll('August', 'Agustus')
+                                    .replaceAll('September', 'September')
+                                    .replaceAll('October', 'Oktober')
+                                    .replaceAll('November', 'November')
+                                    .replaceAll('December', 'Desember'),
+                            style: TypeTheme.smallTextFont)
+                        : Shimmer.fromColors(
+                            baseColor: Colors.grey[300]!,
+                            highlightColor: Colors.grey[100]!,
+                            child: Container(
+                              height: 18,
+                              width: (MediaQuery.of(context).size.width -
+                                      2 * SpaceConfig.longSpace) -
+                                  80,
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.bgLight,
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                            ),
+                          ),
+                  ],
+                ),
+              ),
+              SizedBox(height: SpaceConfig.normalSpace),
+              Container(
+                height: MediaQuery.of(context).size.height / 2 -
+                    SpaceConfig.normalSpace * 10 +
+                    4,
+                child: (localVaccine != null)
+                    ? GridView.count(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: SpaceConfig.longSpace - 4),
+                        crossAxisSpacing: SpaceConfig.shortSpace,
+                        mainAxisSpacing: SpaceConfig.shortSpace,
+                        childAspectRatio: 2.0,
+                        crossAxisCount: 2,
+                        primary: false,
+                        children: [
+                          SmallBoxCard(
+                            icon: Icons.timelapse,
+                            summary: NumberFormat.decimalPattern()
+                                .format(monitoringVaccine![0].totalTarget),
+                            cases: "Total Target",
+                            color: ColorTheme.blueColor,
+                          ),
+                          SmallBoxCard(
+                            icon: Icons.medical_services,
+                            summary: NumberFormat.decimalPattern()
+                                .format(monitoringVaccine![0].targetMedical),
+                            cases: "Tenaga Kesehatan",
+                            color: ColorTheme.greenColor,
+                          ),
+                          SmallBoxCard(
+                            icon: Icons.apartment,
+                            summary: NumberFormat.decimalPattern()
+                                .format(monitoringVaccine![0].targetOfficer),
+                            cases: "Petugas Publik",
+                            color: ColorTheme.greenColor,
+                          ),
+                          SmallBoxCard(
+                            icon: Icons.elderly,
+                            summary: NumberFormat.decimalPattern()
+                                .format(monitoringVaccine![0].targetAged),
+                            cases: "Lanjut Usia",
+                            color: ColorTheme.blueColor,
+                          ),
+                          SmallBoxCard(
+                            icon: Icons.people_sharp,
+                            summary: NumberFormat.decimalPattern().format(
+                                monitoringVaccine![0].targetGeneralPublic),
+                            cases: "Masyarakat Umum",
+                            color: ColorTheme.blueColor,
+                          ),
+                          SmallBoxCard(
+                            icon: Icons.accessibility_new,
+                            summary: NumberFormat.decimalPattern()
+                                .format(monitoringVaccine![0].targetTeenAge),
+                            cases: "Anak Remaja",
+                            color: ColorTheme.greenColor,
+                          ),
+                        ],
+                      )
+                    : Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: GridView.count(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: SpaceConfig.longSpace,
+                            vertical: 1,
+                          ),
+                          crossAxisSpacing: SpaceConfig.normalSpace,
+                          mainAxisSpacing: SpaceConfig.normalSpace,
+                          childAspectRatio: 2.0,
+                          crossAxisCount: 2,
+                          primary: false,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.bgLight,
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.bgLight,
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.bgLight,
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: ColorTheme.bgLight,
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                            ),
+                          ],
+                        ),
+                      ),
+              ),
             ],
           ),
-        ),
-        SizedBox(height: SpaceConfig.normalSpace),
-        Container(
-          height: MediaQuery.of(context).size.height / 2 -
-              SpaceConfig.normalSpace * 10 +
-              4,
-          child: (localVaccine != null)
-              ? GridView.count(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.longSpace - 4),
-                  crossAxisSpacing: SpaceConfig.shortSpace,
-                  mainAxisSpacing: SpaceConfig.shortSpace,
-                  childAspectRatio: 2.0,
-                  crossAxisCount: 2,
-                  primary: false,
-                  children: [
-                    SmallBoxCard(
-                      icon: Icons.timelapse,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].totalTarget),
-                      cases: "Total Target",
-                      color: ColorTheme.blueColor,
-                    ),
-                    SmallBoxCard(
-                      icon: Icons.medical_services,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].targetMedical),
-                      cases: "Tenaga Kesehatan",
-                      color: ColorTheme.greenColor,
-                    ),
-                    SmallBoxCard(
-                      icon: Icons.apartment,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].targetOfficer),
-                      cases: "Petugas Publik",
-                      color: ColorTheme.greenColor,
-                    ),
-                    SmallBoxCard(
-                      icon: Icons.elderly,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].targetAged),
-                      cases: "Lanjut Usia",
-                      color: ColorTheme.blueColor,
-                    ),
-                    SmallBoxCard(
-                      icon: Icons.people_sharp,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].targetGeneralPublic),
-                      cases: "Masyarakat Umum",
-                      color: ColorTheme.blueColor,
-                    ),
-                    SmallBoxCard(
-                      icon: Icons.accessibility_new,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].targetTeenAge),
-                      cases: "Anak Remaja",
-                      color: ColorTheme.greenColor,
-                    ),
-                  ],
-                )
-              : Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: GridView.count(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.longSpace,
-                      vertical: 1,
-                    ),
-                    crossAxisSpacing: SpaceConfig.normalSpace,
-                    mainAxisSpacing: SpaceConfig.normalSpace,
-                    childAspectRatio: 2.0,
-                    crossAxisCount: 2,
-                    primary: false,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                    ],
-                  ),
-                ),
-        ),
-        SizedBox(height: SpaceConfig.longSpace),
-        Container(
-          margin: EdgeInsets.symmetric(
-            horizontal: SpaceConfig.longSpace,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Pelaksanaan Vaksinasi",
-                style: TypeTheme.subTitleTextFont
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-              (localVaccine != null)
-                  ? Text(
-                      "Diperbarui pada " +
-                          DateFormat.EEEE()
-                              .add_d()
-                              .add_yMMMM()
-                              .addPattern('•')
-                              .add_Hms()
-                              .format(
-                                  (DateTime.parse(localVaccine!.lastUpdate)))
-                              .replaceAll('Monday', 'Senin,')
-                              .replaceAll('Tuesday', 'Selasa,')
-                              .replaceAll('Wednesday', 'Rabu,')
-                              .replaceAll('Thursday', 'Kamis,')
-                              .replaceAll('Friday', 'Jumat,')
-                              .replaceAll('Saturday', 'Sabtu,')
-                              .replaceAll('Sunday', 'Minggu,')
-                              .replaceAll('January', 'Januari')
-                              .replaceAll('February', 'Februari')
-                              .replaceAll('March', 'Maret')
-                              .replaceAll('April', 'April')
-                              .replaceAll('May', 'Mei')
-                              .replaceAll('June', 'Juni')
-                              .replaceAll('July', 'Juli')
-                              .replaceAll('August', 'Agustus')
-                              .replaceAll('September', 'September')
-                              .replaceAll('October', 'Oktober')
-                              .replaceAll('November', 'November')
-                              .replaceAll('December', 'Desember'),
-                      style: TypeTheme.smallTextFont)
-                  : Shimmer.fromColors(
-                      baseColor: Colors.grey[300]!,
-                      highlightColor: Colors.grey[100]!,
-                      child: Container(
-                        height: 18,
-                        width: (MediaQuery.of(context).size.width -
-                                2 * SpaceConfig.longSpace) -
-                            80,
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                    ),
-            ],
-          ),
-        ),
-        SizedBox(height: SpaceConfig.normalSpace),
-        Container(
-          height: MediaQuery.of(context).size.height / 3 -
-              SpaceConfig.normalSpace -
-              4,
-          child: (localVaccine != null)
-              ? GridView.count(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.longSpace - 4),
-                  crossAxisSpacing: SpaceConfig.shortSpace,
-                  mainAxisSpacing: SpaceConfig.shortSpace,
-                  childAspectRatio: 3.0,
-                  crossAxisCount: 1,
-                  primary: false,
-                  children: [
-                    ProgressBoxCard(
-                      icon: Icons.medication,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].firstVaccine),
-                      cases: "Vaksin Dosis ke-1",
-                      percent: (monitoringVaccine![0].firstVaccine /
-                          monitoringVaccine![0].totalTarget),
-                      update: ((monitoringVaccine![0].firstVaccine /
-                                  monitoringVaccine![0].totalTarget) *
-                              100)
-                          .toStringAsFixed(2),
-                      color: ColorTheme.secondaryColor,
-                    ),
-                    ProgressBoxCard(
-                      icon: Icons.medication,
-                      summary: NumberFormat.decimalPattern()
-                          .format(monitoringVaccine![0].secondVaccine),
-                      percent: (monitoringVaccine![0].secondVaccine /
-                          monitoringVaccine![0].totalTarget),
-                      update: ((monitoringVaccine![0].secondVaccine /
-                                  monitoringVaccine![0].totalTarget) *
-                              100)
-                          .toStringAsFixed(2),
-                      cases: "Vaksin Dosis ke-2",
-                      color: ColorTheme.secondaryColor,
-                    ),
-                  ],
-                )
-              : Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: GridView.count(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: SpaceConfig.longSpace, vertical: 1),
-                    crossAxisSpacing: SpaceConfig.normalSpace,
-                    mainAxisSpacing: SpaceConfig.normalSpace,
-                    childAspectRatio: 3.0,
-                    crossAxisCount: 1,
-                    primary: false,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: ColorTheme.bgLight,
-                            borderRadius:
-                                BorderRadius.circular(SpaceConfig.normalSpace)),
-                      ),
-                    ],
-                  ),
-                ),
         ),
         SizedBox(height: SpaceConfig.longSpace),
         Container(
