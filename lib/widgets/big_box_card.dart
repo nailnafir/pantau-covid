@@ -56,7 +56,7 @@ class BigBoxCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "+" + update,
+                  update,
                   style: TypeTheme.normalTextFont.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,

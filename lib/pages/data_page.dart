@@ -503,17 +503,18 @@ class _DataPageState extends State<DataPage> {
                       icon: Icons.add_circle_rounded,
                       summary: NumberFormat.decimalPattern()
                           .format(caseTotal!.confirmedTotal),
-                      update: NumberFormat.decimalPattern()
-                          .format(caseTotal!.confirmedUpdate),
+                      update: "+" +
+                          NumberFormat.decimalPattern()
+                              .format(caseTotal!.confirmedUpdate),
                       cases: "Positif",
                       color: ColorTheme.secondaryColor,
                     ),
                     BigBoxCard(
                       icon: Icons.remove_circle_rounded,
                       summary: NumberFormat.decimalPattern()
-                          .format(caseTotal!.recoveredTotal),
+                          .format(caseTotal!.activeTotal),
                       update: NumberFormat.decimalPattern()
-                          .format(caseTotal!.recoveredUpdate),
+                          .format(caseTotal!.activeUpdate),
                       cases: "Dirawat",
                       color: ColorTheme.blueColor,
                     ),
@@ -521,8 +522,9 @@ class _DataPageState extends State<DataPage> {
                       icon: Icons.change_circle_rounded,
                       summary: NumberFormat.decimalPattern()
                           .format(caseTotal!.recoveredTotal),
-                      update: NumberFormat.decimalPattern()
-                          .format(caseTotal!.recoveredUpdate),
+                      update: "+" +
+                          NumberFormat.decimalPattern()
+                              .format(caseTotal!.recoveredUpdate),
                       cases: "Sembuh",
                       color: ColorTheme.greenColor,
                     ),
@@ -530,8 +532,9 @@ class _DataPageState extends State<DataPage> {
                       icon: Icons.cancel_rounded,
                       summary: NumberFormat.decimalPattern()
                           .format(caseTotal!.deathsTotal),
-                      update: NumberFormat.decimalPattern()
-                          .format(caseTotal!.deathsUpdate),
+                      update: "+" +
+                          NumberFormat.decimalPattern()
+                              .format(caseTotal!.deathsUpdate),
                       cases: "Meninggal",
                       color: ColorTheme.redColor,
                     ),
@@ -639,9 +642,9 @@ class _DataPageState extends State<DataPage> {
         ),
         SizedBox(height: SpaceConfig.normalSpace),
         Container(
-          height: MediaQuery.of(context).size.height / 4 -
-              SpaceConfig.normalSpace -
-              2,
+          height: MediaQuery.of(context).size.height / 2 -
+              SpaceConfig.normalSpace * 10 +
+              4,
           child: (localVaccine != null)
               ? GridView.count(
                   padding: EdgeInsets.symmetric(
@@ -685,14 +688,14 @@ class _DataPageState extends State<DataPage> {
                       summary: NumberFormat.decimalPattern()
                           .format(monitoringVaccine![0].targetGeneralPublic),
                       cases: "Masyarakat Umum",
-                      color: ColorTheme.greenColor,
+                      color: ColorTheme.blueColor,
                     ),
                     SmallBoxCard(
                       icon: Icons.accessibility_new,
                       summary: NumberFormat.decimalPattern()
                           .format(monitoringVaccine![0].targetTeenAge),
                       cases: "Anak Remaja",
-                      color: ColorTheme.blueColor,
+                      color: ColorTheme.greenColor,
                     ),
                   ],
                 )
