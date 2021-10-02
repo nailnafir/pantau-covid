@@ -615,14 +615,11 @@ class _DataPageState extends State<DataPage> {
                     color: ColorTheme.bgLight,
                     height: MediaQuery.of(context).size.height / 2 +
                         SpaceConfig.longSpace,
-                    child: ListView(
-                      padding:
-                          EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(
-                            horizontal: SpaceConfig.longSpace,
-                          ),
+                          margin: EdgeInsets.all(SpaceConfig.longSpace),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -683,105 +680,278 @@ class _DataPageState extends State<DataPage> {
                             ],
                           ),
                         ),
-                        SizedBox(height: SpaceConfig.normalSpace),
-                        Container(
-                          height: MediaQuery.of(context).size.height / 3 -
-                              SpaceConfig.normalSpace -
-                              4,
-                          child: (localVaccine != null)
-                              ? GridView.count(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.longSpace - 4),
-                                  crossAxisSpacing: SpaceConfig.shortSpace,
-                                  mainAxisSpacing: SpaceConfig.shortSpace,
-                                  childAspectRatio: 3.0,
-                                  crossAxisCount: 1,
-                                  primary: false,
-                                  children: [
-                                    ProgressBoxCard(
-                                      icon: Icons.medication,
-                                      summary: NumberFormat.decimalPattern()
-                                          .format(monitoringVaccine![
-                                                  monitoringVaccine!.length - 1]
-                                              .firstVaccine),
-                                      cases: "Vaksinasi Nasional Dosis ke-1",
-                                      percent: (monitoringVaccine![
-                                                  monitoringVaccine!.length - 1]
-                                              .firstVaccine /
-                                          monitoringVaccine![
-                                                  monitoringVaccine!.length - 1]
-                                              .totalTarget),
-                                      update: ((monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .firstVaccine /
-                                                  monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .totalTarget) *
-                                              100)
-                                          .toStringAsFixed(2),
-                                      color: ColorTheme.secondaryColor,
-                                    ),
-                                    ProgressBoxCard(
-                                      icon: Icons.medication,
-                                      summary: NumberFormat.decimalPattern()
-                                          .format(monitoringVaccine![
-                                                  monitoringVaccine!.length - 1]
-                                              .secondVaccine),
-                                      percent: (monitoringVaccine![
-                                                  monitoringVaccine!.length - 1]
-                                              .secondVaccine /
-                                          monitoringVaccine![
-                                                  monitoringVaccine!.length - 1]
-                                              .totalTarget),
-                                      update: ((monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .secondVaccine /
-                                                  monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .totalTarget) *
-                                              100)
-                                          .toStringAsFixed(2),
-                                      cases: "Vaksinasi Nasional Dosis ke-2",
-                                      color: ColorTheme.secondaryColor,
-                                    ),
-                                  ],
-                                )
-                              : Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                  child: GridView.count(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: SpaceConfig.longSpace,
-                                        vertical: 1),
-                                    crossAxisSpacing: SpaceConfig.normalSpace,
-                                    mainAxisSpacing: SpaceConfig.normalSpace,
-                                    childAspectRatio: 3.0,
-                                    crossAxisCount: 1,
-                                    primary: false,
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: ColorTheme.bgLight,
-                                            borderRadius: BorderRadius.circular(
-                                                SpaceConfig.normalSpace)),
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: ColorTheme.bgLight,
-                                            borderRadius: BorderRadius.circular(
-                                                SpaceConfig.normalSpace)),
-                                      ),
-                                    ],
-                                  ),
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Text(
+                                  "Vaksinasi Nasional",
+                                  style: TypeTheme.subTitleTextFont
+                                      .copyWith(fontWeight: FontWeight.w600),
                                 ),
+                              ),
+                              SizedBox(height: SpaceConfig.shortSpace),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 3 -
+                                    SpaceConfig.normalSpace -
+                                    4,
+                                child: (monitoringVaccine != null)
+                                    ? GridView.count(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                SpaceConfig.longSpace - 4),
+                                        crossAxisSpacing:
+                                            SpaceConfig.shortSpace,
+                                        mainAxisSpacing: SpaceConfig.shortSpace,
+                                        childAspectRatio: 3.0,
+                                        crossAxisCount: 1,
+                                        primary: false,
+                                        children: [
+                                          ProgressBoxCard(
+                                            icon: Icons.medication,
+                                            summary:
+                                                NumberFormat.decimalPattern()
+                                                    .format(monitoringVaccine![
+                                                            monitoringVaccine!
+                                                                    .length -
+                                                                1]
+                                                        .firstVaccine),
+                                            cases:
+                                                "Vaksinasi Nasional Dosis ke-1",
+                                            percent: (monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .firstVaccine /
+                                                monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .totalTarget),
+                                            update: ((monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .firstVaccine /
+                                                        monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .totalTarget) *
+                                                    100)
+                                                .toStringAsFixed(2),
+                                            color: ColorTheme.secondaryColor,
+                                          ),
+                                          ProgressBoxCard(
+                                            icon: Icons.medication,
+                                            summary:
+                                                NumberFormat.decimalPattern()
+                                                    .format(monitoringVaccine![
+                                                            monitoringVaccine!
+                                                                    .length -
+                                                                1]
+                                                        .secondVaccine),
+                                            percent: (monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .secondVaccine /
+                                                monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .totalTarget),
+                                            update: ((monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .secondVaccine /
+                                                        monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .totalTarget) *
+                                                    100)
+                                                .toStringAsFixed(2),
+                                            cases:
+                                                "Vaksinasi Nasional Dosis ke-2",
+                                            color: ColorTheme.secondaryColor,
+                                          ),
+                                        ],
+                                      )
+                                    : Shimmer.fromColors(
+                                        baseColor: Colors.grey[300]!,
+                                        highlightColor: Colors.grey[100]!,
+                                        child: GridView.count(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: SpaceConfig.longSpace,
+                                              vertical: 1),
+                                          crossAxisSpacing:
+                                              SpaceConfig.normalSpace,
+                                          mainAxisSpacing:
+                                              SpaceConfig.normalSpace,
+                                          childAspectRatio: 3.0,
+                                          crossAxisCount: 1,
+                                          primary: false,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: ColorTheme.bgLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          SpaceConfig
+                                                              .normalSpace)),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: ColorTheme.bgLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          SpaceConfig
+                                                              .normalSpace)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                              ),
+                              SizedBox(height: SpaceConfig.longSpace),
+                              Container(
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Text(
+                                  "Vaksinasi Tenaga Kesehatan",
+                                  style: TypeTheme.subTitleTextFont
+                                      .copyWith(fontWeight: FontWeight.w600),
+                                ),
+                              ),
+                              SizedBox(height: SpaceConfig.shortSpace),
+                              Container(
+                                height: MediaQuery.of(context).size.height / 3 -
+                                    SpaceConfig.normalSpace -
+                                    4,
+                                child: (monitoringVaccine != null)
+                                    ? GridView.count(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                                SpaceConfig.longSpace - 4),
+                                        crossAxisSpacing:
+                                            SpaceConfig.shortSpace,
+                                        mainAxisSpacing: SpaceConfig.shortSpace,
+                                        childAspectRatio: 3.0,
+                                        crossAxisCount: 1,
+                                        primary: false,
+                                        children: [
+                                          ProgressBoxCard(
+                                            icon: Icons.medication,
+                                            summary:
+                                                NumberFormat.decimalPattern()
+                                                    .format(monitoringVaccine![
+                                                            monitoringVaccine!
+                                                                    .length -
+                                                                1]
+                                                        .firstVaccine),
+                                            cases:
+                                                "Vaksinasi Nasional Dosis ke-1",
+                                            percent: (monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .firstVaccine /
+                                                monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .totalTarget),
+                                            update: ((monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .firstVaccine /
+                                                        monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .totalTarget) *
+                                                    100)
+                                                .toStringAsFixed(2),
+                                            color: ColorTheme.secondaryColor,
+                                          ),
+                                          ProgressBoxCard(
+                                            icon: Icons.medication,
+                                            summary:
+                                                NumberFormat.decimalPattern()
+                                                    .format(monitoringVaccine![
+                                                            monitoringVaccine!
+                                                                    .length -
+                                                                1]
+                                                        .secondVaccine),
+                                            percent: (monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .secondVaccine /
+                                                monitoringVaccine![
+                                                        monitoringVaccine!
+                                                                .length -
+                                                            1]
+                                                    .totalTarget),
+                                            update: ((monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .secondVaccine /
+                                                        monitoringVaccine![
+                                                                monitoringVaccine!
+                                                                        .length -
+                                                                    1]
+                                                            .totalTarget) *
+                                                    100)
+                                                .toStringAsFixed(2),
+                                            cases:
+                                                "Vaksinasi Nasional Dosis ke-2",
+                                            color: ColorTheme.secondaryColor,
+                                          ),
+                                        ],
+                                      )
+                                    : Shimmer.fromColors(
+                                        baseColor: Colors.grey[300]!,
+                                        highlightColor: Colors.grey[100]!,
+                                        child: GridView.count(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: SpaceConfig.longSpace,
+                                              vertical: 1),
+                                          crossAxisSpacing:
+                                              SpaceConfig.normalSpace,
+                                          mainAxisSpacing:
+                                              SpaceConfig.normalSpace,
+                                          childAspectRatio: 3.0,
+                                          crossAxisCount: 1,
+                                          primary: false,
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: ColorTheme.bgLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          SpaceConfig
+                                                              .normalSpace)),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: ColorTheme.bgLight,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          SpaceConfig
+                                                              .normalSpace)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
@@ -872,7 +1042,7 @@ class _DataPageState extends State<DataPage> {
                 height: MediaQuery.of(context).size.height / 2 -
                     SpaceConfig.normalSpace * 10 +
                     4,
-                child: (localVaccine != null)
+                child: (monitoringVaccine != null)
                     ? GridView.count(
                         padding: EdgeInsets.symmetric(
                             horizontal: SpaceConfig.longSpace - 4),

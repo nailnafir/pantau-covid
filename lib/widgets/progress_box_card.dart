@@ -35,30 +35,17 @@ class ProgressBoxCard extends StatelessWidget {
               color: color,
             ),
           ),
-          // Align(
-          //   alignment: Alignment.centerRight,
-          //   child: Container(
-          //     margin: EdgeInsets.all(SpaceConfig.normalSpace),
-          //     child: CircularPercentIndicator(
-          //       radius: MediaQuery.of(context).size.width / 6 -
-          //           SpaceConfig.normalSpace -
-          //           8,
-          //       percent: percent,
-          //       animation: true,
-          //       animationDuration: 1200,
-          //       backgroundColor: ColorTheme.bgLight,
-          //       circularStrokeCap: CircularStrokeCap.round,
-          //       lineWidth: 6.0,
-          //       center: Text(
-          //         update + "%",
-          //         style: TypeTheme.smallTextFont.copyWith(
-          //           color: Colors.white,
-          //           fontWeight: FontWeight.w700,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              margin: EdgeInsets.only(top: SpaceConfig.normalSpace),
+              child: Icon(
+                icon,
+                size: MediaQuery.of(context).size.width / 6 - 6,
+                color: Colors.black.withAlpha(50),
+              ),
+            ),
+          ),
           Container(
             width: double.infinity,
             height: double.infinity,
