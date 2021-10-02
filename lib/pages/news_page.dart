@@ -303,7 +303,8 @@ class _NewsPageState extends State<NewsPage> {
                 highlightColor: Colors.grey[100]!,
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height / 3 +
-                      SpaceConfig.normalSpace,
+                      SpaceConfig.longSpace +
+                      8,
                   child: ListView.builder(
                     itemCount: 10,
                     itemBuilder: (BuildContext context, index) {
@@ -329,7 +330,8 @@ class _NewsPageState extends State<NewsPage> {
               )
             : SizedBox(
                 height: MediaQuery.of(context).size.height / 3 +
-                    SpaceConfig.normalSpace,
+                    SpaceConfig.longSpace +
+                    8,
                 child: ListView.builder(
                     itemCount: newsTitleContent!.length,
                     itemBuilder: (BuildContext context, int index) {
