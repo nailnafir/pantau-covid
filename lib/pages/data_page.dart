@@ -269,9 +269,7 @@ class _DataPageState extends State<DataPage> {
                 ),
                 SizedBox(width: SpaceConfig.shortSpace),
                 Text(
-                  userLocation != null
-                      ? userLocation!.address[1]
-                      : "data gak ada",
+                  userLocation != null ? userLocation!.address : "data gak ada",
                   style: TypeTheme.subTitleTextFont,
                 ),
                 Spacer(),

@@ -13,8 +13,9 @@ class UserLocation {
     try {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-      print(placemarks[0].country);
-      return UserLocation(address: (placemarks[0]).toString());
+      print(placemarks[0]);
+      return UserLocation(
+          address: placemarks[0].subAdministrativeArea.toString());
     } catch (e) {
       throw Exception("Gagal menemukan lokasi");
     }
