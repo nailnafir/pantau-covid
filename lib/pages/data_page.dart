@@ -268,10 +268,20 @@ class _DataPageState extends State<DataPage> {
                   color: ColorTheme.secondaryColor,
                 ),
                 SizedBox(width: SpaceConfig.shortSpace),
-                Text(
-                  userLocation != null ? userLocation!.address : "data gak ada",
-                  style: TypeTheme.subTitleTextFont,
-                ),
+                (userLocation != null)
+                    ? Text(
+                        userLocation!.address,
+                        style: TypeTheme.subTitleTextFont,
+                      )
+                    : Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          color: Colors.grey[300]!,
+                          height: 18,
+                          width: MediaQuery.of(context).size.width / 3,
+                        ),
+                      ),
                 Spacer(),
                 Container(
                   padding: EdgeInsets.symmetric(
