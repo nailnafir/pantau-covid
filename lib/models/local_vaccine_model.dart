@@ -25,7 +25,6 @@ class LocalVaccineModel {
     var jsonObject = json.decode(apiResult.body);
 
     if (apiResult.statusCode == 200) {
-      print(jsonObject);
       return LocalVaccineModel.fromJson(jsonObject);
     } else {
       throw Exception('Gagal menyambungkan ke server');
