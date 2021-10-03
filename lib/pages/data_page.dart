@@ -8,6 +8,8 @@ class DataPage extends StatefulWidget {
 }
 
 class _DataPageState extends State<DataPage> {
+  TextEditingController editingController = TextEditingController();
+
   CaseTotalModel? caseTotal;
   LocalVaccineModel? localVaccine;
   List<MonitoringVaccine>? monitoringVaccine;
@@ -343,6 +345,10 @@ class _DataPageState extends State<DataPage> {
                                   SpaceConfig.normalSpace)),
                           color: Colors.white,
                           child: TextFormField(
+                            controller: editingController,
+                            onChanged: (value) {
+                              setState(() {});
+                            },
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none),
@@ -357,74 +363,153 @@ class _DataPageState extends State<DataPage> {
                           child: ListView.builder(
                             itemCount: allProvinceModel!.listData.length,
                             itemBuilder: (context, index) {
-                              return Container(
-                                margin: EdgeInsets.only(
-                                    top: (index == 0
-                                        ? SpaceConfig.normalSpace
-                                        : SpaceConfig.normalSpace),
-                                    bottom: (index ==
-                                            allProvinceModel!.listData.length -
-                                                1
-                                        ? SpaceConfig.normalSpace
-                                        : 0)),
-                                child: DetailBoxCard(
-                                  summaryPositive: NumberFormat.decimalPattern()
-                                      .format(detailProvinceModel![index]
-                                          .confirmedTotal),
-                                  updatePositive: "+" +
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvinceModel![index]
-                                              .update
-                                              .confirmedUpdate),
-                                  summaryActive: NumberFormat.decimalPattern()
-                                      .format(detailProvinceModel![index]
-                                          .activeTotal),
-                                  updateActive: "-0",
-                                  summaryRecovered:
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvinceModel![index]
-                                              .recoveredTotal),
-                                  updateRecovered: "+" +
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvinceModel![index]
-                                              .update
-                                              .recoveredUpdate),
-                                  summaryDeaths: NumberFormat.decimalPattern()
-                                      .format(detailProvinceModel![index]
-                                          .deathsTotal),
-                                  updateDeaths: "+" +
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvinceModel![index]
-                                              .update
-                                              .deathsUpdate),
-                                  provinceName:
-                                      detailProvinceModel![index].provinceName,
-                                  lastUpdate: DateFormat.EEEE()
-                                      .add_d()
-                                      .add_yMMMM()
-                                      .format((DateTime.parse(
-                                          allProvinceModel!.lastUpdate)))
-                                      .replaceAll('Monday', 'Senin,')
-                                      .replaceAll('Tuesday', 'Selasa,')
-                                      .replaceAll('Wednesday', 'Rabu,')
-                                      .replaceAll('Thursday', 'Kamis,')
-                                      .replaceAll('Friday', 'Jumat,')
-                                      .replaceAll('Saturday', 'Sabtu,')
-                                      .replaceAll('Sunday', 'Minggu,')
-                                      .replaceAll('January', 'Januari')
-                                      .replaceAll('February', 'Februari')
-                                      .replaceAll('March', 'Maret')
-                                      .replaceAll('April', 'April')
-                                      .replaceAll('May', 'Mei')
-                                      .replaceAll('June', 'Juni')
-                                      .replaceAll('July', 'Juli')
-                                      .replaceAll('August', 'Agustus')
-                                      .replaceAll('September', 'September')
-                                      .replaceAll('October', 'Oktober')
-                                      .replaceAll('November', 'November')
-                                      .replaceAll('December', 'Desember'),
-                                ),
-                              );
+                              if (editingController.text.isEmpty) {
+                                return Container(
+                                  margin: EdgeInsets.only(
+                                      top: (index == 0
+                                          ? 0
+                                          : SpaceConfig.normalSpace),
+                                      bottom: (index ==
+                                              allProvinceModel!
+                                                      .listData.length -
+                                                  1
+                                          ? SpaceConfig.normalSpace
+                                          : 0)),
+                                  child: DetailBoxCard(
+                                    summaryPositive:
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .confirmedTotal),
+                                    updatePositive: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .update
+                                                .confirmedUpdate),
+                                    summaryActive: NumberFormat.decimalPattern()
+                                        .format(detailProvinceModel![index]
+                                            .activeTotal),
+                                    updateActive: "-0",
+                                    summaryRecovered:
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .recoveredTotal),
+                                    updateRecovered: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .update
+                                                .recoveredUpdate),
+                                    summaryDeaths: NumberFormat.decimalPattern()
+                                        .format(detailProvinceModel![index]
+                                            .deathsTotal),
+                                    updateDeaths: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .update
+                                                .deathsUpdate),
+                                    provinceName: detailProvinceModel![index]
+                                        .provinceName,
+                                    lastUpdate: DateFormat.EEEE()
+                                        .add_d()
+                                        .add_yMMMM()
+                                        .format((DateTime.parse(
+                                            allProvinceModel!.lastUpdate)))
+                                        .replaceAll('Monday', 'Senin,')
+                                        .replaceAll('Tuesday', 'Selasa,')
+                                        .replaceAll('Wednesday', 'Rabu,')
+                                        .replaceAll('Thursday', 'Kamis,')
+                                        .replaceAll('Friday', 'Jumat,')
+                                        .replaceAll('Saturday', 'Sabtu,')
+                                        .replaceAll('Sunday', 'Minggu,')
+                                        .replaceAll('January', 'Januari')
+                                        .replaceAll('February', 'Februari')
+                                        .replaceAll('March', 'Maret')
+                                        .replaceAll('April', 'April')
+                                        .replaceAll('May', 'Mei')
+                                        .replaceAll('June', 'Juni')
+                                        .replaceAll('July', 'Juli')
+                                        .replaceAll('August', 'Agustus')
+                                        .replaceAll('September', 'September')
+                                        .replaceAll('October', 'Oktober')
+                                        .replaceAll('November', 'November')
+                                        .replaceAll('December', 'Desember'),
+                                  ),
+                                );
+                              } else if (detailProvinceModel![index]
+                                  .provinceName
+                                  .trim()
+                                  .replaceAll(RegExp(r"\s+"), "")
+                                  .toLowerCase()
+                                  .contains(editingController.text
+                                      .trim()
+                                      .replaceAll(RegExp(r"\s+"), "")
+                                      .toLowerCase())) {
+                                return Container(
+                                  margin: EdgeInsets.only(
+                                    top: 0,
+                                    bottom: SpaceConfig.normalSpace,
+                                  ),
+                                  child: DetailBoxCard(
+                                    summaryPositive:
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .confirmedTotal),
+                                    updatePositive: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .update
+                                                .confirmedUpdate),
+                                    summaryActive: NumberFormat.decimalPattern()
+                                        .format(detailProvinceModel![index]
+                                            .activeTotal),
+                                    updateActive: "-0",
+                                    summaryRecovered:
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .recoveredTotal),
+                                    updateRecovered: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .update
+                                                .recoveredUpdate),
+                                    summaryDeaths: NumberFormat.decimalPattern()
+                                        .format(detailProvinceModel![index]
+                                            .deathsTotal),
+                                    updateDeaths: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvinceModel![index]
+                                                .update
+                                                .deathsUpdate),
+                                    provinceName: detailProvinceModel![index]
+                                        .provinceName,
+                                    lastUpdate: DateFormat.EEEE()
+                                        .add_d()
+                                        .add_yMMMM()
+                                        .format((DateTime.parse(
+                                            allProvinceModel!.lastUpdate)))
+                                        .replaceAll('Monday', 'Senin,')
+                                        .replaceAll('Tuesday', 'Selasa,')
+                                        .replaceAll('Wednesday', 'Rabu,')
+                                        .replaceAll('Thursday', 'Kamis,')
+                                        .replaceAll('Friday', 'Jumat,')
+                                        .replaceAll('Saturday', 'Sabtu,')
+                                        .replaceAll('Sunday', 'Minggu,')
+                                        .replaceAll('January', 'Januari')
+                                        .replaceAll('February', 'Februari')
+                                        .replaceAll('March', 'Maret')
+                                        .replaceAll('April', 'April')
+                                        .replaceAll('May', 'Mei')
+                                        .replaceAll('June', 'Juni')
+                                        .replaceAll('July', 'Juli')
+                                        .replaceAll('August', 'Agustus')
+                                        .replaceAll('September', 'September')
+                                        .replaceAll('October', 'Oktober')
+                                        .replaceAll('November', 'November')
+                                        .replaceAll('December', 'Desember'),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
                             },
                           ),
                         ),
