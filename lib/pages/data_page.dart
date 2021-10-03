@@ -57,7 +57,7 @@ class _DataPageState extends State<DataPage> {
 
     bannerURL = [
       'https://promkes.kemkes.go.id/cegah-virus-corona-jaga-kesehatan-dengan-germas',
-      'https://covid19.go.id/berita/mekanisme-pendaftaran-vaksinasi-masyarakat-lanjut-usia-60-tahun-ke-atas',
+      'https://kipi.covid19.go.id/',
       'https://sehatnegeriku.kemkes.go.id/baca/umum/20200125/2832840/wni-wuhan-tak-ada-terjangkit-ncov/',
       'https://linktr.ee/covid19.go.id',
     ];
