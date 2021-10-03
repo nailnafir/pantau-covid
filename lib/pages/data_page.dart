@@ -242,6 +242,50 @@ class _DataPageState extends State<DataPage> {
       children: [
         SizedBox(height: SpaceConfig.normalSpace),
         //NOTE: CASE
+        Card(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
+          ),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+          child: Container(
+            width: Get.width,
+            padding: EdgeInsets.symmetric(
+              vertical: SpaceConfig.longSpace,
+              horizontal: SpaceConfig.normalSpace,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  color: ColorTheme.secondaryColor,
+                ),
+                SizedBox(width: SpaceConfig.shortSpace),
+                Text(
+                  "Tangerang",
+                  style: TypeTheme.subTitleTextFont,
+                ),
+                Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SpaceConfig.shortSpace,
+                    vertical: SpaceConfig.shortSpace / 2,
+                  ),
+                  decoration: BoxDecoration(
+                      color: ColorTheme.secondaryColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(4)),
+                  child: Text(
+                    "Lokasi Kamu",
+                    style: TypeTheme.smallTextFont
+                        .copyWith(fontWeight: FontWeight.w400),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: SpaceConfig.longSpace),
         InkWell(
           onTap: () {
             Get.bottomSheet(
@@ -377,53 +421,6 @@ class _DataPageState extends State<DataPage> {
           },
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.symmetric(
-                  horizontal: SpaceConfig.longSpace - 4,
-                ),
-                child: Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(SpaceConfig.normalSpace)),
-                  child: Container(
-                    width: Get.width,
-                    padding: EdgeInsets.symmetric(
-                      vertical: SpaceConfig.longSpace,
-                      horizontal: SpaceConfig.normalSpace,
-                    ),
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.location_on,
-                          color: ColorTheme.secondaryColor,
-                        ),
-                        SizedBox(width: SpaceConfig.shortSpace),
-                        Text(
-                          "Tangerang",
-                          style: TypeTheme.subTitleTextFont,
-                        ),
-                        Spacer(),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: SpaceConfig.shortSpace,
-                            vertical: SpaceConfig.shortSpace / 2,
-                          ),
-                          decoration: BoxDecoration(
-                              color: ColorTheme.secondaryColor.withOpacity(0.3),
-                              borderRadius: BorderRadius.circular(4)),
-                          child: Text(
-                            "Lokasi Kamu",
-                            style: TypeTheme.smallTextFont
-                                .copyWith(fontWeight: FontWeight.w400),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: SpaceConfig.longSpace),
               Container(
                 margin: EdgeInsets.symmetric(
                   horizontal: SpaceConfig.longSpace,
