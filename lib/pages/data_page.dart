@@ -334,30 +334,71 @@ class _DataPageState extends State<DataPage> {
                             ),
                           ),
                         ),
-                        Card(
-                          margin: EdgeInsets.symmetric(
-                            vertical: SpaceConfig.normalSpace,
-                            horizontal: SpaceConfig.longSpace - 4,
-                          ),
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace)),
-                          color: Colors.white,
-                          child: TextFormField(
-                            controller: editingController,
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderSide: BorderSide.none),
-                                prefixIcon: Icon(
-                                  Icons.search,
-                                  color: ColorTheme.secondaryColor,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Card(
+                              margin: EdgeInsets.fromLTRB(
+                                SpaceConfig.longSpace - 4,
+                                SpaceConfig.normalSpace,
+                                0,
+                                SpaceConfig.normalSpace,
+                              ),
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace)),
+                              color: Colors.white,
+                              child: Container(
+                                height: 50,
+                                width: MediaQuery.of(context).size.width -
+                                    2 * SpaceConfig.longSpace -
+                                    50,
+                                child: TextFormField(
+                                  textAlignVertical: TextAlignVertical.center,
+                                  style: TypeTheme.normalTextFont,
+                                  controller: editingController,
+                                  onEditingComplete: () {
+                                    setState(() {});
+                                  },
+                                  onChanged: (value) {
+                                    setState(() {});
+                                  },
+                                  decoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                          borderSide: BorderSide.none),
+                                      hintText: "Cari Provinsi...."),
                                 ),
-                                hintText: "Temukan Provinsi...."),
-                          ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                setState(() {});
+                              },
+                              child: Card(
+                                margin: EdgeInsets.fromLTRB(
+                                  0,
+                                  SpaceConfig.normalSpace,
+                                  SpaceConfig.longSpace - 4,
+                                  SpaceConfig.normalSpace,
+                                ),
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        SpaceConfig.normalSpace)),
+                                color: ColorTheme.secondaryColor,
+                                child: Container(
+                                  width: 50,
+                                  height: 50,
+                                  child: Icon(
+                                    Icons.search,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         Expanded(
                           child: ListView.builder(
