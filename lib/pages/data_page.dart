@@ -271,9 +271,14 @@ class _DataPageState extends State<DataPage> {
                 ),
                 SizedBox(width: SpaceConfig.shortSpace),
                 (userLocation != null)
-                    ? Text(
-                        userLocation!.address,
-                        style: TypeTheme.subTitleTextFont,
+                    ? Container(
+                        width: MediaQuery.of(context).size.width / 2,
+                        child: Text(
+                          userLocation!.address,
+                          overflow: TextOverflow.ellipsis,
+                          style: TypeTheme.subTitleTextFont,
+                          maxLines: 1,
+                        ),
                       )
                     : Shimmer.fromColors(
                         baseColor: Colors.grey[300]!,
