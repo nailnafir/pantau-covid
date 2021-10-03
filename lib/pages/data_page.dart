@@ -1429,6 +1429,7 @@ class _DataPageState extends State<DataPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
                                     Container(
                                       margin: EdgeInsets.symmetric(
                                           horizontal: SpaceConfig.normalSpace),
@@ -1608,6 +1609,7 @@ class _DataPageState extends State<DataPage> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
                                     Container(
                                       margin: EdgeInsets.symmetric(
                                           horizontal: SpaceConfig.normalSpace),
