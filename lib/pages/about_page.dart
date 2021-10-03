@@ -276,14 +276,14 @@ class AboutPage extends StatelessWidget {
                         height: SpaceConfig.longSpace,
                       ),
                       Text(
-                        "Versi 1.0.0",
+                        "Versi 1.3.0",
                         style: TypeTheme.normalTextFont.copyWith(
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
                         ),
                       ),
                       Text(
-                        "Hak Cipta ©${DateTime.now().year}. Nailul Firdaus",
+                        "Hak Cipta ©2020-${DateTime.now().year}. Nailul Firdaus",
                         style: TypeTheme.normalTextFont.copyWith(
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
