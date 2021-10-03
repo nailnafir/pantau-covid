@@ -13,6 +13,7 @@ class _DataPageState extends State<DataPage> {
   List<MonitoringVaccine>? monitoringVaccine;
   AllProvinceModel? allProvinceModel;
   List<DetailProvinceModel>? detailProvinceModel;
+  UserLocation? userLocation;
 
   int _current = 0;
 
@@ -22,6 +23,11 @@ class _DataPageState extends State<DataPage> {
   @override
   void initState() {
     super.initState();
+
+    UserLocation.getUserLocation().then((value) {
+      userLocation = value;
+      setState(() {});
+    });
 
     CaseTotalModel.fetchTotal('/public/api/update.json').then((value) {
       caseTotal = value;
@@ -263,7 +269,9 @@ class _DataPageState extends State<DataPage> {
                 ),
                 SizedBox(width: SpaceConfig.shortSpace),
                 Text(
-                  "Tangerang",
+                  userLocation != null
+                      ? userLocation!.address[1]
+                      : "data gak ada",
                   style: TypeTheme.subTitleTextFont,
                 ),
                 Spacer(),
