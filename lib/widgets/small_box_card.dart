@@ -34,10 +34,10 @@ class SmallBoxCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              margin: EdgeInsets.only(right: 6),
+              margin: EdgeInsets.only(right: SpaceConfig.normalSpace - 2),
               child: Icon(
                 icon,
-                size: MediaQuery.of(context).size.width / 6 - 6,
+                size: 50,
                 color: Colors.black.withAlpha(50),
               ),
             ),

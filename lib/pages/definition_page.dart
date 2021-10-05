@@ -6,7 +6,7 @@ class DefinitionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ColorTheme.bgLight,
+      backgroundColor: ColorTheme.primaryColor,
       appBar: AppBar(
         elevation: 2,
         backgroundColor: ColorTheme.primaryColor,
@@ -35,7 +35,7 @@ class DefinitionPage extends StatelessWidget {
           children: [
             Container(
               color: ColorTheme.primaryColor,
-              height: MediaQuery.of(context).size.height / 1.5,
+              height: MediaQuery.of(context).size.height / 1.2,
             ),
             Positioned(
               top: -150,
@@ -55,12 +55,12 @@ class DefinitionPage extends StatelessWidget {
                 height: 100,
               ),
             ),
-            ListView(
+            Stack(
               children: [
                 _description(),
+                _content(),
               ],
             ),
-            _content(),
           ],
         ),
       ),
@@ -70,76 +70,68 @@ class DefinitionPage extends StatelessWidget {
   _description() {
     return Container(
       padding: EdgeInsets.all(SpaceConfig.longSpace),
-      child: Builder(
-        builder: (context) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Apa Itu Virus Corona?",
-                style: TypeTheme.subTitleTextFont.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ),
-              SizedBox(height: SpaceConfig.shortSpace),
-              Text(
-                "Virus corona (COVID-19) adalah penyakit menular yang disebabkan oleh virus corona yang baru-baru ini ditemukan. Sebagian besar orang yang tertular COVID-19 akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa penanganan khusus.",
-                style: TypeTheme.normalTextFont.copyWith(
-                  color: Colors.black.withOpacity(0.5),
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.justify,
-              ),
-              SizedBox(height: SpaceConfig.longSpace),
-              Text(
-                "Cara Penyebaran Virus",
-                style: TypeTheme.subTitleTextFont.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black.withOpacity(0.5),
-                ),
-              ),
-              SizedBox(height: SpaceConfig.shortSpace),
-              Text(
-                "Virus yang menyebabkan COVID-19 disebarkan melalui droplet (percikan air liur) yang dihasilkan saat orang yang terinfeksi batuk, bersin, atau bernapas. Droplet ini terlalu berat dan tidak bisa bertahan di udara, sehingga dengan cepat jatuh dan menempel pada suatu permukaan. Anda dapat tertular saat menghirup udara yang mengandung virus atau menyentuh permukaan benda yang terkontaminasi lalu menyentuh mata, hidung, atau mulut Anda.",
-                style: TypeTheme.normalTextFont.copyWith(
-                  color: Colors.black.withOpacity(0.5),
-                  fontWeight: FontWeight.w500,
-                ),
-                textAlign: TextAlign.justify,
-              ),
-              SizedBox(height: SpaceConfig.normalSpace),
-            ],
-          );
-        },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Apa Itu Virus Corona?",
+            style: TypeTheme.subTitleTextFont.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black.withOpacity(0.5),
+            ),
+          ),
+          SizedBox(height: SpaceConfig.shortSpace),
+          Text(
+            "Virus corona (COVID-19) adalah penyakit menular yang disebabkan oleh virus corona yang baru-baru ini ditemukan. Sebagian besar orang yang tertular COVID-19 akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa penanganan khusus.",
+            style: TypeTheme.normalTextFont.copyWith(
+              color: Colors.black.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          SizedBox(height: SpaceConfig.longSpace),
+          Text(
+            "Cara Penyebaran Virus",
+            style: TypeTheme.subTitleTextFont.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black.withOpacity(0.5),
+            ),
+          ),
+          SizedBox(height: SpaceConfig.shortSpace),
+          Text(
+            "Virus yang menyebabkan COVID-19 disebarkan melalui droplet (percikan air liur) yang dihasilkan saat orang yang terinfeksi batuk, bersin, atau bernapas. Droplet ini terlalu berat dan tidak bisa bertahan di udara, sehingga dengan cepat jatuh dan menempel pada suatu permukaan. Anda dapat tertular saat menghirup udara yang mengandung virus atau menyentuh permukaan benda yang terkontaminasi lalu menyentuh mata, hidung, atau mulut Anda.",
+            style: TypeTheme.normalTextFont.copyWith(
+              color: Colors.black.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          SizedBox(height: SpaceConfig.normalSpace),
+        ],
       ),
     );
   }
 
   _content() {
     return DraggableScrollableSheet(
-      initialChildSize: 0.30,
-      maxChildSize: 0.70,
-      minChildSize: 0.30,
+      initialChildSize: (Get.height > 720) ? 0.45 : 0.18,
+      maxChildSize: (Get.height > 720) ? 0.64 : 0.80,
+      minChildSize: 0.18,
       builder: (context, scrollController) {
         return NotificationListener<OverscrollIndicatorNotification>(
           onNotification: (notification) {
             notification.disallowGlow();
             return false;
           },
-          child: SingleChildScrollView(
-            primary: false,
-            controller: scrollController,
-            dragStartBehavior: DragStartBehavior.down,
-            child: Container(
-              height: MediaQuery.of(context).size.height / 1.5 -
-                  2 * SpaceConfig.longSpace,
-              decoration: BoxDecoration(
-                color: ColorTheme.bgLight,
-                borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(SpaceConfig.longSpace)),
-              ),
+          child: Container(
+            decoration: BoxDecoration(
+              color: ColorTheme.bgLight,
+              borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(SpaceConfig.longSpace)),
+            ),
+            child: SingleChildScrollView(
+              controller: scrollController,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -155,10 +147,11 @@ class DefinitionPage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: SpaceConfig.longSpace),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
+                    margin: EdgeInsets.symmetric(
+                      horizontal: SpaceConfig.longSpace,
+                      vertical: SpaceConfig.normalSpace,
+                    ),
                     child: Text(
                       "Apakah Kamu Perlu?",
                       style: TypeTheme.subTitleTextFont
@@ -166,9 +159,9 @@ class DefinitionPage extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    margin:
-                        EdgeInsets.symmetric(vertical: SpaceConfig.normalSpace),
-                    height: MediaQuery.of(context).size.height / 2.2,
+                    height: (Get.height > 720)
+                        ? (Get.height / 2.08)
+                        : (Get.height / 1.8),
                     child: GridView.count(
                       padding: EdgeInsets.symmetric(
                           horizontal: SpaceConfig.longSpace - 4),

@@ -73,63 +73,59 @@ class SymptompsPage extends StatelessWidget {
 
   _description() {
     return Container(
-        padding: EdgeInsets.all(SpaceConfig.longSpace),
-        child: Builder(
-          builder: (context) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Apa kamu merasa sakit?",
-                  style: TypeTheme.subTitleTextFont.copyWith(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                ),
-                SizedBox(height: SpaceConfig.shortSpace),
-                Text(
-                  "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
-                  style: TypeTheme.normalTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.justify,
-                ),
-                SizedBox(height: SpaceConfig.longSpace),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(SpaceConfig.normalSpace)),
-                      elevation: 2,
-                      primary: ColorTheme.redColor,
-                    ),
-                    onPressed: () async {
-                      if (await canLaunch(
-                          "https://covid19.go.id/pelaporan-mandiri")) {
-                        await launch(
-                          "https://covid19.go.id/pelaporan-mandiri",
-                          enableDomStorage: true,
-                          enableJavaScript: true,
-                          forceWebView: true,
-                        );
-                      } else {
-                        throw Exception("Gagal mengalihkan ke telepon");
-                      }
-                    },
-                    child: Text("Lapor Mandiri",
-                        style: TypeTheme.subTitleTextFont),
-                  ),
-                ),
-                SizedBox(height: SpaceConfig.normalSpace),
-              ],
-            );
-          },
-        ));
+      padding: EdgeInsets.all(SpaceConfig.longSpace),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Apa kamu merasa sakit?",
+            style: TypeTheme.subTitleTextFont.copyWith(
+              fontWeight: FontWeight.w600,
+              color: Colors.black.withOpacity(0.5),
+            ),
+          ),
+          SizedBox(height: SpaceConfig.shortSpace),
+          Text(
+            "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
+            style: TypeTheme.normalTextFont.copyWith(
+              color: Colors.black.withOpacity(0.5),
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.justify,
+          ),
+          SizedBox(height: SpaceConfig.longSpace),
+          Container(
+            width: Get.width,
+            height: 50,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                elevation: 2,
+                primary: ColorTheme.redColor,
+              ),
+              onPressed: () async {
+                if (await canLaunch(
+                    "https://covid19.go.id/pelaporan-mandiri")) {
+                  await launch(
+                    "https://covid19.go.id/pelaporan-mandiri",
+                    enableDomStorage: true,
+                    enableJavaScript: true,
+                    forceWebView: true,
+                  );
+                } else {
+                  throw Exception("Gagal mengalihkan ke telepon");
+                }
+              },
+              child: Text("Lapor Mandiri", style: TypeTheme.subTitleTextFont),
+            ),
+          ),
+          SizedBox(height: SpaceConfig.normalSpace),
+        ],
+      ),
+    );
   }
 
   _content() {
@@ -139,92 +135,86 @@ class SymptompsPage extends StatelessWidget {
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(SpaceConfig.longSpace)),
       ),
-      child: Builder(
-        builder: (context) {
-          return Column(
-            children: [
-              Container(
-                margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
-                height: MediaQuery.of(context).size.height / 2.2,
-                child: GridView.count(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.longSpace - 4),
-                  crossAxisCount: 2,
-                  crossAxisSpacing: SpaceConfig.shortSpace,
-                  mainAxisSpacing: SpaceConfig.shortSpace,
-                  childAspectRatio: 1.0,
-                  primary: false,
-                  children: [
-                    NormalBoxCard(
-                      iconImage: Container(
-                        width: 120,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/symptomp-headache.png'),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+      child: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
+            height:
+                (Get.height > 720) ? (Get.height / 2.2) : (Get.height / 1.85),
+            child: GridView.count(
+              padding:
+                  EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
+              crossAxisCount: 2,
+              crossAxisSpacing: SpaceConfig.shortSpace,
+              mainAxisSpacing: SpaceConfig.shortSpace,
+              childAspectRatio: 1.0,
+              primary: false,
+              children: [
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/symptomp-headache.png'),
+                        fit: BoxFit.fill,
                       ),
-                      title: 'Sakit Kepala',
-                      backgroundColor: Colors.white,
-                      textColor: Colors.black,
                     ),
-                    NormalBoxCard(
-                      iconImage: Container(
-                        width: 120,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/symptomp-cough.png'),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      title: 'Batuk',
-                      backgroundColor: Colors.white,
-                      textColor: Colors.black,
-                    ),
-                    NormalBoxCard(
-                      iconImage: Container(
-                        width: 120,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/symptomp-fever.png'),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      title: 'Demam',
-                      backgroundColor: Colors.white,
-                      textColor: Colors.black,
-                    ),
-                    NormalBoxCard(
-                      iconImage: Container(
-                        width: 120,
-                        height: 100,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image:
-                                AssetImage('assets/images/symptomp-pain.png'),
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                      title: 'Nyeri Otot',
-                      backgroundColor: Colors.white,
-                      textColor: Colors.black,
-                    ),
-                  ],
+                  ),
+                  title: 'Sakit Kepala',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-              ),
-            ],
-          );
-        },
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/symptomp-cough.png'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  title: 'Batuk',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                ),
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/symptomp-fever.png'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  title: 'Demam',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                ),
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/symptomp-pain.png'),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                  title: 'Nyeri Otot',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

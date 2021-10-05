@@ -36,10 +36,10 @@ class BigBoxCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              margin: EdgeInsets.only(right: 6),
+              margin: EdgeInsets.only(right: SpaceConfig.shortSpace - 2),
               child: Icon(
                 icon,
-                size: MediaQuery.of(context).size.width / 4 - 6,
+                size: 100,
                 color: Colors.black.withAlpha(50),
               ),
             ),

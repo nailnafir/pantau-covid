@@ -328,130 +328,107 @@ class _NewsPageState extends State<NewsPage> {
                   ),
                 ),
               )
-            : SizedBox(
-                height: MediaQuery.of(context).size.height / 3 +
-                    SpaceConfig.longSpace +
-                    8,
-                child: ListView.builder(
-                    itemCount: newsTitleContent!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          launch(
-                            webScraperContent.baseUrl! +
-                                newsUrlContent[index]['attributes']['href'],
-                            forceWebView: true,
-                            enableJavaScript: true,
-                            enableDomStorage: true,
-                          );
-                        },
-                        child: Card(
-                          elevation: 2,
-                          margin: EdgeInsets.only(
-                            top: 0,
-                            bottom: (index == newsTitleContent!.length - 1)
-                                ? SpaceConfig.longSpace
-                                : SpaceConfig.normalSpace,
-                            left: SpaceConfig.longSpace,
-                            right: SpaceConfig.longSpace,
-                          ),
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace)),
-                          child: Container(
-                            padding: EdgeInsets.all(SpaceConfig.normalSpace),
+            : Column(
+                children: List.generate(newsTitleContent!.length, (index) {
+                  return Card(
+                    elevation: 2,
+                    margin: EdgeInsets.only(
+                      top: 0,
+                      bottom: (index == newsTitleContent!.length - 1)
+                          ? SpaceConfig.longSpace
+                          : SpaceConfig.normalSpace,
+                      left: SpaceConfig.longSpace,
+                      right: SpaceConfig.longSpace,
+                    ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.circular(SpaceConfig.normalSpace)),
+                    child: Container(
+                      padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.circular(SpaceConfig.normalSpace),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 100,
+                            height: 100,
                             decoration: BoxDecoration(
-                              color: Colors.white,
                               borderRadius: BorderRadius.circular(
                                   SpaceConfig.normalSpace),
+                              image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                  newsImageContent[index + 2]['attributes']
+                                      ['src'],
+                                ),
+                              ),
                             ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                          ),
+                          Container(
+                            margin:
+                                EdgeInsets.only(left: SpaceConfig.longSpace),
+                            width: MediaQuery.of(context).size.width -
+                                3 * SpaceConfig.longSpace -
+                                2 * SpaceConfig.normalSpace -
+                                100,
+                            height: 100,
+                            child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                        SpaceConfig.normalSpace),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                        newsImageContent[index + 2]
-                                            ['attributes']['src'],
-                                      ),
-                                    ),
+                                Text(
+                                  newsTitleContent![index]['title'],
+                                  maxLines: 3,
+                                  textAlign: TextAlign.left,
+                                  overflow: TextOverflow.clip,
+                                  style: TypeTheme.normalTextFont.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    height: 1.2,
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      left: SpaceConfig.longSpace),
-                                  width: MediaQuery.of(context).size.width -
-                                      3 * SpaceConfig.longSpace -
-                                      2 * SpaceConfig.normalSpace -
-                                      100,
-                                  height: 100,
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        newsTitleContent![index]['title'],
-                                        maxLines: 3,
-                                        textAlign: TextAlign.left,
-                                        overflow: TextOverflow.clip,
-                                        style:
-                                            TypeTheme.normalTextFont.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          height: 1.2,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "merdeka.com",
+                                      style: TypeTheme.smallTextFont.copyWith(
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w500,
+                                        color: ColorTheme.secondaryColor,
+                                      ),
+                                    ),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.access_time,
+                                          color: ColorTheme.secondaryColor,
+                                          size: 18,
                                         ),
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "merdeka.com",
-                                            style: TypeTheme.smallTextFont
-                                                .copyWith(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              color: ColorTheme.secondaryColor,
-                                            ),
+                                        Text(
+                                          newsTimeContent[index + 2]['title'],
+                                          style:
+                                              TypeTheme.smallTextFont.copyWith(
+                                            fontSize: 12,
+                                            color: Colors.grey[700],
                                           ),
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.access_time,
-                                                color:
-                                                    ColorTheme.secondaryColor,
-                                                size: 18,
-                                              ),
-                                              Text(
-                                                newsTimeContent[index + 2]
-                                                    ['title'],
-                                                style: TypeTheme.smallTextFont
-                                                    .copyWith(
-                                                  fontSize: 12,
-                                                  color: Colors.grey[700],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                      );
-                    }),
+                        ],
+                      ),
+                    ),
+                  );
+                }),
               ),
       ],
     );

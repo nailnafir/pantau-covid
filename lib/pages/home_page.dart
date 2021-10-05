@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: SpaceConfig.normalSpace * 5),
               Text(
-                "Hilangkan\nCovid-19",
+                "Lawan\nCovid-19",
                 style: TypeTheme.normalTextFont.copyWith(
                   color: Colors.black.withOpacity(0.5),
                   fontWeight: FontWeight.w700,
@@ -142,8 +142,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                height: MediaQuery.of(context).size.height / 8 +
-                    SpaceConfig.normalSpace,
+                height: (Get.height + Get.width) / 10 + 4,
                 margin: EdgeInsets.symmetric(
                   vertical: SpaceConfig.longSpace,
                   horizontal: SpaceConfig.longSpace - 4,

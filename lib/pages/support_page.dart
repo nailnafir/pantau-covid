@@ -167,62 +167,61 @@ class SupportPage extends StatelessWidget {
                             padding: EdgeInsets.symmetric(
                                 horizontal: SpaceConfig.longSpace),
                             color: ColorTheme.bgLight,
-                            height: MediaQuery.of(context).size.height / 3,
-                            child: Stack(
+                            height: 240,
+                            child: Column(
                               children: [
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    width: 50,
-                                    height: 6,
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: SpaceConfig.normalSpace),
-                                    decoration: BoxDecoration(
-                                      color: ColorTheme.secondaryColor,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                Stack(
                                   children: [
-                                    InkWell(
-                                      onTap: () async {
-                                        if (await canLaunch("tel:119")) {
-                                          await launch("tel:119");
-                                        } else {
-                                          throw Exception(
-                                              'Gagal mengalihkan ke tujuan');
-                                        }
-                                      },
-                                      child: ListCardOneLine(
-                                        backgroundIconColor:
-                                            ColorTheme.redColor,
-                                        tileColor: Colors.white,
-                                        title: "Kontak Darurat",
-                                        icon: Icons.call,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    InkWell(
-                                      onTap: () async {
-                                        if (await canLaunch(
-                                            URLShared.telegramURL)) {
-                                          await launch(URLShared.telegramURL);
-                                        } else {
-                                          throw Exception(
-                                              'Gagal mengalihkan ke tujuan');
-                                        }
-                                      },
-                                      child: ListCardOneLine(
-                                        backgroundIconColor:
-                                            ColorTheme.blueColor,
-                                        tileColor: Colors.white,
-                                        title: "Kontak Saya",
-                                        icon: Icons.call,
+                                    Align(
+                                      alignment: Alignment.topCenter,
+                                      child: Container(
+                                        width: 50,
+                                        height: 6,
+                                        margin: EdgeInsets.symmetric(
+                                            vertical: SpaceConfig.normalSpace),
+                                        decoration: BoxDecoration(
+                                          color: ColorTheme.secondaryColor,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
                                       ),
                                     ),
                                   ],
+                                ),
+                                SizedBox(height: SpaceConfig.normalSpace),
+                                InkWell(
+                                  onTap: () async {
+                                    if (await canLaunch("tel:119")) {
+                                      await launch("tel:119");
+                                    } else {
+                                      throw Exception(
+                                          'Gagal mengalihkan ke tujuan');
+                                    }
+                                  },
+                                  child: ListCardOneLine(
+                                    backgroundIconColor: ColorTheme.redColor,
+                                    tileColor: Colors.white,
+                                    title: "Kontak Darurat",
+                                    icon: Icons.call,
+                                  ),
+                                ),
+                                SizedBox(height: SpaceConfig.normalSpace),
+                                InkWell(
+                                  onTap: () async {
+                                    if (await canLaunch(
+                                        URLShared.telegramURL)) {
+                                      await launch(URLShared.telegramURL);
+                                    } else {
+                                      throw Exception(
+                                          'Gagal mengalihkan ke tujuan');
+                                    }
+                                  },
+                                  child: ListCardOneLine(
+                                    backgroundIconColor: ColorTheme.blueColor,
+                                    tileColor: Colors.white,
+                                    title: "Kontak Saya",
+                                    icon: Icons.call,
+                                  ),
                                 ),
                               ],
                             ),
@@ -248,7 +247,7 @@ class SupportPage extends StatelessWidget {
                     backgroundIconColor: ColorTheme.blueColor,
                     tileColor: Colors.white,
                     title: "Tentang Aplikasi",
-                    subtitle: "Informasi terkait aplikasi",
+                    subtitle: "Informasi aplikasi",
                     icon: Icons.perm_device_info,
                   ),
                 ),
