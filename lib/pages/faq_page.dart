@@ -18,7 +18,7 @@ class FaqPage extends StatelessWidget {
       'Untuk berita yang tidak bisa diakses, kemungkinan bahwa sumber website berita tersebut sedang bermasalah.',
       'Jumlah kasus akan diperbarui setiap hari, tetapi untuk berita diperbarui sekitar 30 menit.',
       'Data yang tidak tampil atau terlalu lama dimuat, biasanya dikarenakan sinyal yang lemah atau kecepatan internet yang lambat.',
-      'Untuk mengubah lokasi pada kasus, dapat menuju ke menu kasus, lalu pilih bagian lokasi yang tersedia.',
+      'Lokasi yang tampil merupakan lokasi kamu saat ini. Jadi, lokasi akan terganti otomatis saat kamu berada di suatu tempat baru.',
     ];
 
     return Scaffold(
@@ -46,36 +46,33 @@ class FaqPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: ListView(
         children: [
-          Container(
-            height: 300,
-            child: Lottie.asset('assets/images/illustration-faq.json'),
-          ),
-          Expanded(
-            child: NotificationListener<OverscrollIndicatorNotification>(
-              onNotification: (notification) {
-                notification.disallowGlow();
-                return false;
-              },
-              child: ListView.builder(
-                itemCount: title.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(SpaceConfig.normalSpace)),
-                    margin: EdgeInsets.fromLTRB(
-                      SpaceConfig.longSpace,
-                      0,
-                      SpaceConfig.longSpace,
-                      SpaceConfig.normalSpace,
-                    ),
-                    child: ClipRRect(
-                      borderRadius:
-                          BorderRadius.circular(SpaceConfig.normalSpace),
+          Stack(
+            children: [
+              Positioned.fill(
+                top: -50,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Container(
+                    height: 300,
+                    child: Lottie.asset('assets/images/illustration-faq.json'),
+                  ),
+                ),
+              ),
+              Container(
+                margin:
+                    EdgeInsets.only(top: 220, bottom: SpaceConfig.longSpace),
+                child: Column(
+                  children: List.generate(title.length, (index) {
+                    return Container(
+                      margin: EdgeInsets.only(
+                        top: (index == 0) ? 0 : SpaceConfig.shortSpace / 2,
+                        bottom: (index == title.length - 1)
+                            ? 0
+                            : SpaceConfig.shortSpace / 2,
+                      ),
+                      color: Colors.white,
                       child: ExpansionTile(
                         leading: Container(
                           padding: EdgeInsets.symmetric(
@@ -89,8 +86,7 @@ class FaqPage extends StatelessWidget {
                           horizontal: SpaceConfig.longSpace,
                         ),
                         iconColor: Colors.black,
-                        collapsedIconColor: ColorTheme.secondaryColor,
-                        backgroundColor: ColorTheme.primaryColor,
+                        collapsedIconColor: ColorTheme.primaryColor,
                         title: Text(
                           title[index],
                           style: TypeTheme.normalTextFont.copyWith(
@@ -108,11 +104,11 @@ class FaqPage extends StatelessWidget {
                           ),
                         ],
                       ),
-                    ),
-                  );
-                },
+                    );
+                  }),
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

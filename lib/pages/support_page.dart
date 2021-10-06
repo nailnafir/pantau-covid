@@ -162,6 +162,7 @@ class SupportPage extends StatelessWidget {
                               top: Radius.circular(SpaceConfig.longSpace)),
                         ),
                         onClosing: () {},
+                        enableDrag: false,
                         builder: (context) {
                           return Container(
                             padding: EdgeInsets.symmetric(
