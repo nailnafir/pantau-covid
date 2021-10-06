@@ -276,7 +276,7 @@ class _DataPageState extends State<DataPage> {
                         child: Text(
                           userLocation!.address,
                           overflow: TextOverflow.ellipsis,
-                          style: TypeTheme.normalTextFont
+                          style: TypeTheme.subTitleTextFont
                               .copyWith(fontWeight: FontWeight.w600),
                           maxLines: 1,
                         ),
@@ -287,7 +287,7 @@ class _DataPageState extends State<DataPage> {
                         child: Container(
                           color: Colors.grey[300]!,
                           height: 18,
-                          width: MediaQuery.of(context).size.width / 3,
+                          width: Get.width / 3,
                         ),
                       ),
                 Spacer(),
@@ -324,6 +324,7 @@ class _DataPageState extends State<DataPage> {
   }
 
   _case() {
+    bool isTyping = false;
     return GestureDetector(
       onTap: () {
         Get.bottomSheet(
@@ -334,11 +335,11 @@ class _DataPageState extends State<DataPage> {
                   top: Radius.circular(SpaceConfig.longSpace)),
             ),
             onClosing: () {},
+            enableDrag: false,
+            backgroundColor: ColorTheme.bgLight,
             builder: (context) {
-              return Container(
-                color: ColorTheme.bgLight,
-                height: MediaQuery.of(context).size.height / 1.5,
-                child: Column(
+              return StatefulBuilder(builder: (BuildContext context, setState) {
+                return Column(
                   children: [
                     Align(
                       alignment: Alignment.topCenter,
@@ -377,13 +378,25 @@ class _DataPageState extends State<DataPage> {
                               textAlignVertical: TextAlignVertical.center,
                               style: TypeTheme.normalTextFont,
                               controller: editingController,
-                              onEditingComplete: () {
-                                setState(() {});
-                              },
                               onChanged: (value) {
-                                setState(() {});
+                                setState(() {
+                                  isTyping = value.length >= 1;
+                                });
                               },
                               decoration: InputDecoration(
+                                  suffixIcon: isTyping
+                                      ? IconButton(
+                                          color: ColorTheme.redColor,
+                                          icon: Icon(Icons.close),
+                                          onPressed: () {
+                                            setState(() {
+                                              editingController.text = '';
+
+                                              isTyping = !isTyping;
+                                            });
+                                          },
+                                        )
+                                      : SizedBox(),
                                   border: OutlineInputBorder(
                                       borderSide: BorderSide.none),
                                   hintText: "Cari Provinsi...."),
@@ -392,7 +405,6 @@ class _DataPageState extends State<DataPage> {
                         ),
                         InkWell(
                           onTap: () {
-                            FocusScope.of(context).unfocus();
                             setState(() {});
                           },
                           child: Card(
@@ -568,8 +580,8 @@ class _DataPageState extends State<DataPage> {
                       ),
                     ),
                   ],
-                ),
-              );
+                );
+              });
             },
           ),
         );
@@ -788,10 +800,11 @@ class _DataPageState extends State<DataPage> {
                   top: Radius.circular(SpaceConfig.longSpace)),
             ),
             onClosing: () {},
+            enableDrag: false,
             builder: (context) {
               return Container(
                 color: ColorTheme.bgLight,
-                height: MediaQuery.of(context).size.height / 1.5,
+                height: Get.height / 1.5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
