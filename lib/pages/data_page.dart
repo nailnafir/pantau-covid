@@ -745,7 +745,7 @@ class _DataPageState extends State<DataPage> {
                     children: List.generate(2, (index) {
                       return Container(
                         margin: EdgeInsets.only(
-                          bottom: SpaceConfig.normalSpace + 4,
+                          bottom: SpaceConfig.normalSpace - 4,
                           left: SpaceConfig.longSpace,
                           right: SpaceConfig.longSpace,
                         ),
@@ -2109,7 +2109,7 @@ class _DataPageState extends State<DataPage> {
                     children: List.generate(3, (index) {
                       return Container(
                         margin: EdgeInsets.only(
-                          bottom: SpaceConfig.normalSpace + 4,
+                          bottom: SpaceConfig.normalSpace - 4,
                           left: SpaceConfig.longSpace,
                           right: SpaceConfig.longSpace,
                         ),
