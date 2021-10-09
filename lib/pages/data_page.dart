@@ -8,6 +8,9 @@ class DataPage extends StatefulWidget {
 }
 
 class _DataPageState extends State<DataPage> {
+  final GlobalKey<RefreshIndicatorState> refreshData =
+      new GlobalKey<RefreshIndicatorState>();
+
   TextEditingController editingController = TextEditingController();
 
   CaseTotalModel? caseTotal;
@@ -76,47 +79,86 @@ class _DataPageState extends State<DataPage> {
     return Scaffold(
       backgroundColor: ColorTheme.bgLight,
       body: SafeArea(
-        child: ListView(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 250,
-                  color: ColorTheme.primaryColor,
-                ),
-                Positioned(
-                  top: -180,
-                  left: -150,
-                  child: Bubble(
-                    color: ColorTheme.secondaryColor,
-                    width: 300,
-                    height: 300,
+        child: RefreshIndicator(
+          key: refreshData,
+          color: ColorTheme.secondaryColor,
+          onRefresh: () {
+            return Future.delayed(Duration(seconds: 3)).then((value) {
+              UserLocation.getUserLocation().then((value) {
+                userLocation = value;
+                setState(() {});
+              });
+
+              CaseTotalModel.fetchTotal('/public/api/update.json')
+                  .then((value) {
+                caseTotal = value;
+                setState(() {});
+              });
+
+              AllProvinceModel.fetchAll('/public/api/prov.json').then((value) {
+                allProvinceModel = value;
+                setState(() {});
+              });
+
+              DetailProvinceModel.fetchDetail('/public/api/prov.json')
+                  .then((value) {
+                detailProvinceModel = value;
+                setState(() {});
+              });
+
+              LocalVaccineModel.fetchVaccine('/vaksinasi').then((value) {
+                localVaccine = value;
+                setState(() {});
+              });
+
+              MonitoringVaccine.fetchVaccine('/vaksinasi').then((value) {
+                monitoringVaccine = value;
+                setState(() {});
+              });
+            });
+          },
+          child: ListView(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 250,
+                    color: ColorTheme.primaryColor,
                   ),
-                ),
-                Positioned(
-                  top: 30,
-                  right: -50,
-                  child: Bubble(
-                    color: ColorTheme.secondaryColor,
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 150),
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: ColorTheme.bgLight,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(SpaceConfig.longSpace),
-                      topRight: Radius.circular(SpaceConfig.longSpace),
+                  Positioned(
+                    top: -180,
+                    left: -150,
+                    child: Bubble(
+                      color: ColorTheme.secondaryColor,
+                      width: 300,
+                      height: 300,
                     ),
                   ),
-                ),
-                _buildBody(),
-              ],
-            ),
-          ],
+                  Positioned(
+                    top: 30,
+                    right: -50,
+                    child: Bubble(
+                      color: ColorTheme.secondaryColor,
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 150),
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: ColorTheme.bgLight,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(SpaceConfig.longSpace),
+                        topRight: Radius.circular(SpaceConfig.longSpace),
+                      ),
+                    ),
+                  ),
+                  _buildBody(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -8,6 +8,9 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
+  final GlobalKey<RefreshIndicatorState> refreshNews =
+      new GlobalKey<RefreshIndicatorState>();
+
   final webScraperSlider = WebScraper('https://health.detik.com');
 
   final webScraperContent = WebScraper('https://www.merdeka.com');
@@ -84,47 +87,59 @@ class _NewsPageState extends State<NewsPage> {
     return Scaffold(
       backgroundColor: ColorTheme.bgLight,
       body: SafeArea(
-        child: ListView(
-          children: [
-            Stack(
-              children: [
-                Container(
-                  height: 250,
-                  color: ColorTheme.primaryColor,
-                ),
-                Positioned(
-                  top: -180,
-                  left: -150,
-                  child: Bubble(
-                    color: ColorTheme.secondaryColor,
-                    width: 300,
-                    height: 300,
+        child: RefreshIndicator(
+          key: refreshNews,
+          color: ColorTheme.secondaryColor,
+          onRefresh: () {
+            return Future.delayed(Duration(seconds: 3)).then((value) {
+              setState(() {
+                fetchNewsSlider();
+                fetchNewsContent();
+              });
+            });
+          },
+          child: ListView(
+            children: [
+              Stack(
+                children: [
+                  Container(
+                    height: 250,
+                    color: ColorTheme.primaryColor,
                   ),
-                ),
-                Positioned(
-                  top: 30,
-                  right: -50,
-                  child: Bubble(
-                    color: ColorTheme.secondaryColor,
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 150),
-                  height: 300,
-                  decoration: BoxDecoration(
-                    color: ColorTheme.bgLight,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(SpaceConfig.longSpace),
-                      topRight: Radius.circular(SpaceConfig.longSpace),
+                  Positioned(
+                    top: -180,
+                    left: -150,
+                    child: Bubble(
+                      color: ColorTheme.secondaryColor,
+                      width: 300,
+                      height: 300,
                     ),
                   ),
-                ),
-                _buildBody(),
-              ],
-            ),
-          ],
+                  Positioned(
+                    top: 30,
+                    right: -50,
+                    child: Bubble(
+                      color: ColorTheme.secondaryColor,
+                      width: 100,
+                      height: 100,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.only(top: 150),
+                    height: 300,
+                    decoration: BoxDecoration(
+                      color: ColorTheme.bgLight,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(SpaceConfig.longSpace),
+                        topRight: Radius.circular(SpaceConfig.longSpace),
+                      ),
+                    ),
+                  ),
+                  _buildBody(),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
