@@ -158,137 +158,134 @@ class DefinitionPage extends StatelessWidget {
                           .copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
-                  Container(
-                    height: (Get.height > 720)
-                        ? (Get.height / 2.08)
-                        : (Get.height / 1.8),
-                    child: GridView.count(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: SpaceConfig.longSpace - 4),
-                      crossAxisCount: 2,
-                      crossAxisSpacing: SpaceConfig.shortSpace,
-                      mainAxisSpacing: SpaceConfig.shortSpace,
-                      childAspectRatio: 1.0,
-                      primary: false,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            if (await canLaunch(
-                                "https://www.halodoc.com/tanya-dokter")) {
-                              await launch(
-                                "https://www.halodoc.com/tanya-dokter",
-                                enableDomStorage: true,
-                                enableJavaScript: true,
-                                forceWebView: true,
-                              );
-                            }
-                          },
-                          child: NormalBoxCard(
-                            iconImage: Container(
-                              width: 120,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/illustration-doctor.png'),
-                                  fit: BoxFit.fill,
-                                ),
+                  GridView.count(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: SpaceConfig.longSpace - 4),
+                    crossAxisCount: 2,
+                    crossAxisSpacing: SpaceConfig.shortSpace,
+                    mainAxisSpacing: SpaceConfig.shortSpace,
+                    childAspectRatio: 1.0,
+                    primary: false,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    children: [
+                      InkWell(
+                        onTap: () async {
+                          if (await canLaunch(
+                              "https://www.halodoc.com/tanya-dokter")) {
+                            await launch(
+                              "https://www.halodoc.com/tanya-dokter",
+                              enableDomStorage: true,
+                              enableJavaScript: true,
+                              forceWebView: true,
+                            );
+                          }
+                        },
+                        child: NormalBoxCard(
+                          iconImage: Container(
+                            width: 120,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/illustration-doctor.png'),
+                                fit: BoxFit.fill,
                               ),
                             ),
-                            title: 'Dokter',
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
                           ),
+                          title: 'Dokter',
+                          backgroundColor: Colors.white,
+                          textColor: Colors.black,
                         ),
-                        InkWell(
-                          onTap: () async {
-                            if (await canLaunch(
-                                "https://www.halodoc.com/obat-dan-vitamin")) {
-                              await launch(
-                                "https://www.halodoc.com/obat-dan-vitamin",
-                                enableDomStorage: true,
-                                enableJavaScript: true,
-                                forceWebView: true,
-                              );
-                            }
-                          },
-                          child: NormalBoxCard(
-                            iconImage: Container(
-                              width: 120,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/illustration-medicine.png'),
-                                  fit: BoxFit.fill,
-                                ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          if (await canLaunch(
+                              "https://www.halodoc.com/obat-dan-vitamin")) {
+                            await launch(
+                              "https://www.halodoc.com/obat-dan-vitamin",
+                              enableDomStorage: true,
+                              enableJavaScript: true,
+                              forceWebView: true,
+                            );
+                          }
+                        },
+                        child: NormalBoxCard(
+                          iconImage: Container(
+                            width: 120,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/illustration-medicine.png'),
+                                fit: BoxFit.fill,
                               ),
                             ),
-                            title: 'Obat',
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
                           ),
+                          title: 'Obat',
+                          backgroundColor: Colors.white,
+                          textColor: Colors.black,
                         ),
-                        InkWell(
-                          onTap: () async {
-                            if (await canLaunch(
-                                "http://yankes.kemkes.go.id/app/siranap/")) {
-                              await launch(
-                                "http://yankes.kemkes.go.id/app/siranap/",
-                                enableDomStorage: true,
-                                enableJavaScript: true,
-                                forceWebView: true,
-                              );
-                            }
-                          },
-                          child: NormalBoxCard(
-                            iconImage: Container(
-                              width: 120,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/illustration-hospital.png'),
-                                  fit: BoxFit.fill,
-                                ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          if (await canLaunch(
+                              "http://yankes.kemkes.go.id/app/siranap/")) {
+                            await launch(
+                              "http://yankes.kemkes.go.id/app/siranap/",
+                              enableDomStorage: true,
+                              enableJavaScript: true,
+                              forceWebView: true,
+                            );
+                          }
+                        },
+                        child: NormalBoxCard(
+                          iconImage: Container(
+                            width: 120,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/illustration-hospital.png'),
+                                fit: BoxFit.fill,
                               ),
                             ),
-                            title: 'Rumah Sakit',
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
                           ),
+                          title: 'Rumah Sakit',
+                          backgroundColor: Colors.white,
+                          textColor: Colors.black,
                         ),
-                        InkWell(
-                          onTap: () async {
-                            if (await canLaunch(
-                                "https://kitabisa.com/campaign/daruratcovid2021")) {
-                              await launch(
-                                "https://kitabisa.com/campaign/daruratcovid2021",
-                                enableDomStorage: true,
-                                enableJavaScript: true,
-                                forceWebView: true,
-                              );
-                            }
-                          },
-                          child: NormalBoxCard(
-                            iconImage: Container(
-                              width: 120,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/illustration-donation.png'),
-                                  fit: BoxFit.fill,
-                                ),
+                      ),
+                      InkWell(
+                        onTap: () async {
+                          if (await canLaunch(
+                              "https://kitabisa.com/campaign/daruratcovid2021")) {
+                            await launch(
+                              "https://kitabisa.com/campaign/daruratcovid2021",
+                              enableDomStorage: true,
+                              enableJavaScript: true,
+                              forceWebView: true,
+                            );
+                          }
+                        },
+                        child: NormalBoxCard(
+                          iconImage: Container(
+                            width: 120,
+                            height: 100,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/illustration-donation.png'),
+                                fit: BoxFit.fill,
                               ),
                             ),
-                            title: 'Donasi',
-                            backgroundColor: Colors.white,
-                            textColor: Colors.black,
                           ),
+                          title: 'Donasi',
+                          backgroundColor: Colors.white,
+                          textColor: Colors.black,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ],
               ),

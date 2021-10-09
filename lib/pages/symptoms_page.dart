@@ -145,7 +145,7 @@ class SymptompsPage extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: SpaceConfig.shortSpace,
             mainAxisSpacing: SpaceConfig.shortSpace,
-            childAspectRatio: 0.88,
+            childAspectRatio: 1.0,
             primary: false,
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
