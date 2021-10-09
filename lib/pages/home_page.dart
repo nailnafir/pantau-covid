@@ -110,7 +110,7 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: SpaceConfig.normalSpace * 5),
               Text(
-                "Lawan\nCovid-19",
+                "Lawan\nVirus",
                 style: TypeTheme.normalTextFont.copyWith(
                   color: Colors.black.withOpacity(0.5),
                   fontWeight: FontWeight.w700,

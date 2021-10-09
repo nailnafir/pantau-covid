@@ -130,6 +130,10 @@ class SymptompsPage extends StatelessWidget {
 
   _content() {
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: SpaceConfig.longSpace - 4,
+        vertical: SpaceConfig.longSpace,
+      ),
       decoration: BoxDecoration(
         color: ColorTheme.bgLight,
         borderRadius:
@@ -137,82 +141,76 @@ class SymptompsPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
-            height:
-                (Get.height > 720) ? (Get.height / 2.2) : (Get.height / 1.85),
-            child: GridView.count(
-              padding:
-                  EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
-              crossAxisCount: 2,
-              crossAxisSpacing: SpaceConfig.shortSpace,
-              mainAxisSpacing: SpaceConfig.shortSpace,
-              childAspectRatio: 1.0,
-              primary: false,
-              children: [
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image:
-                            AssetImage('assets/images/symptomp-headache.png'),
-                        fit: BoxFit.fill,
-                      ),
+          GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: SpaceConfig.shortSpace,
+            mainAxisSpacing: SpaceConfig.shortSpace,
+            childAspectRatio: 0.88,
+            primary: false,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/symptomp-headache.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Sakit Kepala',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/symptomp-cough.png'),
-                        fit: BoxFit.fill,
-                      ),
+                title: 'Sakit Kepala',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/symptomp-cough.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Batuk',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/symptomp-fever.png'),
-                        fit: BoxFit.fill,
-                      ),
+                title: 'Batuk',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/symptomp-fever.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Demam',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/symptomp-pain.png'),
-                        fit: BoxFit.fill,
-                      ),
+                title: 'Demam',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/symptomp-pain.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Nyeri Otot',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-              ],
-            ),
+                title: 'Nyeri Otot',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+            ],
           ),
         ],
       ),

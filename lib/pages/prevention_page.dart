@@ -102,6 +102,10 @@ class PreventionPage extends StatelessWidget {
 
   _content() {
     return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: SpaceConfig.longSpace - 4,
+        vertical: SpaceConfig.longSpace,
+      ),
       decoration: BoxDecoration(
         color: ColorTheme.bgLight,
         borderRadius:
@@ -109,83 +113,78 @@ class PreventionPage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
-            height:
-                (Get.height > 720) ? (Get.height / 2.2) : (Get.height / 1.85),
-            child: GridView.count(
-              padding:
-                  EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace - 4),
-              crossAxisCount: 2,
-              crossAxisSpacing: SpaceConfig.shortSpace,
-              mainAxisSpacing: SpaceConfig.shortSpace,
-              childAspectRatio: 1.0,
-              primary: false,
-              children: [
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/prevention-mask.png'),
-                        fit: BoxFit.fill,
-                      ),
+          GridView.count(
+            crossAxisCount: 2,
+            crossAxisSpacing: SpaceConfig.shortSpace,
+            mainAxisSpacing: SpaceConfig.shortSpace,
+            childAspectRatio: 0.88,
+            primary: false,
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/prevention-mask.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Masker',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/prevention-wash.png'),
-                        fit: BoxFit.fill,
-                      ),
+                title: 'Masker',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/prevention-wash.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Cuci Tangan',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image:
-                            AssetImage('assets/images/prevention-distance.png'),
-                        fit: BoxFit.fill,
-                      ),
+                title: 'Cuci Tangan',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image:
+                          AssetImage('assets/images/prevention-distance.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Jaga Jarak',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-                NormalBoxCard(
-                  iconImage: Container(
-                    width: 120,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage(
-                            'assets/images/prevention-disinfectant.png'),
-                        fit: BoxFit.fill,
-                      ),
+                title: 'Jaga Jarak',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+              NormalBoxCard(
+                iconImage: Container(
+                  width: 120,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                          'assets/images/prevention-disinfectant.png'),
+                      fit: BoxFit.fill,
                     ),
                   ),
-                  title: 'Disinfektan',
-                  backgroundColor: Colors.white,
-                  textColor: Colors.black,
                 ),
-              ],
-            ),
+                title: 'Disinfektan',
+                backgroundColor: Colors.white,
+                textColor: Colors.black,
+              ),
+            ],
           ),
         ],
       ),
