@@ -29,7 +29,7 @@ class SplashPage extends StatelessWidget {
               child: AnimatedTextKit(
                 animatedTexts: [
                   TyperAnimatedText(
-                    "Pantau Covid-19",
+                    "PANTAU COVID-19",
                     speed: Duration(milliseconds: 100),
                     textStyle: TypeTheme.titleTextFont.copyWith(
                       color: Colors.black.withOpacity(0.5),
