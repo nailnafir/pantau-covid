@@ -125,7 +125,7 @@ class AboutPage extends StatelessWidget {
           Container(
             margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
             child: Text(
-              "Versi 1.3.0\nHak Cipta @2020-${DateTime.now().year}. Nailul Firdaus",
+              "Versi 1.8.0\nHak Cipta @2020-${DateTime.now().year}. Nailul Firdaus",
               style: TypeTheme.normalTextFont.copyWith(
                 color: Colors.grey,
                 fontWeight: FontWeight.w400,
