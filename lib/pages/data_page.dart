@@ -83,7 +83,14 @@ class _DataPageState extends State<DataPage> {
           key: refreshData,
           color: ColorTheme.secondaryColor,
           onRefresh: () {
-            return Future.delayed(Duration(seconds: 3)).then((value) {
+            return Future.delayed(Duration(seconds: 1)).whenComplete(() {
+              userLocation = null;
+              caseTotal = null;
+              allProvince = null;
+              detailProvince = null;
+              localVaccine = null;
+              monitoringVaccine = null;
+
               LocationService.getUserLocation().then((value) {
                 userLocation = value;
                 setState(() {});

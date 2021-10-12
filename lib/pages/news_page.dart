@@ -91,8 +91,10 @@ class _NewsPageState extends State<NewsPage> {
           key: refreshNews,
           color: ColorTheme.secondaryColor,
           onRefresh: () {
-            return Future.delayed(Duration(seconds: 3)).then((value) {
+            return Future.delayed(Duration(seconds: 1)).whenComplete(() {
               setState(() {
+                newsTitleSlider = null;
+                newsTitleContent = null;
                 fetchNewsSlider();
                 fetchNewsContent();
               });
