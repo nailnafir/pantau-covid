@@ -15,10 +15,10 @@ class _DataPageState extends State<DataPage> {
 
   CaseTotalModel? caseTotal;
   LocalVaccineModel? localVaccine;
-  List<MonitoringVaccine>? monitoringVaccine;
-  AllProvinceModel? allProvinceModel;
-  List<DetailProvinceModel>? detailProvinceModel;
-  UserLocation? userLocation;
+  List<MonitoringVaccineModel>? monitoringVaccine;
+  AllProvinceModel? allProvince;
+  List<DetailProvinceModel>? detailProvince;
+  LocationModel? userLocation;
 
   int _current = 0;
 
@@ -29,32 +29,32 @@ class _DataPageState extends State<DataPage> {
   void initState() {
     super.initState();
 
-    UserLocation.getUserLocation().then((value) {
+    LocationService.getUserLocation().then((value) {
       userLocation = value;
       setState(() {});
     });
 
-    CaseTotalModel.fetchTotal('/public/api/update.json').then((value) {
+    CaseTotalService.fetchTotal('/public/api/update.json').then((value) {
       caseTotal = value;
       setState(() {});
     });
 
-    AllProvinceModel.fetchAll('/public/api/prov.json').then((value) {
-      allProvinceModel = value;
+    AllProvinceService.fetchAll('/public/api/prov.json').then((value) {
+      allProvince = value;
       setState(() {});
     });
 
-    DetailProvinceModel.fetchDetail('/public/api/prov.json').then((value) {
-      detailProvinceModel = value;
+    DetailProvinceService.fetchDetail('/public/api/prov.json').then((value) {
+      detailProvince = value;
       setState(() {});
     });
 
-    LocalVaccineModel.fetchVaccine('/vaksinasi').then((value) {
+    LocalVaccineService.fetchVaccine('/vaksinasi').then((value) {
       localVaccine = value;
       setState(() {});
     });
 
-    MonitoringVaccine.fetchVaccine('/vaksinasi').then((value) {
+    MonitoringVaccineService.fetchVaccine('/vaksinasi').then((value) {
       monitoringVaccine = value;
       setState(() {});
     });
@@ -84,34 +84,35 @@ class _DataPageState extends State<DataPage> {
           color: ColorTheme.secondaryColor,
           onRefresh: () {
             return Future.delayed(Duration(seconds: 3)).then((value) {
-              UserLocation.getUserLocation().then((value) {
+              LocationService.getUserLocation().then((value) {
                 userLocation = value;
                 setState(() {});
               });
 
-              CaseTotalModel.fetchTotal('/public/api/update.json')
+              CaseTotalService.fetchTotal('/public/api/update.json')
                   .then((value) {
                 caseTotal = value;
                 setState(() {});
               });
 
-              AllProvinceModel.fetchAll('/public/api/prov.json').then((value) {
-                allProvinceModel = value;
-                setState(() {});
-              });
-
-              DetailProvinceModel.fetchDetail('/public/api/prov.json')
+              AllProvinceService.fetchAll('/public/api/prov.json')
                   .then((value) {
-                detailProvinceModel = value;
+                allProvince = value;
                 setState(() {});
               });
 
-              LocalVaccineModel.fetchVaccine('/vaksinasi').then((value) {
+              DetailProvinceService.fetchDetail('/public/api/prov.json')
+                  .then((value) {
+                detailProvince = value;
+                setState(() {});
+              });
+
+              LocalVaccineService.fetchVaccine('/vaksinasi').then((value) {
                 localVaccine = value;
                 setState(() {});
               });
 
-              MonitoringVaccine.fetchVaccine('/vaksinasi').then((value) {
+              MonitoringVaccineService.fetchVaccine('/vaksinasi').then((value) {
                 monitoringVaccine = value;
                 setState(() {});
               });
@@ -475,7 +476,7 @@ class _DataPageState extends State<DataPage> {
                     ),
                     Expanded(
                       child: ListView.builder(
-                        itemCount: allProvinceModel!.listData.length,
+                        itemCount: allProvince!.listData.length,
                         itemBuilder: (context, index) {
                           if (editingController.text.isEmpty) {
                             return Container(
@@ -483,46 +484,44 @@ class _DataPageState extends State<DataPage> {
                                   top: (index == 0
                                       ? 0
                                       : SpaceConfig.normalSpace),
-                                  bottom: (index ==
-                                          allProvinceModel!.listData.length - 1
-                                      ? SpaceConfig.normalSpace
-                                      : 0)),
+                                  bottom:
+                                      (index == allProvince!.listData.length - 1
+                                          ? SpaceConfig.normalSpace
+                                          : 0)),
                               child: DetailBoxCard(
                                 summaryPositive: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .confirmedTotal),
+                                    .format(
+                                        detailProvince![index].confirmedTotal),
                                 updatePositive: "+" +
                                     NumberFormat.decimalPattern().format(
-                                        detailProvinceModel![index]
+                                        detailProvince![index]
                                             .update
                                             .confirmedUpdate),
                                 summaryActive: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .activeTotal),
+                                    .format(detailProvince![index].activeTotal),
                                 updateActive: "-0",
                                 summaryRecovered: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .recoveredTotal),
+                                    .format(
+                                        detailProvince![index].recoveredTotal),
                                 updateRecovered: "+" +
                                     NumberFormat.decimalPattern().format(
-                                        detailProvinceModel![index]
+                                        detailProvince![index]
                                             .update
                                             .recoveredUpdate),
                                 summaryDeaths: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .deathsTotal),
+                                    .format(detailProvince![index].deathsTotal),
                                 updateDeaths: "+" +
                                     NumberFormat.decimalPattern().format(
-                                        detailProvinceModel![index]
+                                        detailProvince![index]
                                             .update
                                             .deathsUpdate),
                                 provinceName:
-                                    detailProvinceModel![index].provinceName,
+                                    detailProvince![index].provinceName,
                                 lastUpdate: DateFormat.EEEE()
                                     .add_d()
                                     .add_yMMMM()
                                     .format((DateTime.parse(
-                                        allProvinceModel!.lastUpdate)))
+                                        allProvince!.lastUpdate)))
                                     .replaceAll('Monday', 'Senin,')
                                     .replaceAll('Tuesday', 'Selasa,')
                                     .replaceAll('Wednesday', 'Rabu,')
@@ -544,7 +543,7 @@ class _DataPageState extends State<DataPage> {
                                     .replaceAll('December', 'Desember'),
                               ),
                             );
-                          } else if (detailProvinceModel![index]
+                          } else if (detailProvince![index]
                               .provinceName
                               .trim()
                               .replaceAll(RegExp(r"\s+"), "")
@@ -560,40 +559,38 @@ class _DataPageState extends State<DataPage> {
                               ),
                               child: DetailBoxCard(
                                 summaryPositive: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .confirmedTotal),
+                                    .format(
+                                        detailProvince![index].confirmedTotal),
                                 updatePositive: "+" +
                                     NumberFormat.decimalPattern().format(
-                                        detailProvinceModel![index]
+                                        detailProvince![index]
                                             .update
                                             .confirmedUpdate),
                                 summaryActive: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .activeTotal),
+                                    .format(detailProvince![index].activeTotal),
                                 updateActive: "-0",
                                 summaryRecovered: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .recoveredTotal),
+                                    .format(
+                                        detailProvince![index].recoveredTotal),
                                 updateRecovered: "+" +
                                     NumberFormat.decimalPattern().format(
-                                        detailProvinceModel![index]
+                                        detailProvince![index]
                                             .update
                                             .recoveredUpdate),
                                 summaryDeaths: NumberFormat.decimalPattern()
-                                    .format(detailProvinceModel![index]
-                                        .deathsTotal),
+                                    .format(detailProvince![index].deathsTotal),
                                 updateDeaths: "+" +
                                     NumberFormat.decimalPattern().format(
-                                        detailProvinceModel![index]
+                                        detailProvince![index]
                                             .update
                                             .deathsUpdate),
                                 provinceName:
-                                    detailProvinceModel![index].provinceName,
+                                    detailProvince![index].provinceName,
                                 lastUpdate: DateFormat.EEEE()
                                     .add_d()
                                     .add_yMMMM()
                                     .format((DateTime.parse(
-                                        allProvinceModel!.lastUpdate)))
+                                        allProvince!.lastUpdate)))
                                     .replaceAll('Monday', 'Senin,')
                                     .replaceAll('Tuesday', 'Selasa,')
                                     .replaceAll('Wednesday', 'Rabu,')

@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pantau_covid/models/models.dart';
+import 'package:flutter_pantau_covid/services/services.dart';
 import 'package:flutter_pantau_covid/utilities/utilities.dart';
 import 'package:flutter_pantau_covid/widgets/widgets.dart';
 import 'package:get/get.dart';

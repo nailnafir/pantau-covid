@@ -2,7 +2,7 @@ part of 'models.dart';
 
 class LocalVaccineModel {
   String lastUpdate;
-  List<MonitoringVaccine> monitoring;
+  List<MonitoringVaccineModel> monitoring;
 
   LocalVaccineModel({
     required this.lastUpdate,
@@ -12,27 +12,13 @@ class LocalVaccineModel {
   factory LocalVaccineModel.fromJson(Map<String, dynamic> json) {
     return LocalVaccineModel(
       lastUpdate: json['last_updated'],
-      monitoring: List<MonitoringVaccine>.from(
-          json['monitoring'].map((x) => MonitoringVaccine.fromJson(x))),
+      monitoring: List<MonitoringVaccineModel>.from(
+          json['monitoring'].map((x) => MonitoringVaccineModel.fromJson(x))),
     );
-  }
-
-  static Future<LocalVaccineModel> fetchVaccine(String type) async {
-    String apiURL = URLShared.apiVaccineURL + type;
-    var url = Uri.parse(apiURL);
-
-    var apiResult = await http.get(url);
-    var jsonObject = json.decode(apiResult.body);
-
-    if (apiResult.statusCode == 200) {
-      return LocalVaccineModel.fromJson(jsonObject);
-    } else {
-      throw Exception('Gagal menyambungkan ke server');
-    }
   }
 }
 
-class MonitoringVaccine {
+class MonitoringVaccineModel {
   int totalTarget;
   int targetMedical;
   int targetAged;
@@ -52,7 +38,7 @@ class MonitoringVaccine {
   int doneVaccine1TeenAge;
   int doneVaccine2TeenAge;
 
-  MonitoringVaccine({
+  MonitoringVaccineModel({
     required this.totalTarget,
     required this.targetMedical,
     required this.targetAged,
@@ -73,8 +59,8 @@ class MonitoringVaccine {
     required this.doneVaccine2TeenAge,
   });
 
-  factory MonitoringVaccine.fromJson(Map<String, dynamic> json) {
-    return MonitoringVaccine(
+  factory MonitoringVaccineModel.fromJson(Map<String, dynamic> json) {
+    return MonitoringVaccineModel(
       totalTarget: json['total_sasaran_vaksinasi'],
       targetMedical: json['sasaran_vaksinasi_sdmk'],
       targetOfficer: json['sasaran_vaksinasi_petugas_publik'],
@@ -102,23 +88,5 @@ class MonitoringVaccine {
       doneVaccine2TeenAge: json['tahapan_vaksinasi']['kelompok_usia_12_17']
           ['sudah_vaksin2'],
     );
-  }
-
-  static Future<List<MonitoringVaccine>> fetchVaccine(String name) async {
-    String apiURL = URLShared.apiVaccineURL + name;
-    var url = Uri.parse(apiURL);
-
-    var response = await http.get(url);
-    var data = json.decode(response.body);
-
-    List<MonitoringVaccine> vaccines = (data['monitoring'] as List)
-        .map((e) => MonitoringVaccine.fromJson(e))
-        .toList();
-
-    if (response.statusCode == 200) {
-      return vaccines;
-    } else {
-      throw Exception('Gagal menyambungkan ke server');
-    }
   }
 }
