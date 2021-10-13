@@ -315,38 +315,32 @@ class _NewsPageState extends State<NewsPage> {
           ),
         ),
         (newsTitleContent == null)
-            ? Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 3 +
-                      SpaceConfig.longSpace +
-                      8,
-                  child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (BuildContext context, index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                          top: 0,
-                          bottom: (index == 10)
-                              ? SpaceConfig.longSpace
-                              : SpaceConfig.normalSpace,
-                          left: SpaceConfig.longSpace,
-                          right: SpaceConfig.longSpace,
-                        ),
-                        height: 100 + SpaceConfig.longSpace,
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(SpaceConfig.normalSpace),
-                          color: ColorTheme.bgLight,
-                        ),
-                      );
-                    },
-                  ),
-                ),
+            ? Column(
+                children: List.generate(10, (index) {
+                  return Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        top: 0,
+                        bottom: (index == 10)
+                            ? SpaceConfig.longSpace
+                            : SpaceConfig.normalSpace,
+                        left: SpaceConfig.longSpace,
+                        right: SpaceConfig.longSpace,
+                      ),
+                      height: 100 + SpaceConfig.longSpace,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(SpaceConfig.normalSpace),
+                        color: ColorTheme.bgLight,
+                      ),
+                    ),
+                  );
+                }),
               )
             : Column(
-                children: List.generate(newsTitleContent!.length, (index) {
+                children: List.generate(10, (index) {
                   return Card(
                     elevation: 2,
                     margin: EdgeInsets.only(
