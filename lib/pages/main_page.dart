@@ -98,18 +98,22 @@ class _MainPageState extends State<MainPage> {
             Icon(
               Icons.home,
               size: 30,
+              color: Colors.black.withOpacity(0.5),
             ),
             Icon(
               Icons.article,
               size: 30,
+              color: Colors.black.withOpacity(0.5),
             ),
             Icon(
               Icons.ballot,
               size: 30,
+              color: Colors.black.withOpacity(0.5),
             ),
             Icon(
               Icons.help_center,
               size: 30,
+              color: Colors.black.withOpacity(0.5),
             ),
           ],
           onTap: (index) {
