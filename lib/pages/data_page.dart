@@ -594,67 +594,72 @@ class _DataPageState extends State<DataPage> {
                                     .trim()
                                     .replaceAll(RegExp(r"\s+"), "")
                                     .toLowerCase())) {
-                              return Container(
-                                margin: EdgeInsets.only(
-                                  top: 0,
-                                  bottom: SpaceConfig.normalSpace,
-                                ),
-                                child: DetailBoxCard(
-                                  summaryPositive: NumberFormat.decimalPattern()
-                                      .format(detailProvince![index]
-                                          .confirmedTotal),
-                                  updatePositive: "+" +
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvince![index]
-                                              .update
-                                              .confirmedUpdate),
-                                  summaryActive: NumberFormat.decimalPattern()
-                                      .format(
-                                          detailProvince![index].activeTotal),
-                                  updateActive: "-0",
-                                  summaryRecovered:
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvince![index]
-                                              .recoveredTotal),
-                                  updateRecovered: "+" +
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvince![index]
-                                              .update
-                                              .recoveredUpdate),
-                                  summaryDeaths: NumberFormat.decimalPattern()
-                                      .format(
-                                          detailProvince![index].deathsTotal),
-                                  updateDeaths: "+" +
-                                      NumberFormat.decimalPattern().format(
-                                          detailProvince![index]
-                                              .update
-                                              .deathsUpdate),
-                                  provinceName:
-                                      detailProvince![index].provinceName,
-                                  lastUpdate: DateFormat.EEEE()
-                                      .add_d()
-                                      .add_yMMMM()
-                                      .format((DateTime.parse(
-                                          allProvince!.lastUpdate)))
-                                      .replaceAll('Monday', 'Senin,')
-                                      .replaceAll('Tuesday', 'Selasa,')
-                                      .replaceAll('Wednesday', 'Rabu,')
-                                      .replaceAll('Thursday', 'Kamis,')
-                                      .replaceAll('Friday', 'Jumat,')
-                                      .replaceAll('Saturday', 'Sabtu,')
-                                      .replaceAll('Sunday', 'Minggu,')
-                                      .replaceAll('January', 'Januari')
-                                      .replaceAll('February', 'Februari')
-                                      .replaceAll('March', 'Maret')
-                                      .replaceAll('April', 'April')
-                                      .replaceAll('May', 'Mei')
-                                      .replaceAll('June', 'Juni')
-                                      .replaceAll('July', 'Juli')
-                                      .replaceAll('August', 'Agustus')
-                                      .replaceAll('September', 'September')
-                                      .replaceAll('October', 'Oktober')
-                                      .replaceAll('November', 'November')
-                                      .replaceAll('December', 'Desember'),
+                              return FadeInUp(
+                                delay:
+                                    Duration(milliseconds: isScroll ? 0 : 350),
+                                child: Container(
+                                  margin: EdgeInsets.only(
+                                    top: 0,
+                                    bottom: SpaceConfig.normalSpace,
+                                  ),
+                                  child: DetailBoxCard(
+                                    summaryPositive:
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvince![index]
+                                                .confirmedTotal),
+                                    updatePositive: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvince![index]
+                                                .update
+                                                .confirmedUpdate),
+                                    summaryActive: NumberFormat.decimalPattern()
+                                        .format(
+                                            detailProvince![index].activeTotal),
+                                    updateActive: "-0",
+                                    summaryRecovered:
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvince![index]
+                                                .recoveredTotal),
+                                    updateRecovered: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvince![index]
+                                                .update
+                                                .recoveredUpdate),
+                                    summaryDeaths: NumberFormat.decimalPattern()
+                                        .format(
+                                            detailProvince![index].deathsTotal),
+                                    updateDeaths: "+" +
+                                        NumberFormat.decimalPattern().format(
+                                            detailProvince![index]
+                                                .update
+                                                .deathsUpdate),
+                                    provinceName:
+                                        detailProvince![index].provinceName,
+                                    lastUpdate: DateFormat.EEEE()
+                                        .add_d()
+                                        .add_yMMMM()
+                                        .format((DateTime.parse(
+                                            allProvince!.lastUpdate)))
+                                        .replaceAll('Monday', 'Senin,')
+                                        .replaceAll('Tuesday', 'Selasa,')
+                                        .replaceAll('Wednesday', 'Rabu,')
+                                        .replaceAll('Thursday', 'Kamis,')
+                                        .replaceAll('Friday', 'Jumat,')
+                                        .replaceAll('Saturday', 'Sabtu,')
+                                        .replaceAll('Sunday', 'Minggu,')
+                                        .replaceAll('January', 'Januari')
+                                        .replaceAll('February', 'Februari')
+                                        .replaceAll('March', 'Maret')
+                                        .replaceAll('April', 'April')
+                                        .replaceAll('May', 'Mei')
+                                        .replaceAll('June', 'Juni')
+                                        .replaceAll('July', 'Juli')
+                                        .replaceAll('August', 'Agustus')
+                                        .replaceAll('September', 'September')
+                                        .replaceAll('October', 'Oktober')
+                                        .replaceAll('November', 'November')
+                                        .replaceAll('December', 'Desember'),
+                                  ),
                                 ),
                               );
                             } else {
