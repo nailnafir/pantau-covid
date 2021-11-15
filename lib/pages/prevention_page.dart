@@ -40,19 +40,23 @@ class PreventionPage extends StatelessWidget {
             Positioned(
               top: -150,
               left: -150,
-              child: Bubble(
-                color: ColorTheme.secondaryColor,
-                width: 300,
-                height: 300,
+              child: FadeInLeft(
+                child: Bubble(
+                  color: ColorTheme.secondaryColor,
+                  width: 300,
+                  height: 300,
+                ),
               ),
             ),
             Positioned(
               top: 50,
               right: -50,
-              child: Bubble(
-                color: ColorTheme.secondaryColor,
-                width: 100,
-                height: 100,
+              child: FadeInRight(
+                child: Bubble(
+                  color: ColorTheme.secondaryColor,
+                  width: 100,
+                  height: 100,
+                ),
               ),
             ),
             _buildBody(),
@@ -74,28 +78,31 @@ class PreventionPage extends StatelessWidget {
   _description() {
     return Container(
       padding: EdgeInsets.all(SpaceConfig.longSpace),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Text(
-            "Patuhi Protokol Kesehatan!",
-            style: TypeTheme.subTitleTextFont.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black.withOpacity(0.5),
+      child: FadeInDown(
+        delay: Duration(milliseconds: 350),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Text(
+              "Patuhi Protokol Kesehatan!",
+              style: TypeTheme.subTitleTextFont.copyWith(
+                fontWeight: FontWeight.w600,
+                color: Colors.black.withOpacity(0.5),
+              ),
             ),
-          ),
-          SizedBox(height: SpaceConfig.shortSpace),
-          Text(
-            "Lindungi diri Anda dan orang lain di sekitar Anda dengan mengetahui fakta-fakta terkait virus ini dan mengambil langkah pencegahan yang sesuai. Ikuti saran yang diberikan oleh otoritas kesehatan setempat.",
-            style: TypeTheme.normalTextFont.copyWith(
-              color: Colors.black.withOpacity(0.5),
-              fontWeight: FontWeight.w500,
+            SizedBox(height: SpaceConfig.shortSpace),
+            Text(
+              "Lindungi diri Anda dan orang lain di sekitar Anda dengan mengetahui fakta-fakta terkait virus ini dan mengambil langkah pencegahan yang sesuai. Ikuti saran yang diberikan oleh otoritas kesehatan setempat.",
+              style: TypeTheme.normalTextFont.copyWith(
+                color: Colors.black.withOpacity(0.5),
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.justify,
             ),
-            textAlign: TextAlign.justify,
-          ),
-          SizedBox(height: SpaceConfig.normalSpace),
-        ],
+            SizedBox(height: SpaceConfig.normalSpace),
+          ],
+        ),
       ),
     );
   }
@@ -111,82 +118,85 @@ class PreventionPage extends StatelessWidget {
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(SpaceConfig.longSpace)),
       ),
-      child: Column(
-        children: [
-          GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: SpaceConfig.shortSpace,
-            mainAxisSpacing: SpaceConfig.shortSpace,
-            childAspectRatio: 1.0,
-            primary: false,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/prevention-mask.png'),
-                      fit: BoxFit.fill,
+      child: FadeInDown(
+        delay: Duration(milliseconds: 350 * 2),
+        child: Column(
+          children: [
+            GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: SpaceConfig.shortSpace,
+              mainAxisSpacing: SpaceConfig.shortSpace,
+              childAspectRatio: 1.0,
+              primary: false,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/prevention-mask.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Masker',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Masker',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/prevention-wash.png'),
-                      fit: BoxFit.fill,
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/prevention-wash.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Cuci Tangan',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Cuci Tangan',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image:
-                          AssetImage('assets/images/prevention-distance.png'),
-                      fit: BoxFit.fill,
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/prevention-distance.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Jaga Jarak',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Jaga Jarak',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'assets/images/prevention-disinfectant.png'),
-                      fit: BoxFit.fill,
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(
+                            'assets/images/prevention-disinfectant.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Disinfektan',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Disinfektan',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

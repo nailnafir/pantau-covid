@@ -111,19 +111,23 @@ class _NewsPageState extends State<NewsPage> {
                   Positioned(
                     top: -180,
                     left: -150,
-                    child: Bubble(
-                      color: ColorTheme.secondaryColor,
-                      width: 300,
-                      height: 300,
+                    child: FadeInLeft(
+                      child: Bubble(
+                        color: ColorTheme.secondaryColor,
+                        width: 300,
+                        height: 300,
+                      ),
                     ),
                   ),
                   Positioned(
                     top: 30,
                     right: -50,
-                    child: Bubble(
-                      color: ColorTheme.secondaryColor,
-                      width: 100,
-                      height: 100,
+                    child: FadeInRight(
+                      child: Bubble(
+                        color: ColorTheme.secondaryColor,
+                        width: 100,
+                        height: 100,
+                      ),
                     ),
                   ),
                   Container(
@@ -176,6 +180,8 @@ class _NewsPageState extends State<NewsPage> {
   _slider() {
     double contentHeight = 280;
     double contentWidth = 200;
+    bool isScroll = false;
+
     return (newsTitleSlider == null)
         ? Shimmer.fromColors(
             baseColor: Colors.grey[300]!,
@@ -186,21 +192,24 @@ class _NewsPageState extends State<NewsPage> {
                 scrollDirection: Axis.horizontal,
                 itemCount: 10,
                 itemBuilder: (BuildContext context, index) {
-                  return Container(
-                    margin: EdgeInsets.only(
-                      left: (index == 0) ? SpaceConfig.longSpace : 0,
-                      right: (index == 10)
-                          ? SpaceConfig.longSpace
-                          : SpaceConfig.normalSpace,
-                      top: SpaceConfig.shortSpace,
-                      bottom: SpaceConfig.shortSpace,
-                    ),
-                    width: contentWidth + SpaceConfig.longSpace,
-                    height: contentHeight,
-                    decoration: BoxDecoration(
-                      borderRadius:
-                          BorderRadius.circular(SpaceConfig.normalSpace),
-                      color: ColorTheme.bgLight,
+                  return FadeInRight(
+                    delay: Duration(milliseconds: 350 * (index + 1)),
+                    child: Container(
+                      margin: EdgeInsets.only(
+                        left: (index == 0) ? SpaceConfig.longSpace : 0,
+                        right: (index == 10)
+                            ? SpaceConfig.longSpace
+                            : SpaceConfig.normalSpace,
+                        top: SpaceConfig.shortSpace,
+                        bottom: SpaceConfig.shortSpace,
+                      ),
+                      width: contentWidth + SpaceConfig.longSpace,
+                      height: contentHeight,
+                      decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(SpaceConfig.normalSpace),
+                        color: ColorTheme.bgLight,
+                      ),
                     ),
                   );
                 },
@@ -209,91 +218,106 @@ class _NewsPageState extends State<NewsPage> {
           )
         : SizedBox(
             height: contentHeight,
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: newsTitleSlider!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return GestureDetector(
-                    onTap: () {
-                      launch(
-                        newsUrlSlider[index]['attributes']['href'],
-                        forceWebView: true,
-                        enableJavaScript: true,
-                        enableDomStorage: true,
-                      );
-                    },
-                    child: Card(
-                      elevation: 2,
-                      margin: EdgeInsets.only(
-                        top: SpaceConfig.shortSpace,
-                        bottom: SpaceConfig.shortSpace,
-                        left: (index == 0) ? SpaceConfig.longSpace : 0,
-                        right: (index == newsTitleSlider!.length - 1)
-                            ? SpaceConfig.longSpace
-                            : SpaceConfig.normalSpace,
-                      ),
-                      shape: RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.circular(SpaceConfig.normalSpace)),
-                      child: Container(
-                        padding: EdgeInsets.all(SpaceConfig.normalSpace),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius:
-                              BorderRadius.circular(SpaceConfig.normalSpace),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: contentWidth,
-                              height:
-                                  contentHeight / 2 - SpaceConfig.shortSpace,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    newsImageSlider[index]['attributes']['src'],
+            child: NotificationListener(
+              onNotification: (notification) {
+                if (notification is ScrollStartNotification) {
+                  isScroll = true;
+                }
+                return true;
+              },
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: newsTitleSlider!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return FadeInRight(
+                      delay: Duration(
+                          milliseconds: isScroll ? 0 : 350 * (index + 1)),
+                      child: GestureDetector(
+                        onTap: () {
+                          launch(
+                            newsUrlSlider[index]['attributes']['href'],
+                            forceWebView: true,
+                            enableJavaScript: true,
+                            enableDomStorage: true,
+                          );
+                        },
+                        child: Card(
+                          elevation: 2,
+                          margin: EdgeInsets.only(
+                            top: SpaceConfig.shortSpace,
+                            bottom: SpaceConfig.shortSpace,
+                            left: (index == 0) ? SpaceConfig.longSpace : 0,
+                            right: (index == newsTitleSlider!.length - 1)
+                                ? SpaceConfig.longSpace
+                                : SpaceConfig.normalSpace,
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  SpaceConfig.normalSpace)),
+                          child: Container(
+                            padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(
+                                  SpaceConfig.normalSpace),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  width: contentWidth,
+                                  height: contentHeight / 2 -
+                                      SpaceConfig.shortSpace,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        SpaceConfig.normalSpace),
+                                    image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                        newsImageSlider[index]['attributes']
+                                            ['src'],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            Container(
-                              width: contentWidth,
-                              height: contentHeight / 3,
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    newsTitleSlider![index]['title'],
-                                    maxLines: 3,
-                                    textAlign: TextAlign.left,
-                                    overflow: TextOverflow.clip,
-                                    style: TypeTheme.normalTextFont.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      height: 1.2,
-                                    ),
+                                Container(
+                                  width: contentWidth,
+                                  height: contentHeight / 3,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        newsTitleSlider![index]['title'],
+                                        maxLines: 3,
+                                        textAlign: TextAlign.left,
+                                        overflow: TextOverflow.clip,
+                                        style:
+                                            TypeTheme.normalTextFont.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          height: 1.2,
+                                        ),
+                                      ),
+                                      Text(
+                                        newsTimeSlider[index]['title'],
+                                        style: TypeTheme.smallTextFont.copyWith(
+                                          fontSize: 12,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    newsTimeSlider[index]['title'],
-                                    style: TypeTheme.smallTextFont.copyWith(
-                                      fontSize: 12,
-                                      color: Colors.grey[700],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+            ),
           );
   }
 
@@ -308,10 +332,13 @@ class _NewsPageState extends State<NewsPage> {
             SpaceConfig.longSpace,
             SpaceConfig.shortSpace,
           ),
-          child: Text(
-            "Berita Hari Ini",
-            style: TypeTheme.subTitleTextFont
-                .copyWith(fontWeight: FontWeight.w600),
+          child: FadeInDown(
+            delay: Duration(milliseconds: 350 * 4),
+            child: Text(
+              "Berita Hari Ini",
+              style: TypeTheme.subTitleTextFont
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
           ),
         ),
         (newsTitleContent == null)
@@ -320,20 +347,23 @@ class _NewsPageState extends State<NewsPage> {
                   return Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
                     highlightColor: Colors.grey[100]!,
-                    child: Container(
-                      margin: EdgeInsets.only(
-                        top: 0,
-                        bottom: (index == 10)
-                            ? SpaceConfig.longSpace
-                            : SpaceConfig.normalSpace,
-                        left: SpaceConfig.longSpace,
-                        right: SpaceConfig.longSpace,
-                      ),
-                      height: 100 + SpaceConfig.longSpace,
-                      decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(SpaceConfig.normalSpace),
-                        color: ColorTheme.bgLight,
+                    child: FadeInDown(
+                      delay: Duration(milliseconds: 350 * (index + 5)),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                          top: 0,
+                          bottom: (index == 10)
+                              ? SpaceConfig.longSpace
+                              : SpaceConfig.normalSpace,
+                          left: SpaceConfig.longSpace,
+                          right: SpaceConfig.longSpace,
+                        ),
+                        height: 100 + SpaceConfig.longSpace,
+                        decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(SpaceConfig.normalSpace),
+                          color: ColorTheme.bgLight,
+                        ),
                       ),
                     ),
                   );
@@ -341,101 +371,106 @@ class _NewsPageState extends State<NewsPage> {
               )
             : Column(
                 children: List.generate(10, (index) {
-                  return Card(
-                    elevation: 2,
-                    margin: EdgeInsets.only(
-                      top: 0,
-                      bottom: (index == newsTitleContent!.length - 1)
-                          ? SpaceConfig.longSpace
-                          : SpaceConfig.normalSpace,
-                      left: SpaceConfig.longSpace,
-                      right: SpaceConfig.longSpace,
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(SpaceConfig.normalSpace)),
-                    child: Container(
-                      padding: EdgeInsets.all(SpaceConfig.normalSpace),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius:
-                            BorderRadius.circular(SpaceConfig.normalSpace),
+                  return FadeInDown(
+                    delay: Duration(milliseconds: 350 * (index + 5)),
+                    child: Card(
+                      elevation: 2,
+                      margin: EdgeInsets.only(
+                        top: 0,
+                        bottom: (index == newsTitleContent!.length - 1)
+                            ? SpaceConfig.longSpace
+                            : SpaceConfig.normalSpace,
+                        left: SpaceConfig.longSpace,
+                        right: SpaceConfig.longSpace,
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(
-                                  newsImageContent[index + 2]['attributes']
-                                      ['src'],
+                      shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(SpaceConfig.normalSpace)),
+                      child: Container(
+                        padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius:
+                              BorderRadius.circular(SpaceConfig.normalSpace),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    SpaceConfig.normalSpace),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(
+                                    newsImageContent[index + 2]['attributes']
+                                        ['src'],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Container(
-                            margin:
-                                EdgeInsets.only(left: SpaceConfig.longSpace),
-                            width: MediaQuery.of(context).size.width -
-                                3 * SpaceConfig.longSpace -
-                                2 * SpaceConfig.normalSpace -
-                                100,
-                            height: 100,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  newsTitleContent![index]['title'],
-                                  maxLines: 3,
-                                  textAlign: TextAlign.left,
-                                  overflow: TextOverflow.clip,
-                                  style: TypeTheme.normalTextFont.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    height: 1.2,
+                            Container(
+                              margin:
+                                  EdgeInsets.only(left: SpaceConfig.longSpace),
+                              width: MediaQuery.of(context).size.width -
+                                  3 * SpaceConfig.longSpace -
+                                  2 * SpaceConfig.normalSpace -
+                                  100,
+                              height: 100,
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    newsTitleContent![index]['title'],
+                                    maxLines: 3,
+                                    textAlign: TextAlign.left,
+                                    overflow: TextOverflow.clip,
+                                    style: TypeTheme.normalTextFont.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      height: 1.2,
+                                    ),
                                   ),
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "merdeka.com",
-                                      style: TypeTheme.smallTextFont.copyWith(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        color: ColorTheme.secondaryColor,
-                                      ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.access_time,
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "merdeka.com",
+                                        style: TypeTheme.smallTextFont.copyWith(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
                                           color: ColorTheme.secondaryColor,
-                                          size: 18,
                                         ),
-                                        Text(
-                                          newsTimeContent[index + 2]['title'],
-                                          style:
-                                              TypeTheme.smallTextFont.copyWith(
-                                            fontSize: 12,
-                                            color: Colors.grey[700],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.access_time,
+                                            color: ColorTheme.secondaryColor,
+                                            size: 18,
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                          Text(
+                                            newsTimeContent[index + 2]['title'],
+                                            style: TypeTheme.smallTextFont
+                                                .copyWith(
+                                              fontSize: 12,
+                                              color: Colors.grey[700],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   );

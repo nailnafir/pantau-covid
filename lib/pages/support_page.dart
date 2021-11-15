@@ -19,32 +19,39 @@ class SupportPage extends StatelessWidget {
                 Positioned(
                   top: -130,
                   left: -130,
-                  child: Bubble(
-                    color: ColorTheme.secondaryColor,
-                    width: 300,
-                    height: 300,
+                  child: FadeInLeft(
+                    child: Bubble(
+                      color: ColorTheme.secondaryColor,
+                      width: 300,
+                      height: 300,
+                    ),
                   ),
                 ),
                 Positioned(
                   top: 50,
                   right: -50,
-                  child: Bubble(
-                    color: ColorTheme.secondaryColor,
-                    width: 100,
-                    height: 100,
+                  child: FadeInRight(
+                    child: Bubble(
+                      color: ColorTheme.secondaryColor,
+                      width: 100,
+                      height: 100,
+                    ),
                   ),
                 ),
                 Positioned(
                   top: 4,
                   right: 22,
-                  child: Container(
-                    width: 220,
-                    height: 240,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image:
-                            AssetImage("assets/images/image-help-center.png"),
-                        fit: BoxFit.cover,
+                  child: FadeInRight(
+                    delay: Duration(milliseconds: 350 * 2),
+                    child: Container(
+                      width: 220,
+                      height: 240,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image:
+                              AssetImage("assets/images/image-help-center.png"),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
@@ -83,33 +90,42 @@ class SupportPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.coronavirus_outlined,
-                        color: Colors.white,
-                      ),
-                      SizedBox(width: 4),
-                      Text("PANTAU COVID-19",
-                          style: TypeTheme.normalTextFont.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w500,
-                          )),
-                    ],
+                  FadeInLeft(
+                    delay: Duration(milliseconds: 350),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.coronavirus_outlined,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 4),
+                        Text("PANTAU COVID-19",
+                            style: TypeTheme.normalTextFont.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      ],
+                    ),
                   ),
-                  Icon(
-                    Icons.notifications_outlined,
-                    color: Colors.white,
+                  FadeInRight(
+                    delay: Duration(milliseconds: 350),
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: Colors.white,
+                    ),
                   ),
                 ],
               ),
               SizedBox(height: SpaceConfig.normalSpace * 5),
-              Text(
-                "Bantuan\nUntukmu",
-                style: TypeTheme.normalTextFont.copyWith(
-                  color: Colors.black.withOpacity(0.5),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 24,
+              FadeInLeft(
+                delay: Duration(milliseconds: 350 * 2),
+                child: Text(
+                  "Bantuan\nUntukmu",
+                  style: TypeTheme.normalTextFont.copyWith(
+                    color: Colors.black.withOpacity(0.5),
+                    fontWeight: FontWeight.w700,
+                    fontSize: 24,
+                  ),
                 ),
               ),
               SizedBox(height: SpaceConfig.normalSpace * 5),
@@ -139,117 +155,135 @@ class SupportPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SpaceConfig.longSpace),
-                InkWell(
-                  onTap: () {
-                    Get.to(FaqPage());
-                  },
-                  child: ListCardTwoLines(
-                    backgroundIconColor: ColorTheme.redColor,
-                    tileColor: Colors.white,
-                    title: "Pertanyaan Terkait",
-                    subtitle: "Kumpulan pertanyaan",
-                    icon: Icons.question_answer,
+                FadeInDown(
+                  delay: Duration(milliseconds: 350 * 3),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(FaqPage());
+                    },
+                    child: ListCardTwoLines(
+                      backgroundIconColor: ColorTheme.redColor,
+                      tileColor: Colors.white,
+                      title: "Pertanyaan Terkait",
+                      subtitle: "Kumpulan pertanyaan",
+                      icon: Icons.question_answer,
+                    ),
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
-                InkWell(
-                  onTap: () {
-                    Get.bottomSheet(
-                      BottomSheet(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                              top: Radius.circular(SpaceConfig.longSpace)),
-                        ),
-                        onClosing: () {},
-                        enableDrag: false,
-                        builder: (context) {
-                          return Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            color: ColorTheme.bgLight,
-                            height: 240,
-                            child: Column(
-                              children: [
-                                Stack(
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Container(
-                                        width: 50,
-                                        height: 6,
-                                        margin: EdgeInsets.symmetric(
-                                            vertical: SpaceConfig.normalSpace),
-                                        decoration: BoxDecoration(
-                                          color: ColorTheme.secondaryColor,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
+                FadeInDown(
+                  delay: Duration(milliseconds: 350 * 4),
+                  child: InkWell(
+                    onTap: () {
+                      Get.bottomSheet(
+                        BottomSheet(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(SpaceConfig.longSpace)),
+                          ),
+                          onClosing: () {},
+                          enableDrag: false,
+                          builder: (context) {
+                            return Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: SpaceConfig.longSpace),
+                              color: ColorTheme.bgLight,
+                              height: 240,
+                              child: Column(
+                                children: [
+                                  Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.topCenter,
+                                        child: Container(
+                                          width: 50,
+                                          height: 6,
+                                          margin: EdgeInsets.symmetric(
+                                              vertical:
+                                                  SpaceConfig.normalSpace),
+                                          decoration: BoxDecoration(
+                                            color: ColorTheme.secondaryColor,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
                                         ),
                                       ),
+                                    ],
+                                  ),
+                                  SizedBox(height: SpaceConfig.normalSpace),
+                                  FadeInUp(
+                                    delay: Duration(milliseconds: 350),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        if (await canLaunch("tel:119")) {
+                                          await launch("tel:119");
+                                        } else {
+                                          throw Exception(
+                                              'Gagal mengalihkan ke tujuan');
+                                        }
+                                      },
+                                      child: ListCardOneLine(
+                                        backgroundIconColor:
+                                            ColorTheme.redColor,
+                                        tileColor: Colors.white,
+                                        title: "Kontak Darurat",
+                                        icon: Icons.call,
+                                      ),
                                     ),
-                                  ],
-                                ),
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                InkWell(
-                                  onTap: () async {
-                                    if (await canLaunch("tel:119")) {
-                                      await launch("tel:119");
-                                    } else {
-                                      throw Exception(
-                                          'Gagal mengalihkan ke tujuan');
-                                    }
-                                  },
-                                  child: ListCardOneLine(
-                                    backgroundIconColor: ColorTheme.redColor,
-                                    tileColor: Colors.white,
-                                    title: "Kontak Darurat",
-                                    icon: Icons.call,
                                   ),
-                                ),
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                InkWell(
-                                  onTap: () async {
-                                    if (await canLaunch(
-                                        URLShared.telegramURL)) {
-                                      await launch(URLShared.telegramURL);
-                                    } else {
-                                      throw Exception(
-                                          'Gagal mengalihkan ke tujuan');
-                                    }
-                                  },
-                                  child: ListCardOneLine(
-                                    backgroundIconColor: ColorTheme.blueColor,
-                                    tileColor: Colors.white,
-                                    title: "Kontak Saya",
-                                    icon: Icons.call,
+                                  SizedBox(height: SpaceConfig.normalSpace),
+                                  FadeInUp(
+                                    delay: Duration(milliseconds: 350 * 2),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        if (await canLaunch(
+                                            URLShared.telegramURL)) {
+                                          await launch(URLShared.telegramURL);
+                                        } else {
+                                          throw Exception(
+                                              'Gagal mengalihkan ke tujuan');
+                                        }
+                                      },
+                                      child: ListCardOneLine(
+                                        backgroundIconColor:
+                                            ColorTheme.blueColor,
+                                        tileColor: Colors.white,
+                                        title: "Kontak Saya",
+                                        icon: Icons.call,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: ListCardTwoLines(
-                    backgroundIconColor: ColorTheme.greenColor,
-                    tileColor: Colors.white,
-                    title: "Hubungi Kami",
-                    subtitle: "Bantuan lebih lanjut",
-                    icon: Icons.call,
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                    child: ListCardTwoLines(
+                      backgroundIconColor: ColorTheme.greenColor,
+                      tileColor: Colors.white,
+                      title: "Hubungi Kami",
+                      subtitle: "Bantuan lebih lanjut",
+                      icon: Icons.call,
+                    ),
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
-                InkWell(
-                  onTap: () {
-                    Get.to(AboutPage());
-                  },
-                  child: ListCardTwoLines(
-                    backgroundIconColor: ColorTheme.blueColor,
-                    tileColor: Colors.white,
-                    title: "Tentang Aplikasi",
-                    subtitle: "Informasi aplikasi",
-                    icon: Icons.perm_device_info,
+                FadeInDown(
+                  delay: Duration(milliseconds: 350 * 5),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(AboutPage());
+                    },
+                    child: ListCardTwoLines(
+                      backgroundIconColor: ColorTheme.blueColor,
+                      tileColor: Colors.white,
+                      title: "Tentang Aplikasi",
+                      subtitle: "Informasi aplikasi",
+                      icon: Icons.perm_device_info,
+                    ),
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),

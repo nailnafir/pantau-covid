@@ -16,12 +16,15 @@ class SplashPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Container(
-              height: 280,
-              width: 280,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/logo-pantau-covid.png"),
+            ZoomIn(
+              duration: Duration(milliseconds: 800),
+              child: Container(
+                height: 280,
+                width: 280,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/logo-pantau-covid.png"),
+                  ),
                 ),
               ),
             ),

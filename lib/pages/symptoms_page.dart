@@ -40,19 +40,23 @@ class SymptompsPage extends StatelessWidget {
             Positioned(
               top: -150,
               left: -150,
-              child: Bubble(
-                color: ColorTheme.secondaryColor,
-                width: 300,
-                height: 300,
+              child: FadeInLeft(
+                child: Bubble(
+                  color: ColorTheme.secondaryColor,
+                  width: 300,
+                  height: 300,
+                ),
               ),
             ),
             Positioned(
               top: 50,
               right: -50,
-              child: Bubble(
-                color: ColorTheme.secondaryColor,
-                width: 100,
-                height: 100,
+              child: FadeInRight(
+                child: Bubble(
+                  color: ColorTheme.secondaryColor,
+                  width: 100,
+                  height: 100,
+                ),
               ),
             ),
             _buildBody(),
@@ -75,51 +79,61 @@ class SymptompsPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(SpaceConfig.longSpace),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Text(
-            "Apa kamu merasa sakit?",
-            style: TypeTheme.subTitleTextFont.copyWith(
-              fontWeight: FontWeight.w600,
-              color: Colors.black.withOpacity(0.5),
+          FadeInDown(
+            delay: Duration(milliseconds: 350),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Text(
+                  "Apa kamu merasa sakit?",
+                  style: TypeTheme.subTitleTextFont.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+                SizedBox(height: SpaceConfig.shortSpace),
+                Text(
+                  "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
+                  style: TypeTheme.normalTextFont.copyWith(
+                    color: Colors.black.withOpacity(0.5),
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.justify,
+                ),
+              ],
             ),
-          ),
-          SizedBox(height: SpaceConfig.shortSpace),
-          Text(
-            "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
-            style: TypeTheme.normalTextFont.copyWith(
-              color: Colors.black.withOpacity(0.5),
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.justify,
           ),
           SizedBox(height: SpaceConfig.longSpace),
-          Container(
-            width: Get.width,
-            height: 50,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius:
-                        BorderRadius.circular(SpaceConfig.normalSpace)),
-                elevation: 2,
-                primary: ColorTheme.redColor,
+          FadeInDown(
+            delay: Duration(milliseconds: 350 * 2),
+            child: Container(
+              width: Get.width,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(SpaceConfig.normalSpace)),
+                  elevation: 2,
+                  primary: ColorTheme.redColor,
+                ),
+                onPressed: () async {
+                  if (await canLaunch(
+                      "https://covid19.go.id/pelaporan-mandiri")) {
+                    await launch(
+                      "https://covid19.go.id/pelaporan-mandiri",
+                      enableDomStorage: true,
+                      enableJavaScript: true,
+                      forceWebView: true,
+                    );
+                  } else {
+                    throw Exception("Gagal mengalihkan ke telepon");
+                  }
+                },
+                child: Text("Lapor Mandiri", style: TypeTheme.subTitleTextFont),
               ),
-              onPressed: () async {
-                if (await canLaunch(
-                    "https://covid19.go.id/pelaporan-mandiri")) {
-                  await launch(
-                    "https://covid19.go.id/pelaporan-mandiri",
-                    enableDomStorage: true,
-                    enableJavaScript: true,
-                    forceWebView: true,
-                  );
-                } else {
-                  throw Exception("Gagal mengalihkan ke telepon");
-                }
-              },
-              child: Text("Lapor Mandiri", style: TypeTheme.subTitleTextFont),
             ),
           ),
           SizedBox(height: SpaceConfig.normalSpace),
@@ -139,80 +153,84 @@ class SymptompsPage extends StatelessWidget {
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(SpaceConfig.longSpace)),
       ),
-      child: Column(
-        children: [
-          GridView.count(
-            crossAxisCount: 2,
-            crossAxisSpacing: SpaceConfig.shortSpace,
-            mainAxisSpacing: SpaceConfig.shortSpace,
-            childAspectRatio: 1.0,
-            primary: false,
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            children: [
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/symptomp-headache.png'),
-                      fit: BoxFit.fill,
+      child: FadeInDown(
+        delay: Duration(milliseconds: 350 * 3),
+        child: Column(
+          children: [
+            GridView.count(
+              crossAxisCount: 2,
+              crossAxisSpacing: SpaceConfig.shortSpace,
+              mainAxisSpacing: SpaceConfig.shortSpace,
+              childAspectRatio: 1.0,
+              primary: false,
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image:
+                            AssetImage('assets/images/symptomp-headache.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Sakit Kepala',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Sakit Kepala',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/symptomp-cough.png'),
-                      fit: BoxFit.fill,
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/symptomp-cough.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Batuk',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Batuk',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/symptomp-fever.png'),
-                      fit: BoxFit.fill,
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/symptomp-fever.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Demam',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Demam',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-              NormalBoxCard(
-                iconImage: Container(
-                  width: 120,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/symptomp-pain.png'),
-                      fit: BoxFit.fill,
+                NormalBoxCard(
+                  iconImage: Container(
+                    width: 120,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/symptomp-pain.png'),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
+                  title: 'Nyeri Otot',
+                  backgroundColor: Colors.white,
+                  textColor: Colors.black,
                 ),
-                title: 'Nyeri Otot',
-                backgroundColor: Colors.white,
-                textColor: Colors.black,
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
