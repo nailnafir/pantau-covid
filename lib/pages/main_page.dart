@@ -90,55 +90,34 @@ class _MainPageState extends State<MainPage> {
             ],
           ),
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(boxShadow: [
-            BoxShadow(
-              color: Colors.grey,
-              blurRadius: 1.0,
-              spreadRadius: 0.5,
-              offset: Offset(0.0, 1.0),
+        bottomNavigationBar: CurvedNavigationBar(
+          color: ColorTheme.primaryColor,
+          backgroundColor: ColorTheme.bgLight,
+          height: 50,
+          items: [
+            Icon(
+              Icons.home,
+              size: 30,
             ),
-          ]),
-          child: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Beranda",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.article),
-                label: "Data",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.ballot),
-                label: "Berita",
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.help_center),
-                label: "Bantuan",
-              ),
-            ],
-            type: BottomNavigationBarType.fixed,
-            showUnselectedLabels: true,
-            showSelectedLabels: true,
-            selectedLabelStyle: TypeTheme.normalTextFont.copyWith(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
+            Icon(
+              Icons.article,
+              size: 30,
             ),
-            unselectedLabelStyle: TypeTheme.normalTextFont.copyWith(
-              fontWeight: FontWeight.w500,
-              fontSize: 12,
+            Icon(
+              Icons.ballot,
+              size: 30,
             ),
-            selectedItemColor: ColorTheme.secondaryColor,
-            unselectedItemColor: Colors.grey,
-            currentIndex: _selectedPage,
-            onTap: (index) {
-              setState(() {
-                _selectedPage = index;
-              });
-              _pageController.jumpToPage(_selectedPage);
-            },
-          ),
+            Icon(
+              Icons.help_center,
+              size: 30,
+            ),
+          ],
+          onTap: (index) {
+            setState(() {
+              _selectedPage = index;
+            });
+            _pageController.jumpToPage(_selectedPage);
+          },
         ),
       ),
     );
