@@ -504,11 +504,14 @@ class _DataPageState extends State<DataPage> {
                         onNotification: (notification) {
                           if (notification is ScrollStartNotification) {
                             isScroll = true;
+                          } else if (notification is ScrollEndNotification) {
+                            isScroll = true;
+                          } else {
+                            isScroll = true;
                           }
                           return true;
                         },
                         child: ListView.builder(
-                          primary: false,
                           itemCount: allProvince!.listData.length,
                           itemBuilder: (context, index) {
                             if (editingController.text.isEmpty) {
@@ -894,6 +897,8 @@ class _DataPageState extends State<DataPage> {
   }
 
   _vaccine() {
+    bool isScroll = false;
+
     return GestureDetector(
       onTap: () {
         Get.bottomSheet(
@@ -925,116 +930,152 @@ class _DataPageState extends State<DataPage> {
                         ),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                          horizontal: SpaceConfig.longSpace),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: SpaceConfig.normalSpace),
-                          Text(
-                            "Pelaksanaan Vaksinasi",
-                            style: TypeTheme.subTitleTextFont
-                                .copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          (localVaccine != null)
-                              ? Text(
-                                  "Diperbarui pada " +
-                                      DateFormat.EEEE()
-                                          .add_d()
-                                          .add_yMMMM()
-                                          .addPattern('•')
-                                          .add_Hms()
-                                          .format((DateTime.parse(
-                                              localVaccine!.lastUpdate)))
-                                          .replaceAll('Monday', 'Senin,')
-                                          .replaceAll('Tuesday', 'Selasa,')
-                                          .replaceAll('Wednesday', 'Rabu,')
-                                          .replaceAll('Thursday', 'Kamis,')
-                                          .replaceAll('Friday', 'Jumat,')
-                                          .replaceAll('Saturday', 'Sabtu,')
-                                          .replaceAll('Sunday', 'Minggu,')
-                                          .replaceAll('January', 'Januari')
-                                          .replaceAll('February', 'Februari')
-                                          .replaceAll('March', 'Maret')
-                                          .replaceAll('April', 'April')
-                                          .replaceAll('May', 'Mei')
-                                          .replaceAll('June', 'Juni')
-                                          .replaceAll('July', 'Juli')
-                                          .replaceAll('August', 'Agustus')
-                                          .replaceAll('September', 'September')
-                                          .replaceAll('October', 'Oktober')
-                                          .replaceAll('November', 'November')
-                                          .replaceAll('December', 'Desember'),
-                                  style: TypeTheme.smallTextFont)
-                              : Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                  child: Container(
-                                    height: 18,
-                                    width: (MediaQuery.of(context).size.width -
-                                            2 * SpaceConfig.longSpace) -
-                                        80,
-                                    decoration: BoxDecoration(
-                                        color: ColorTheme.bgLight,
-                                        borderRadius: BorderRadius.circular(
-                                            SpaceConfig.normalSpace)),
+                    FadeInUp(
+                      delay: Duration(milliseconds: 350),
+                      child: Container(
+                        margin: EdgeInsets.symmetric(
+                            horizontal: SpaceConfig.longSpace),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: SpaceConfig.normalSpace),
+                            Text(
+                              "Pelaksanaan Vaksinasi",
+                              style: TypeTheme.subTitleTextFont
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                            (localVaccine != null)
+                                ? Text(
+                                    "Diperbarui pada " +
+                                        DateFormat.EEEE()
+                                            .add_d()
+                                            .add_yMMMM()
+                                            .addPattern('•')
+                                            .add_Hms()
+                                            .format((DateTime.parse(
+                                                localVaccine!.lastUpdate)))
+                                            .replaceAll('Monday', 'Senin,')
+                                            .replaceAll('Tuesday', 'Selasa,')
+                                            .replaceAll('Wednesday', 'Rabu,')
+                                            .replaceAll('Thursday', 'Kamis,')
+                                            .replaceAll('Friday', 'Jumat,')
+                                            .replaceAll('Saturday', 'Sabtu,')
+                                            .replaceAll('Sunday', 'Minggu,')
+                                            .replaceAll('January', 'Januari')
+                                            .replaceAll('February', 'Februari')
+                                            .replaceAll('March', 'Maret')
+                                            .replaceAll('April', 'April')
+                                            .replaceAll('May', 'Mei')
+                                            .replaceAll('June', 'Juni')
+                                            .replaceAll('July', 'Juli')
+                                            .replaceAll('August', 'Agustus')
+                                            .replaceAll(
+                                                'September', 'September')
+                                            .replaceAll('October', 'Oktober')
+                                            .replaceAll('November', 'November')
+                                            .replaceAll('December', 'Desember'),
+                                    style: TypeTheme.smallTextFont)
+                                : Shimmer.fromColors(
+                                    baseColor: Colors.grey[300]!,
+                                    highlightColor: Colors.grey[100]!,
+                                    child: Container(
+                                      height: 18,
+                                      width:
+                                          (MediaQuery.of(context).size.width -
+                                                  2 * SpaceConfig.longSpace) -
+                                              80,
+                                      decoration: BoxDecoration(
+                                          color: ColorTheme.bgLight,
+                                          borderRadius: BorderRadius.circular(
+                                              SpaceConfig.normalSpace)),
+                                    ),
                                   ),
-                                ),
-                          SizedBox(height: SpaceConfig.longSpace),
-                        ],
+                            SizedBox(height: SpaceConfig.longSpace),
+                          ],
+                        ),
                       ),
                     ),
                     Expanded(
-                      child: ListView(
-                        children: [
-                          //NOTE: NATIONAL
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.normalSpace),
-                                  child: Text(
-                                    "Vaksinasi Nasional",
-                                    style: TypeTheme.subTitleTextFont
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
+                      child: NotificationListener(
+                        onNotification: (notification) {
+                          if (notification is ScrollStartNotification) {
+                            isScroll = true;
+                          } else if (notification is ScrollEndNotification) {
+                            isScroll = true;
+                          } else {
+                            isScroll = true;
+                          }
+                          return true;
+                        },
+                        child: ListView(
+                          children: [
+                            //NOTE: NATIONAL
+                            FadeInUp(
+                              delay: Duration(
+                                  milliseconds: isScroll ? 0 : 350 * 2),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace),
                                 ),
-                                SizedBox(height: SpaceConfig.shortSpace),
-                                (monitoringVaccine != null)
-                                    ? Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .firstVaccine),
-                                              cases:
-                                                  "Vaksinasi Nasional Dosis ke-1",
-                                              percent: ((monitoringVaccine![
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: SpaceConfig.normalSpace),
+                                      child: Text(
+                                        "Vaksinasi Nasional",
+                                        style: TypeTheme.subTitleTextFont
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.shortSpace),
+                                    (monitoringVaccine != null)
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
+                                                ),
+                                                width: Get.width,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .firstVaccine),
+                                                  cases:
+                                                      "Vaksinasi Nasional Dosis ke-1",
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .firstVaccine /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .totalTarget) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1043,53 +1084,57 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .totalTarget) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
+                                                              .totalTarget)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .firstVaccine /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .totalTarget) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  color: ColorTheme.greenColor,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
+                                                ),
+                                                width: Get.width,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
                                                               monitoringVaccine!
                                                                       .length -
                                                                   1]
-                                                          .firstVaccine /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .totalTarget)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .firstVaccine /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .totalTarget) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              color: ColorTheme.greenColor,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .secondVaccine),
-                                              percent: ((monitoringVaccine![
+                                                          .secondVaccine),
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .secondVaccine /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .totalTarget) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1098,116 +1143,129 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .totalTarget) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .secondVaccine /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .totalTarget)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .secondVaccine /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .totalTarget) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              cases:
-                                                  "Vaksinasi Nasional Dosis ke-2",
-                                              color: ColorTheme.greenColor,
+                                                              .totalTarget)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .secondVaccine /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .totalTarget) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  cases:
+                                                      "Vaksinasi Nasional Dosis ke-2",
+                                                  color: ColorTheme.greenColor,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            child: Column(
+                                              children:
+                                                  List.generate(2, (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: SpaceConfig
+                                                            .normalSpace +
+                                                        4,
+                                                    left:
+                                                        SpaceConfig.normalSpace,
+                                                    right:
+                                                        SpaceConfig.normalSpace,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              SpaceConfig
+                                                                  .normalSpace),
+                                                    ),
+                                                    width: Get.width,
+                                                    height: 120 - 4,
+                                                  ),
+                                                );
+                                              }),
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    : Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Column(
-                                          children: List.generate(2, (index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom:
-                                                    SpaceConfig.normalSpace + 4,
-                                                left: SpaceConfig.normalSpace,
-                                                right: SpaceConfig.normalSpace,
-                                              ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          SpaceConfig
-                                                              .normalSpace),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: SpaceConfig.normalSpace),
+                            //NOTE: MEDICAL
+                            FadeInUp(
+                              delay: Duration(
+                                  milliseconds: isScroll ? 0 : 350 * 3),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace),
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: SpaceConfig.normalSpace),
+                                      child: Text(
+                                        "Vaksinasi Petugas Medis",
+                                        style: TypeTheme.subTitleTextFont
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.shortSpace),
+                                    (monitoringVaccine != null)
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
                                                 ),
                                                 width: Get.width,
-                                                height: 120 - 4,
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: SpaceConfig.normalSpace),
-                          //NOTE: MEDICAL
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.normalSpace),
-                                  child: Text(
-                                    "Vaksinasi Petugas Medis",
-                                    style: TypeTheme.subTitleTextFont
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                SizedBox(height: SpaceConfig.shortSpace),
-                                (monitoringVaccine != null)
-                                    ? Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine1Medical),
-                                              cases:
-                                                  "Vaksinasi Petugas Medis Dosis ke-1",
-                                              percent: ((monitoringVaccine![
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine1Medical),
+                                                  cases:
+                                                      "Vaksinasi Petugas Medis Dosis ke-1",
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1Medical /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetMedical) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1216,53 +1274,58 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetMedical) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
+                                                              .targetMedical)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1Medical /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetMedical) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  color:
+                                                      ColorTheme.secondaryColor,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
+                                                ),
+                                                width: Get.width,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
                                                               monitoringVaccine!
                                                                       .length -
                                                                   1]
-                                                          .doneVaccine1Medical /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetMedical)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine1Medical /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetMedical) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              color: ColorTheme.secondaryColor,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine2Medical),
-                                              percent: ((monitoringVaccine![
+                                                          .doneVaccine2Medical),
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2Medical /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetMedical) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1271,116 +1334,130 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetMedical) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2Medical /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetMedical)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2Medical /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetMedical) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              cases:
-                                                  "Vaksinasi Petugas Medis Dosis ke-2",
-                                              color: ColorTheme.secondaryColor,
+                                                              .targetMedical)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2Medical /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetMedical) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  cases:
+                                                      "Vaksinasi Petugas Medis Dosis ke-2",
+                                                  color:
+                                                      ColorTheme.secondaryColor,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            child: Column(
+                                              children:
+                                                  List.generate(2, (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: SpaceConfig
+                                                            .normalSpace +
+                                                        4,
+                                                    left:
+                                                        SpaceConfig.normalSpace,
+                                                    right:
+                                                        SpaceConfig.normalSpace,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              SpaceConfig
+                                                                  .normalSpace),
+                                                    ),
+                                                    width: Get.width,
+                                                    height: 120 - 4,
+                                                  ),
+                                                );
+                                              }),
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    : Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Column(
-                                          children: List.generate(2, (index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom:
-                                                    SpaceConfig.normalSpace + 4,
-                                                left: SpaceConfig.normalSpace,
-                                                right: SpaceConfig.normalSpace,
-                                              ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          SpaceConfig
-                                                              .normalSpace),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: SpaceConfig.normalSpace),
+                            //NOTE: OFFICER
+                            FadeInUp(
+                              delay: Duration(
+                                  milliseconds: isScroll ? 0 : 350 * 4),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace),
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: SpaceConfig.normalSpace),
+                                      child: Text(
+                                        "Vaksinasi Petugas Publik",
+                                        style: TypeTheme.subTitleTextFont
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.shortSpace),
+                                    (monitoringVaccine != null)
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
                                                 ),
                                                 width: Get.width,
-                                                height: 120 - 4,
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: SpaceConfig.normalSpace),
-                          //NOTE: OFFICER
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.normalSpace),
-                                  child: Text(
-                                    "Vaksinasi Petugas Publik",
-                                    style: TypeTheme.subTitleTextFont
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                SizedBox(height: SpaceConfig.shortSpace),
-                                (monitoringVaccine != null)
-                                    ? Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine1Officer),
-                                              cases:
-                                                  "Vaksinasi Petugas Publik Dosis ke-1",
-                                              percent: ((monitoringVaccine![
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine1Officer),
+                                                  cases:
+                                                      "Vaksinasi Petugas Publik Dosis ke-1",
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1Officer /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetOfficer) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1389,53 +1466,57 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetOfficer) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
+                                                              .targetOfficer)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1Officer /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetOfficer) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  color: ColorTheme.blueColor,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
+                                                ),
+                                                width: Get.width,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
                                                               monitoringVaccine!
                                                                       .length -
                                                                   1]
-                                                          .doneVaccine1Officer /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetOfficer)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine1Officer /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetOfficer) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              color: ColorTheme.blueColor,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine2Officer),
-                                              percent: ((monitoringVaccine![
+                                                          .doneVaccine2Officer),
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2Officer /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetOfficer) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1444,116 +1525,129 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetOfficer) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2Officer /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetOfficer)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2Officer /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetOfficer) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              cases:
-                                                  "Vaksinasi Petugas Publik Dosis ke-2",
-                                              color: ColorTheme.blueColor,
+                                                              .targetOfficer)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2Officer /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetOfficer) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  cases:
+                                                      "Vaksinasi Petugas Publik Dosis ke-2",
+                                                  color: ColorTheme.blueColor,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            child: Column(
+                                              children:
+                                                  List.generate(2, (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: SpaceConfig
+                                                            .normalSpace +
+                                                        4,
+                                                    left:
+                                                        SpaceConfig.normalSpace,
+                                                    right:
+                                                        SpaceConfig.normalSpace,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              SpaceConfig
+                                                                  .normalSpace),
+                                                    ),
+                                                    width: Get.width,
+                                                    height: 120 - 4,
+                                                  ),
+                                                );
+                                              }),
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    : Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Column(
-                                          children: List.generate(2, (index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom:
-                                                    SpaceConfig.normalSpace + 4,
-                                                left: SpaceConfig.normalSpace,
-                                                right: SpaceConfig.normalSpace,
-                                              ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          SpaceConfig
-                                                              .normalSpace),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: SpaceConfig.normalSpace),
+                            //NOTE: TEEN
+                            FadeInUp(
+                              delay: Duration(
+                                  milliseconds: isScroll ? 0 : 350 * 5),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace),
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: SpaceConfig.normalSpace),
+                                      child: Text(
+                                        "Vaksinasi Anak Remaja",
+                                        style: TypeTheme.subTitleTextFont
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.shortSpace),
+                                    (monitoringVaccine != null)
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
                                                 ),
                                                 width: Get.width,
-                                                height: 120 - 4,
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: SpaceConfig.normalSpace),
-                          //NOTE: TEEN
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.normalSpace),
-                                  child: Text(
-                                    "Vaksinasi Anak Remaja",
-                                    style: TypeTheme.subTitleTextFont
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                SizedBox(height: SpaceConfig.shortSpace),
-                                (monitoringVaccine != null)
-                                    ? Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine1TeenAge),
-                                              cases:
-                                                  "Vaksinasi Anak Remaja Dosis ke-1",
-                                              percent: ((monitoringVaccine![
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine1TeenAge),
+                                                  cases:
+                                                      "Vaksinasi Anak Remaja Dosis ke-1",
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1TeenAge /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetTeenAge) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1562,53 +1656,57 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetTeenAge) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
+                                                              .targetTeenAge)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1TeenAge /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetTeenAge) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  color: ColorTheme.greenColor,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
+                                                ),
+                                                width: Get.width,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
                                                               monitoringVaccine!
                                                                       .length -
                                                                   1]
-                                                          .doneVaccine1TeenAge /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetTeenAge)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine1TeenAge /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetTeenAge) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              color: ColorTheme.greenColor,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine2TeenAge),
-                                              percent: ((monitoringVaccine![
+                                                          .doneVaccine2TeenAge),
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2TeenAge /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetTeenAge) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1617,116 +1715,129 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetTeenAge) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2TeenAge /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetTeenAge)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2TeenAge /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetTeenAge) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              cases:
-                                                  "Vaksinasi Anak Remaja Dosis ke-2",
-                                              color: ColorTheme.greenColor,
+                                                              .targetTeenAge)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2TeenAge /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetTeenAge) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  cases:
+                                                      "Vaksinasi Anak Remaja Dosis ke-2",
+                                                  color: ColorTheme.greenColor,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            child: Column(
+                                              children:
+                                                  List.generate(2, (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: SpaceConfig
+                                                            .normalSpace +
+                                                        4,
+                                                    left:
+                                                        SpaceConfig.normalSpace,
+                                                    right:
+                                                        SpaceConfig.normalSpace,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              SpaceConfig
+                                                                  .normalSpace),
+                                                    ),
+                                                    width: Get.width,
+                                                    height: 120 - 4,
+                                                  ),
+                                                );
+                                              }),
                                             ),
                                           ),
-                                        ],
-                                      )
-                                    : Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Column(
-                                          children: List.generate(2, (index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom:
-                                                    SpaceConfig.normalSpace + 4,
-                                                left: SpaceConfig.normalSpace,
-                                                right: SpaceConfig.normalSpace,
-                                              ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          SpaceConfig
-                                                              .normalSpace),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: SpaceConfig.normalSpace),
+                            //NOTE: PUBLIC
+                            FadeInUp(
+                              delay: Duration(
+                                  milliseconds: isScroll ? 0 : 350 * 6),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace),
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: SpaceConfig.normalSpace),
+                                      child: Text(
+                                        "Vaksinasi Warga Umum",
+                                        style: TypeTheme.subTitleTextFont
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.shortSpace),
+                                    (monitoringVaccine != null)
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
                                                 ),
                                                 width: Get.width,
-                                                height: 120 - 4,
-                                              ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: SpaceConfig.normalSpace),
-                          //NOTE: PUBLIC
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.normalSpace),
-                                  child: Text(
-                                    "Vaksinasi Warga Umum",
-                                    style: TypeTheme.subTitleTextFont
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
-                                ),
-                                SizedBox(height: SpaceConfig.shortSpace),
-                                (monitoringVaccine != null)
-                                    ? Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine1GeneralPublic),
-                                              cases:
-                                                  "Vaksinasi Warga Umum Dosis ke-1",
-                                              percent: ((monitoringVaccine![
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine1GeneralPublic),
+                                                  cases:
+                                                      "Vaksinasi Warga Umum Dosis ke-1",
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1GeneralPublic /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetGeneralPublic) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
@@ -1735,298 +1846,315 @@ class _DataPageState extends State<DataPage> {
                                                                   monitoringVaccine!
                                                                           .length -
                                                                       1]
-                                                              .targetGeneralPublic) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1GeneralPublic /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetGeneralPublic)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine1GeneralPublic /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetGeneralPublic) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              color: ColorTheme.blueColor,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine2GeneralPublic),
-                                              percent: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2GeneralPublic /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetGeneralPublic) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2GeneralPublic /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetGeneralPublic)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2GeneralPublic /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetGeneralPublic) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              cases:
-                                                  "Vaksinasi Warga Umum Dosis ke-2",
-                                              color: ColorTheme.blueColor,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Column(
-                                          children: List.generate(2, (index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom:
-                                                    SpaceConfig.normalSpace + 4,
-                                                left: SpaceConfig.normalSpace,
-                                                right: SpaceConfig.normalSpace,
+                                                              .targetGeneralPublic)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1GeneralPublic /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetGeneralPublic) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  color: ColorTheme.blueColor,
+                                                ),
                                               ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          SpaceConfig
-                                                              .normalSpace),
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
                                                 ),
                                                 width: Get.width,
-                                                height: 120 - 4,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine2GeneralPublic),
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2GeneralPublic /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetGeneralPublic) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
+                                                                  monitoringVaccine!
+                                                                          .length -
+                                                                      1]
+                                                              .doneVaccine2GeneralPublic /
+                                                          monitoringVaccine![
+                                                                  monitoringVaccine!
+                                                                          .length -
+                                                                      1]
+                                                              .targetGeneralPublic)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2GeneralPublic /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetGeneralPublic) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  cases:
+                                                      "Vaksinasi Warga Umum Dosis ke-2",
+                                                  color: ColorTheme.blueColor,
+                                                ),
                                               ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: SpaceConfig.normalSpace),
-                          //NOTE: AGED
-                          Card(
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                            margin: EdgeInsets.symmetric(
-                                horizontal: SpaceConfig.longSpace),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(height: SpaceConfig.normalSpace),
-                                Container(
-                                  margin: EdgeInsets.symmetric(
-                                      horizontal: SpaceConfig.normalSpace),
-                                  child: Text(
-                                    "Vaksinasi Lanjut Usia",
-                                    style: TypeTheme.subTitleTextFont
-                                        .copyWith(fontWeight: FontWeight.w600),
-                                  ),
+                                            ],
+                                          )
+                                        : Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            child: Column(
+                                              children:
+                                                  List.generate(2, (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: SpaceConfig
+                                                            .normalSpace +
+                                                        4,
+                                                    left:
+                                                        SpaceConfig.normalSpace,
+                                                    right:
+                                                        SpaceConfig.normalSpace,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              SpaceConfig
+                                                                  .normalSpace),
+                                                    ),
+                                                    width: Get.width,
+                                                    height: 120 - 4,
+                                                  ),
+                                                );
+                                              }),
+                                            ),
+                                          ),
+                                  ],
                                 ),
-                                SizedBox(height: SpaceConfig.shortSpace),
-                                (monitoringVaccine != null)
-                                    ? Column(
-                                        children: [
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine1Aged),
-                                              cases:
-                                                  "Vaksinasi Lanjut Usia Dosis ke-1",
-                                              percent: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine1Aged /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetAged) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1Aged /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetAged)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine1Aged /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetAged) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              color: ColorTheme.secondaryColor,
-                                            ),
-                                          ),
-                                          Container(
-                                            margin: EdgeInsets.only(
-                                              left: SpaceConfig.normalSpace - 4,
-                                              right:
-                                                  SpaceConfig.normalSpace - 4,
-                                              bottom: SpaceConfig.shortSpace,
-                                            ),
-                                            width: Get.width,
-                                            height: 120,
-                                            child: ProgressBoxCard(
-                                              icon: Icons.medication,
-                                              summary: NumberFormat
-                                                      .decimalPattern()
-                                                  .format(monitoringVaccine![
-                                                          monitoringVaccine!
-                                                                  .length -
-                                                              1]
-                                                      .doneVaccine2Aged),
-                                              percent: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2Aged /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetAged) >
-                                                      1.0
-                                                  ? 1.0
-                                                  : (monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2Aged /
-                                                      monitoringVaccine![
-                                                              monitoringVaccine!
-                                                                      .length -
-                                                                  1]
-                                                          .targetAged)),
-                                              update: ((monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .doneVaccine2Aged /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
-                                                              .targetAged) *
-                                                      100)
-                                                  .toStringAsFixed(2),
-                                              cases:
-                                                  "Vaksinasi Lanjut Usia Dosis ke-2",
-                                              color: ColorTheme.secondaryColor,
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Shimmer.fromColors(
-                                        baseColor: Colors.grey[300]!,
-                                        highlightColor: Colors.grey[100]!,
-                                        child: Column(
-                                          children: List.generate(2, (index) {
-                                            return Container(
-                                              margin: EdgeInsets.only(
-                                                bottom:
-                                                    SpaceConfig.normalSpace + 4,
-                                                left: SpaceConfig.normalSpace,
-                                                right: SpaceConfig.normalSpace,
-                                              ),
-                                              child: Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          SpaceConfig
-                                                              .normalSpace),
+                              ),
+                            ),
+                            SizedBox(height: SpaceConfig.normalSpace),
+                            //NOTE: AGED
+                            FadeInUp(
+                              delay: Duration(
+                                  milliseconds: isScroll ? 0 : 350 * 7),
+                              child: Card(
+                                elevation: 2,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      SpaceConfig.normalSpace),
+                                ),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          horizontal: SpaceConfig.normalSpace),
+                                      child: Text(
+                                        "Vaksinasi Lanjut Usia",
+                                        style: TypeTheme.subTitleTextFont
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600),
+                                      ),
+                                    ),
+                                    SizedBox(height: SpaceConfig.shortSpace),
+                                    (monitoringVaccine != null)
+                                        ? Column(
+                                            children: [
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
                                                 ),
                                                 width: Get.width,
-                                                height: 120 - 4,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine1Aged),
+                                                  cases:
+                                                      "Vaksinasi Lanjut Usia Dosis ke-1",
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1Aged /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetAged) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
+                                                                  monitoringVaccine!
+                                                                          .length -
+                                                                      1]
+                                                              .doneVaccine1Aged /
+                                                          monitoringVaccine![
+                                                                  monitoringVaccine!
+                                                                          .length -
+                                                                      1]
+                                                              .targetAged)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine1Aged /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetAged) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  color:
+                                                      ColorTheme.secondaryColor,
+                                                ),
                                               ),
-                                            );
-                                          }),
-                                        ),
-                                      ),
-                              ],
+                                              Container(
+                                                margin: EdgeInsets.only(
+                                                  left:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  right:
+                                                      SpaceConfig.normalSpace -
+                                                          4,
+                                                  bottom:
+                                                      SpaceConfig.shortSpace,
+                                                ),
+                                                width: Get.width,
+                                                height: 120,
+                                                child: ProgressBoxCard(
+                                                  icon: Icons.medication,
+                                                  summary: NumberFormat
+                                                          .decimalPattern()
+                                                      .format(monitoringVaccine![
+                                                              monitoringVaccine!
+                                                                      .length -
+                                                                  1]
+                                                          .doneVaccine2Aged),
+                                                  percent: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2Aged /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetAged) >
+                                                          1.0
+                                                      ? 1.0
+                                                      : (monitoringVaccine![
+                                                                  monitoringVaccine!
+                                                                          .length -
+                                                                      1]
+                                                              .doneVaccine2Aged /
+                                                          monitoringVaccine![
+                                                                  monitoringVaccine!
+                                                                          .length -
+                                                                      1]
+                                                              .targetAged)),
+                                                  update: ((monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .doneVaccine2Aged /
+                                                              monitoringVaccine![
+                                                                      monitoringVaccine!
+                                                                              .length -
+                                                                          1]
+                                                                  .targetAged) *
+                                                          100)
+                                                      .toStringAsFixed(2),
+                                                  cases:
+                                                      "Vaksinasi Lanjut Usia Dosis ke-2",
+                                                  color:
+                                                      ColorTheme.secondaryColor,
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        : Shimmer.fromColors(
+                                            baseColor: Colors.grey[300]!,
+                                            highlightColor: Colors.grey[100]!,
+                                            child: Column(
+                                              children:
+                                                  List.generate(2, (index) {
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                    bottom: SpaceConfig
+                                                            .normalSpace +
+                                                        4,
+                                                    left:
+                                                        SpaceConfig.normalSpace,
+                                                    right:
+                                                        SpaceConfig.normalSpace,
+                                                  ),
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              SpaceConfig
+                                                                  .normalSpace),
+                                                    ),
+                                                    width: Get.width,
+                                                    height: 120 - 4,
+                                                  ),
+                                                );
+                                              }),
+                                            ),
+                                          ),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: SpaceConfig.normalSpace),
-                        ],
+                            SizedBox(height: SpaceConfig.normalSpace),
+                          ],
+                        ),
                       ),
                     ),
                   ],
