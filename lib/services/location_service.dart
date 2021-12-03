@@ -1,15 +1,6 @@
 part of 'services.dart';
 
 class LocationService {
-  static String getFirstWord(String inputString) {
-    List<String> wordList = inputString.split(" ");
-    if (wordList.isNotEmpty) {
-      return wordList[0];
-    } else {
-      return ' ';
-    }
-  }
-
   static Future<LocationModel> getUserLocation() async {
     var position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best)
