@@ -334,11 +334,11 @@ class _DataPageState extends State<DataPage> {
                   SizedBox(width: SpaceConfig.shortSpace / 2),
                   (userLocation != null)
                       ? Container(
-                          width: Get.width / 2.2,
+                          width: Get.width / 1.75,
                           child: Text(
                             userLocation!.address,
                             overflow: TextOverflow.ellipsis,
-                            style: TypeTheme.subTitleTextFont
+                            style: TypeTheme.normalTextFont
                                 .copyWith(fontWeight: FontWeight.w600),
                             maxLines: 1,
                           ),
@@ -362,7 +362,7 @@ class _DataPageState extends State<DataPage> {
                         color: ColorTheme.secondaryColor.withOpacity(0.3),
                         borderRadius: BorderRadius.circular(4)),
                     child: Text(
-                      "Lokasi Kamu",
+                      "Lokasimu",
                       style: TypeTheme.smallTextFont
                           .copyWith(fontWeight: FontWeight.w400),
                     ),

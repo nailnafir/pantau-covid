@@ -1,6 +1,15 @@
 part of 'services.dart';
 
 class LocationService {
+  static String getFirstWord(String inputString) {
+    List<String> wordList = inputString.split(" ");
+    if (wordList.isNotEmpty) {
+      return wordList[0];
+    } else {
+      return ' ';
+    }
+  }
+
   static Future<LocationModel> getUserLocation() async {
     var position = await Geolocator.getCurrentPosition(
             desiredAccuracy: LocationAccuracy.best)
@@ -10,7 +19,11 @@ class LocationService {
       List<Placemark> placemarks =
           await placemarkFromCoordinates(position.latitude, position.longitude);
       print(placemarks[0]);
-      return LocationModel(address: placemarks[0].locality.toString());
+      List<String> subAdministrativeList =
+          placemarks[0].subAdministrativeArea!.split(" ");
+      List<String> localityList = placemarks[0].locality!.split(" ");
+      return LocationModel(
+          address: "${localityList[1]}, ${subAdministrativeList[1]}.");
     } catch (e) {
       throw Exception("Gagal menemukan lokasi");
     }
