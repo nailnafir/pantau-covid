@@ -87,7 +87,6 @@ class PreventionPage extends StatelessWidget {
             Text(
               "Patuhi Protokol Kesehatan!",
               style: TypeTheme.subTitleTextFont.copyWith(
-                fontWeight: FontWeight.w600,
                 color: Colors.black.withOpacity(0.5),
               ),
             ),
@@ -96,7 +95,6 @@ class PreventionPage extends StatelessWidget {
               "Lindungi diri Anda dan orang lain di sekitar Anda dengan mengetahui fakta-fakta terkait virus ini dan mengambil langkah pencegahan yang sesuai. Ikuti saran yang diberikan oleh otoritas kesehatan setempat.",
               style: TypeTheme.normalTextFont.copyWith(
                 color: Colors.black.withOpacity(0.5),
-                fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.justify,
             ),

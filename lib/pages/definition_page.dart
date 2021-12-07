@@ -85,7 +85,6 @@ class DefinitionPage extends StatelessWidget {
                 Text(
                   "Apa Itu Virus Corona?",
                   style: TypeTheme.subTitleTextFont.copyWith(
-                    fontWeight: FontWeight.w600,
                     color: Colors.black.withOpacity(0.5),
                   ),
                 ),
@@ -94,7 +93,6 @@ class DefinitionPage extends StatelessWidget {
                   "Virus corona (COVID-19) adalah penyakit menular yang disebabkan oleh virus corona yang baru-baru ini ditemukan. Sebagian besar orang yang tertular COVID-19 akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa penanganan khusus.",
                   style: TypeTheme.normalTextFont.copyWith(
                     color: Colors.black.withOpacity(0.5),
-                    fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.justify,
                 ),
@@ -111,7 +109,6 @@ class DefinitionPage extends StatelessWidget {
                 Text(
                   "Cara Penyebaran Virus",
                   style: TypeTheme.subTitleTextFont.copyWith(
-                    fontWeight: FontWeight.w600,
                     color: Colors.black.withOpacity(0.5),
                   ),
                 ),
@@ -120,7 +117,6 @@ class DefinitionPage extends StatelessWidget {
                   "Virus yang menyebabkan COVID-19 disebarkan melalui droplet (percikan air liur) yang dihasilkan saat orang yang terinfeksi batuk, bersin, atau bernapas. Droplet ini terlalu berat dan tidak bisa bertahan di udara, sehingga dengan cepat jatuh dan menempel pada suatu permukaan. Anda dapat tertular saat menghirup udara yang mengandung virus atau menyentuh permukaan benda yang terkontaminasi lalu menyentuh mata, hidung, atau mulut Anda.",
                   style: TypeTheme.normalTextFont.copyWith(
                     color: Colors.black.withOpacity(0.5),
-                    fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.justify,
                 ),
@@ -178,8 +174,7 @@ class DefinitionPage extends StatelessWidget {
                         ),
                         child: Text(
                           "Apakah Kamu Perlu?",
-                          style: TypeTheme.subTitleTextFont
-                              .copyWith(fontWeight: FontWeight.w600),
+                          style: TypeTheme.subTitleTextFont,
                         ),
                       ),
                     ),

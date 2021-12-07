@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pantau_covid/pages/pages.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 

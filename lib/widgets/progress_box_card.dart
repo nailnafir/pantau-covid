@@ -71,7 +71,6 @@ class ProgressBoxCard extends StatelessWidget {
                       summary,
                       style: TypeTheme.subTitleTextFont.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
                         height: 2.2,
                       ),
                     ),

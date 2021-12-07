@@ -69,7 +69,6 @@ class BigBoxCard extends StatelessWidget {
                       summary,
                       style: TypeTheme.subTitleTextFont.copyWith(
                         color: Colors.white,
-                        fontWeight: FontWeight.w700,
                         height: 0.5,
                       ),
                     ),

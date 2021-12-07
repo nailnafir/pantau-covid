@@ -104,7 +104,6 @@ class FaqPage extends StatelessWidget {
                               subtitle[index],
                               style: TypeTheme.normalTextFont.copyWith(
                                 color: Colors.black.withOpacity(0.75),
-                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ],

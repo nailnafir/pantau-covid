@@ -30,7 +30,6 @@ class Welcome extends StatelessWidget {
               "Selamat ${greetings()},",
               style: TypeTheme.titleTextFont.copyWith(
                 color: Colors.black.withOpacity(0.75),
-                fontWeight: FontWeight.w600,
               ),
             ),
             Icon(

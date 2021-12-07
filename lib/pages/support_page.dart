@@ -121,9 +121,8 @@ class SupportPage extends StatelessWidget {
                 delay: Duration(milliseconds: 350 * 2),
                 child: Text(
                   "Bantuan\nUntukmu",
-                  style: TypeTheme.normalTextFont.copyWith(
+                  style: TypeTheme.titleTextFont.copyWith(
                     color: Colors.black.withOpacity(0.5),
-                    fontWeight: FontWeight.w700,
                     fontSize: 24,
                   ),
                 ),

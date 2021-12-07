@@ -336,8 +336,7 @@ class _NewsPageState extends State<NewsPage> {
             delay: Duration(milliseconds: 350 * 4),
             child: Text(
               "Berita Hari Ini",
-              style: TypeTheme.subTitleTextFont
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: TypeTheme.subTitleTextFont,
             ),
           ),
         ),

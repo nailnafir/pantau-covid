@@ -126,9 +126,8 @@ class _HomePageState extends State<HomePage> {
                 delay: Duration(milliseconds: 350 * 2),
                 child: Text(
                   "Lawan\nVirus",
-                  style: TypeTheme.normalTextFont.copyWith(
+                  style: TypeTheme.titleTextFont.copyWith(
                     color: Colors.black.withOpacity(0.5),
-                    fontWeight: FontWeight.w700,
                     fontSize: 24,
                   ),
                 ),
@@ -246,8 +245,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Text(
                     "Semua Tentang COVID-19",
-                    style: TypeTheme.subTitleTextFont
-                        .copyWith(fontWeight: FontWeight.w600),
+                    style: TypeTheme.subTitleTextFont,
                   ),
                 ),
               ),

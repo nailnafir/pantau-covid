@@ -363,8 +363,7 @@ class _DataPageState extends State<DataPage> {
                         borderRadius: BorderRadius.circular(4)),
                     child: Text(
                       "Lokasimu",
-                      style: TypeTheme.smallTextFont
-                          .copyWith(fontWeight: FontWeight.w400),
+                      style: TypeTheme.smallTextFont,
                     ),
                   ),
                 ],
@@ -695,8 +694,7 @@ class _DataPageState extends State<DataPage> {
                     children: [
                       Text(
                         "Jumlah Kasus",
-                        style: TypeTheme.subTitleTextFont
-                            .copyWith(fontWeight: FontWeight.w600),
+                        style: TypeTheme.subTitleTextFont,
                       ),
                       Shimmer.fromColors(
                         baseColor: ColorTheme.secondaryColor,
@@ -705,7 +703,7 @@ class _DataPageState extends State<DataPage> {
                           "Lihat Semua",
                           style: TypeTheme.smallTextFont.copyWith(
                             color: ColorTheme.secondaryColor,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -941,8 +939,7 @@ class _DataPageState extends State<DataPage> {
                             SizedBox(height: SpaceConfig.normalSpace),
                             Text(
                               "Pelaksanaan Vaksinasi",
-                              style: TypeTheme.subTitleTextFont
-                                  .copyWith(fontWeight: FontWeight.w600),
+                              style: TypeTheme.subTitleTextFont,
                             ),
                             (localVaccine != null)
                                 ? Text(
@@ -1030,9 +1027,7 @@ class _DataPageState extends State<DataPage> {
                                           horizontal: SpaceConfig.normalSpace),
                                       child: Text(
                                         "Vaksinasi Nasional",
-                                        style: TypeTheme.subTitleTextFont
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                        style: TypeTheme.subTitleTextFont,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
@@ -1220,9 +1215,7 @@ class _DataPageState extends State<DataPage> {
                                           horizontal: SpaceConfig.normalSpace),
                                       child: Text(
                                         "Vaksinasi Petugas Medis",
-                                        style: TypeTheme.subTitleTextFont
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                        style: TypeTheme.subTitleTextFont,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
@@ -1412,9 +1405,7 @@ class _DataPageState extends State<DataPage> {
                                           horizontal: SpaceConfig.normalSpace),
                                       child: Text(
                                         "Vaksinasi Petugas Publik",
-                                        style: TypeTheme.subTitleTextFont
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                        style: TypeTheme.subTitleTextFont,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
@@ -1602,9 +1593,7 @@ class _DataPageState extends State<DataPage> {
                                           horizontal: SpaceConfig.normalSpace),
                                       child: Text(
                                         "Vaksinasi Anak Remaja",
-                                        style: TypeTheme.subTitleTextFont
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                        style: TypeTheme.subTitleTextFont,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
@@ -1792,9 +1781,7 @@ class _DataPageState extends State<DataPage> {
                                           horizontal: SpaceConfig.normalSpace),
                                       child: Text(
                                         "Vaksinasi Warga Umum",
-                                        style: TypeTheme.subTitleTextFont
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                        style: TypeTheme.subTitleTextFont,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
@@ -1982,9 +1969,7 @@ class _DataPageState extends State<DataPage> {
                                           horizontal: SpaceConfig.normalSpace),
                                       child: Text(
                                         "Vaksinasi Lanjut Usia",
-                                        style: TypeTheme.subTitleTextFont
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600),
+                                        style: TypeTheme.subTitleTextFont,
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
@@ -2180,8 +2165,7 @@ class _DataPageState extends State<DataPage> {
                     children: [
                       Text(
                         "Target Vaksinasi",
-                        style: TypeTheme.subTitleTextFont
-                            .copyWith(fontWeight: FontWeight.w600),
+                        style: TypeTheme.subTitleTextFont,
                       ),
                       Shimmer.fromColors(
                         baseColor: ColorTheme.secondaryColor,
@@ -2190,7 +2174,7 @@ class _DataPageState extends State<DataPage> {
                           "Lihat Semua",
                           style: TypeTheme.smallTextFont.copyWith(
                             color: ColorTheme.secondaryColor,
-                            fontWeight: FontWeight.w700,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -2235,9 +2219,10 @@ class _DataPageState extends State<DataPage> {
                                     2 * SpaceConfig.longSpace) -
                                 80,
                             decoration: BoxDecoration(
-                                color: ColorTheme.bgLight,
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace)),
+                              color: ColorTheme.bgLight,
+                              borderRadius: BorderRadius.circular(
+                                  SpaceConfig.normalSpace),
+                            ),
                           ),
                         ),
                 ],
@@ -2412,8 +2397,7 @@ class _DataPageState extends State<DataPage> {
             ),
             child: Text(
               "Peta Sebaran",
-              style: TypeTheme.subTitleTextFont
-                  .copyWith(fontWeight: FontWeight.w600),
+              style: TypeTheme.subTitleTextFont,
             ),
           ),
         ),

@@ -24,25 +24,25 @@ abstract class GradientTheme {
 
 abstract class TypeTheme {
   static TextStyle titleTextFont = TextStyle(
-    fontFamily: "Inter",
+    fontFamily: "Rubik",
     fontSize: 20,
-    fontWeight: FontWeight.w700,
-  );
-  static TextStyle subTitleTextFont = TextStyle(
-    fontFamily: "Inter",
-    fontSize: 18,
     fontWeight: FontWeight.w600,
   );
+  static TextStyle subTitleTextFont = TextStyle(
+    fontFamily: "Rubik",
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
   static TextStyle bigTextFont = TextStyle(
-    fontFamily: "Inter",
+    fontFamily: "Rubik",
     fontSize: 16,
   );
   static TextStyle normalTextFont = TextStyle(
-    fontFamily: "Inter",
+    fontFamily: "Rubik",
     fontSize: 14,
   );
   static TextStyle smallTextFont = TextStyle(
-    fontFamily: "Inter",
+    fontFamily: "Rubik",
     fontSize: 12,
   );
 }

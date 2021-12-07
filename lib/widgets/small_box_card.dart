@@ -57,7 +57,6 @@ class SmallBoxCard extends StatelessWidget {
                   summary,
                   style: TypeTheme.subTitleTextFont.copyWith(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 Text(

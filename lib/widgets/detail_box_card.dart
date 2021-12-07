@@ -41,13 +41,11 @@ class DetailBoxCard extends StatelessWidget {
           children: [
             Text(
               provinceName,
-              style: TypeTheme.normalTextFont
-                  .copyWith(fontWeight: FontWeight.w500),
+              style: TypeTheme.subTitleTextFont,
             ),
             Text(
               "Diperbarui: $lastUpdate",
-              style: TypeTheme.normalTextFont
-                  .copyWith(fontWeight: FontWeight.w500, color: Colors.grey),
+              style: TypeTheme.smallTextFont.copyWith(color: Colors.grey),
             ),
             SizedBox(height: SpaceConfig.normalSpace),
             Row(
@@ -91,13 +89,12 @@ class DetailBoxCard extends StatelessWidget {
                             "$summaryPositive",
                             style: TypeTheme.subTitleTextFont.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             "Positif",
                             style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.white,
+                              color: Colors.white.withOpacity(0.75),
                               fontWeight: FontWeight.w500,
                               height: 0.85,
                             ),
@@ -145,13 +142,12 @@ class DetailBoxCard extends StatelessWidget {
                             "$summaryActive",
                             style: TypeTheme.subTitleTextFont.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             "Dirawat",
                             style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.white,
+                              color: Colors.white.withOpacity(0.75),
                               fontWeight: FontWeight.w500,
                               height: 0.85,
                             ),
@@ -205,13 +201,12 @@ class DetailBoxCard extends StatelessWidget {
                             "$summaryRecovered",
                             style: TypeTheme.subTitleTextFont.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             "Sembuh",
                             style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.white,
+                              color: Colors.white.withOpacity(0.75),
                               fontWeight: FontWeight.w500,
                               height: 0.85,
                             ),
@@ -259,13 +254,12 @@ class DetailBoxCard extends StatelessWidget {
                             "$summaryDeaths",
                             style: TypeTheme.subTitleTextFont.copyWith(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
                             ),
                           ),
                           Text(
                             "Meninggal",
                             style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.white,
+                              color: Colors.white.withOpacity(0.75),
                               fontWeight: FontWeight.w500,
                               height: 0.85,
                             ),

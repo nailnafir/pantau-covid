@@ -35,7 +35,6 @@ class NormalBoxCard extends StatelessWidget {
             Text(
               title,
               style: TypeTheme.subTitleTextFont.copyWith(
-                fontWeight: FontWeight.w700,
                 color: textColor,
               ),
             ),

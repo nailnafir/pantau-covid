@@ -89,7 +89,6 @@ class SymptompsPage extends StatelessWidget {
                 Text(
                   "Apa kamu merasa sakit?",
                   style: TypeTheme.subTitleTextFont.copyWith(
-                    fontWeight: FontWeight.w600,
                     color: Colors.black.withOpacity(0.5),
                   ),
                 ),
@@ -98,7 +97,6 @@ class SymptompsPage extends StatelessWidget {
                   "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
                   style: TypeTheme.normalTextFont.copyWith(
                     color: Colors.black.withOpacity(0.5),
-                    fontWeight: FontWeight.w500,
                   ),
                   textAlign: TextAlign.justify,
                 ),
