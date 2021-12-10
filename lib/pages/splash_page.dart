@@ -6,7 +6,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3)).then((value) {
-      Get.offAll(MainPage(initialPage: 0));
+      Get.offAll(OnBoardingPage());
     });
 
     return Scaffold(
