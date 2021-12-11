@@ -139,7 +139,7 @@ class DefinitionPage extends StatelessWidget {
         builder: (context, scrollController) {
           return NotificationListener<OverscrollIndicatorNotification>(
             onNotification: (notification) {
-              notification.disallowGlow();
+              notification.disallowIndicator();
               return false;
             },
             child: Container(
