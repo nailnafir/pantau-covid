@@ -3,10 +3,18 @@ part of 'pages.dart';
 class SplashPage extends StatelessWidget {
   const SplashPage({Key? key}) : super(key: key);
 
+  Future<String?> loadData() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.getString("name") ?? null;
+  }
+
   @override
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3)).then((value) {
-      Get.offAll(OnBoardingPage());
+      loadData().then((name) {
+        Get.offAll(
+            (name == null) ? OnBoardingPage() : MainPage(initialPage: 0));
+      });
     });
 
     return Scaffold(

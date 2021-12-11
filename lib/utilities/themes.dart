@@ -9,6 +9,8 @@ abstract class ColorTheme {
   static Color greenColor = Color(0xFF08AF80);
   static Color blueColor = Color(0xFF01ABE6);
   static Color redColor = Color(0xFFF65D5A);
+  static Color accentColorDarkGrey = Color(0xFFADADAD);
+  static Color accentColorLightGrey = Color(0xFFE3E3E3);
 }
 
 abstract class GradientTheme {

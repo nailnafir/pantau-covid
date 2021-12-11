@@ -66,7 +66,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       done: Text("Selesai", style: TypeTheme.bigTextFont),
       dotsDecorator: DotsDecorator(
         size: Size(10.0, 10.0),
-        color: Color(0xFFBDBDBD),
+        color: ColorTheme.accentColorLightGrey,
         activeSize: Size(24.0, 10.0),
         activeColor: ColorTheme.secondaryColor,
         activeShape: RoundedRectangleBorder(

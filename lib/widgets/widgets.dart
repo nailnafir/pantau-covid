@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pantau_covid/utilities/utilities.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'bubble.dart';
 part 'list_card_one.dart';
