@@ -64,9 +64,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       skip: Text("Lewati", style: TypeTheme.bigTextFont),
       next: Icon(Icons.arrow_forward),
       done: Text("Selesai", style: TypeTheme.bigTextFont),
+      globalBackgroundColor: ColorTheme.bgLight,
       dotsDecorator: DotsDecorator(
         size: Size(10.0, 10.0),
-        color: ColorTheme.accentColorLightGrey,
+        color: ColorTheme.accentColorDarkGrey,
         activeSize: Size(24.0, 10.0),
         activeColor: ColorTheme.secondaryColor,
         activeShape: RoundedRectangleBorder(

@@ -97,6 +97,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         EdgeInsets.symmetric(horizontal: SpaceConfig.longSpace),
                     child: TextFormField(
                       controller: nameController,
+                      textCapitalization: TextCapitalization.words,
                       textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.name,
                       style: TypeTheme.normalTextFont,
