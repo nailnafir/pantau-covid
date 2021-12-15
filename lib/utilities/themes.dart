@@ -26,25 +26,25 @@ abstract class GradientTheme {
 
 abstract class TypeTheme {
   static TextStyle titleTextFont = TextStyle(
-    fontFamily: "Manrope",
+    fontFamily: "Inter",
     fontSize: 20,
     fontWeight: FontWeight.w800,
   );
   static TextStyle subTitleTextFont = TextStyle(
-    fontFamily: "Manrope",
+    fontFamily: "Inter",
     fontSize: 18,
     fontWeight: FontWeight.w700,
   );
   static TextStyle bigTextFont = TextStyle(
-    fontFamily: "Manrope",
+    fontFamily: "Inter",
     fontSize: 16,
   );
   static TextStyle normalTextFont = TextStyle(
-    fontFamily: "Manrope",
+    fontFamily: "Inter",
     fontSize: 14,
   );
   static TextStyle smallTextFont = TextStyle(
-    fontFamily: "Manrope",
+    fontFamily: "Inter",
     fontSize: 12,
   );
 }
