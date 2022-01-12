@@ -1,9 +1,12 @@
 part of 'utilities.dart';
 
-abstract class URLShared {
+class ContactUrl {
   static String telegramURL = "https://t.me/nailnafir";
   static String emailURL = "mailto:nailnafir@outlook.com";
-  static String apiLocalURL = 'https://data.covid19.go.id';
-  static String apiVaccineURL = 'https://cekdiri.id';
-  static String apiGlobalURL = 'https://covid19.mathdro.id/api/countries/';
+}
+
+class ApiUrl {
+  static String apiLocalURL = 'data.covid19.go.id';
+  static String apiVaccineURL = 'cekdiri.id';
+  static String apiGlobalURL = 'covid19.mathdro.id';
 }
