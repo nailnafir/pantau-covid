@@ -1,15 +1,17 @@
 part of 'services.dart';
 
 class CaseTotalService {
-  static Future<CaseTotalModel> fetchTotal(String name) async {
-    String apiURL = URLShared.apiLocalURL + name;
-    var url = Uri.parse(apiURL);
+  static Future<CaseTotalModel> getTotalCase() async {
+    final host = ApiUrl.apiLocalURL;
+    final client = http.Client();
 
-    var apiResult = await http.get(url);
-    var jsonObject = json.decode(apiResult.body);
+    var url = Uri.https(host, '/public/api/update.json');
 
-    if (apiResult.statusCode == 200) {
-      return CaseTotalModel.fromJson(jsonObject);
+    var response = await client.get(url);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return CaseTotalModel.fromJson(data);
     } else {
       throw Exception('Gagal menyambungkan ke server');
     }

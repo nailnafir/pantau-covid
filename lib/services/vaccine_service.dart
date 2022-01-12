@@ -1,15 +1,17 @@
 part of 'services.dart';
 
 class LocalVaccineService {
-  static Future<LocalVaccineModel> fetchVaccine(String type) async {
-    String apiURL = URLShared.apiVaccineURL + type;
-    var url = Uri.parse(apiURL);
+  static Future<LocalVaccineModel> getVaccine() async {
+    final host = ApiUrl.apiVaccineURL;
+    final client = http.Client();
 
-    var apiResult = await http.get(url);
-    var jsonObject = json.decode(apiResult.body);
+    var url = Uri.https(host, '/vaksinasi');
 
-    if (apiResult.statusCode == 200) {
-      return LocalVaccineModel.fromJson(jsonObject);
+    var response = await client.get(url);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return LocalVaccineModel.fromJson(data);
     } else {
       throw Exception('Gagal menyambungkan ke server');
     }
@@ -17,18 +19,21 @@ class LocalVaccineService {
 }
 
 class MonitoringVaccineService {
-  static Future<List<MonitoringVaccineModel>> fetchVaccine(String name) async {
-    String apiURL = URLShared.apiVaccineURL + name;
-    var url = Uri.parse(apiURL);
+  static Future<List<MonitoringVaccineModel>> getVaccine() async {
+    final host = ApiUrl.apiVaccineURL;
+    final client = http.Client();
 
-    var response = await http.get(url);
-    var data = json.decode(response.body);
+    var url = Uri.https(host, '/vaksinasi');
 
-    List<MonitoringVaccineModel> vaccines = (data['monitoring'] as List)
-        .map((e) => MonitoringVaccineModel.fromJson(e))
-        .toList();
+    var response = await client.get(url);
 
     if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      List result = data['monitoring'];
+
+      List<MonitoringVaccineModel> vaccines =
+          result.map((e) => MonitoringVaccineModel.fromJson(e)).toList();
       return vaccines;
     } else {
       throw Exception('Gagal menyambungkan ke server');

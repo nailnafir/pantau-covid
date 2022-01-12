@@ -1,15 +1,17 @@
 part of 'services.dart';
 
 class AllProvinceService {
-  static Future<AllProvinceModel> fetchAll(String name) async {
-    String apiURL = URLShared.apiLocalURL + name;
-    var url = Uri.parse(apiURL);
+  static Future<AllProvinceModel> getAllProvince() async {
+    final host = ApiUrl.apiLocalURL;
+    final client = http.Client();
 
-    var apiResult = await http.get(url);
-    var jsonObject = json.decode(apiResult.body);
+    var url = Uri.https(host, '/public/api/prov.json');
 
-    if (apiResult.statusCode == 200) {
-      return AllProvinceModel.fromJson(jsonObject);
+    var response = await client.get(url);
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      return AllProvinceModel.fromJson(data);
     } else {
       throw Exception('Gagal menyambungkan ke server');
     }
@@ -17,17 +19,21 @@ class AllProvinceService {
 }
 
 class DetailProvinceService {
-  static Future<List<DetailProvinceModel>> fetchDetail(String name) async {
-    String apiURL = URLShared.apiLocalURL + name;
-    var url = Uri.parse(apiURL);
+  static Future<List<DetailProvinceModel>> getDetailProvince() async {
+    final host = ApiUrl.apiLocalURL;
+    final client = http.Client();
 
-    var response = await http.get(url);
-    var data = json.decode(response.body);
+    var url = Uri.https(host, '/public/api/prov.json');
 
-    List<DetailProvinceModel> provinces = (data['list_data'] as Iterable)
-        .map((e) => DetailProvinceModel.fromJson(e))
-        .toList();
+    var response = await client.get(url);
+
     if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      List result = data['list_data'];
+
+      List<DetailProvinceModel> provinces =
+          result.map((e) => DetailProvinceModel.fromJson(e)).toList();
       return provinces;
     } else {
       throw Exception('Gagal menyambungkan ke server');
