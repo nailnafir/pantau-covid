@@ -237,8 +237,8 @@ class SupportPage extends StatelessWidget {
                                     child: InkWell(
                                       onTap: () async {
                                         if (await canLaunch(
-                                            URLShared.telegramURL)) {
-                                          await launch(URLShared.telegramURL);
+                                            ContactUrl.telegramURL)) {
+                                          await launch(ContactUrl.telegramURL);
                                         } else {
                                           throw Exception(
                                               'Gagal mengalihkan ke tujuan');
