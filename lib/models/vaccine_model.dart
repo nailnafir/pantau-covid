@@ -11,9 +11,10 @@ class LocalVaccineModel {
 
   factory LocalVaccineModel.fromJson(Map<String, dynamic> json) {
     return LocalVaccineModel(
-      lastUpdate: json['last_updated'],
+      lastUpdate: json['last_updated'] ?? "",
       monitoring: List<MonitoringVaccineModel>.from(
-          json['monitoring'].map((x) => MonitoringVaccineModel.fromJson(x))),
+          json['monitoring'].map((e) => MonitoringVaccineModel.fromJson(e)) ??
+              ""),
     );
   }
 }
@@ -61,32 +62,36 @@ class MonitoringVaccineModel {
 
   factory MonitoringVaccineModel.fromJson(Map<String, dynamic> json) {
     return MonitoringVaccineModel(
-      totalTarget: json['total_sasaran_vaksinasi'],
-      targetMedical: json['sasaran_vaksinasi_sdmk'],
-      targetOfficer: json['sasaran_vaksinasi_petugas_publik'],
-      targetAged: json['sasaran_vaksinasi_lansia'],
-      targetGeneralPublic: json['sasaran_vaksinasi_masyarakat_umum'],
-      targetTeenAge: json['sasaran_vaksinasi_kelompok_1217'],
-      firstVaccine: json['vaksinasi1'],
-      secondVaccine: json['vaksinasi2'],
-      doneVaccine1Medical: json['tahapan_vaksinasi']['sdm_kesehatan']
-          ['sudah_vaksin1'],
-      doneVaccine2Medical: json['tahapan_vaksinasi']['sdm_kesehatan']
-          ['sudah_vaksin2'],
-      doneVaccine1Officer: json['tahapan_vaksinasi']['petugas_publik']
-          ['sudah_vaksin1'],
-      doneVaccine2Officer: json['tahapan_vaksinasi']['petugas_publik']
-          ['sudah_vaksin2'],
-      doneVaccine1Aged: json['tahapan_vaksinasi']['lansia']['sudah_vaksin1'],
-      doneVaccine2Aged: json['tahapan_vaksinasi']['lansia']['sudah_vaksin2'],
-      doneVaccine1GeneralPublic: json['tahapan_vaksinasi']['masyarakat_umum']
-          ['sudah_vaksin1'],
-      doneVaccine2GeneralPublic: json['tahapan_vaksinasi']['masyarakat_umum']
-          ['sudah_vaksin2'],
+      totalTarget: json['total_sasaran_vaksinasi'] ?? "",
+      targetMedical: json['sasaran_vaksinasi_sdmk'] ?? "",
+      targetOfficer: json['sasaran_vaksinasi_petugas_publik'] ?? "",
+      targetAged: json['sasaran_vaksinasi_lansia'] ?? "",
+      targetGeneralPublic: json['sasaran_vaksinasi_masyarakat_umum'] ?? "",
+      targetTeenAge: json['sasaran_vaksinasi_kelompok_1217'] ?? "",
+      firstVaccine: json['vaksinasi1'] ?? "",
+      secondVaccine: json['vaksinasi2'] ?? "",
+      doneVaccine1Medical:
+          json['tahapan_vaksinasi']['sdm_kesehatan']['sudah_vaksin1'] ?? "",
+      doneVaccine2Medical:
+          json['tahapan_vaksinasi']['sdm_kesehatan']['sudah_vaksin2'] ?? "",
+      doneVaccine1Officer:
+          json['tahapan_vaksinasi']['petugas_publik']['sudah_vaksin1'] ?? "",
+      doneVaccine2Officer:
+          json['tahapan_vaksinasi']['petugas_publik']['sudah_vaksin2'] ?? "",
+      doneVaccine1Aged:
+          json['tahapan_vaksinasi']['lansia']['sudah_vaksin1'] ?? "",
+      doneVaccine2Aged:
+          json['tahapan_vaksinasi']['lansia']['sudah_vaksin2'] ?? "",
+      doneVaccine1GeneralPublic:
+          json['tahapan_vaksinasi']['masyarakat_umum']['sudah_vaksin1'] ?? "",
+      doneVaccine2GeneralPublic:
+          json['tahapan_vaksinasi']['masyarakat_umum']['sudah_vaksin2'] ?? "",
       doneVaccine1TeenAge: json['tahapan_vaksinasi']['kelompok_usia_12_17']
-          ['sudah_vaksin1'],
+              ['sudah_vaksin1'] ??
+          "",
       doneVaccine2TeenAge: json['tahapan_vaksinasi']['kelompok_usia_12_17']
-          ['sudah_vaksin2'],
+              ['sudah_vaksin2'] ??
+          "",
     );
   }
 }

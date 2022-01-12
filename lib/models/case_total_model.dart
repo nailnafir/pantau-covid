@@ -23,17 +23,17 @@ class CaseTotalModel {
     required this.lastUpdate,
   });
 
-  factory CaseTotalModel.fromJson(Map<String, dynamic> object) {
+  factory CaseTotalModel.fromJson(Map<String, dynamic> json) {
     return CaseTotalModel(
-      confirmedTotal: object['update']['total']['jumlah_positif'],
-      recoveredTotal: object['update']['total']['jumlah_sembuh'],
-      activeTotal: object['update']['total']['jumlah_dirawat'],
-      deathsTotal: object['update']['total']['jumlah_meninggal'],
-      confirmedUpdate: object['update']['penambahan']['jumlah_positif'],
-      recoveredUpdate: object['update']['penambahan']['jumlah_sembuh'],
-      activeUpdate: object['update']['penambahan']['jumlah_dirawat'],
-      deathsUpdate: object['update']['penambahan']['jumlah_meninggal'],
-      lastUpdate: object['update']['penambahan']['created'],
+      confirmedTotal: json['update']['total']['jumlah_positif'] ?? "",
+      recoveredTotal: json['update']['total']['jumlah_sembuh'] ?? "",
+      activeTotal: json['update']['total']['jumlah_dirawat'] ?? "",
+      deathsTotal: json['update']['total']['jumlah_meninggal'] ?? "",
+      confirmedUpdate: json['update']['penambahan']['jumlah_positif'] ?? "",
+      recoveredUpdate: json['update']['penambahan']['jumlah_sembuh'] ?? "",
+      activeUpdate: json['update']['penambahan']['jumlah_dirawat'] ?? "",
+      deathsUpdate: json['update']['penambahan']['jumlah_meninggal'] ?? "",
+      lastUpdate: json['update']['penambahan']['created'] ?? "",
     );
   }
 }
