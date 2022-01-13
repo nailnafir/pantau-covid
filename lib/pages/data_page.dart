@@ -18,61 +18,22 @@ class _DataPageState extends State<DataPage> {
   List<MonitoringVaccineModel>? monitoringVaccine;
   AllProvinceModel? allProvince;
   List<DetailProvinceModel>? detailProvince;
-  LocationModel? userLocation;
+  LocationModel? location;
 
   int _current = 0;
 
-  List imgBanner = [];
-  List bannerURL = [];
-
-  @override
-  void initState() {
-    super.initState();
-
-    LocationService.getUserLocation().then((value) {
-      userLocation = value;
-      setState(() {});
-    });
-
-    CaseTotalService.fetchTotal('/public/api/update.json').then((value) {
-      caseTotal = value;
-      setState(() {});
-    });
-
-    AllProvinceService.fetchAll('/public/api/prov.json').then((value) {
-      allProvince = value;
-      setState(() {});
-    });
-
-    DetailProvinceService.fetchDetail('/public/api/prov.json').then((value) {
-      detailProvince = value;
-      setState(() {});
-    });
-
-    LocalVaccineService.fetchVaccine('/vaksinasi').then((value) {
-      localVaccine = value;
-      setState(() {});
-    });
-
-    MonitoringVaccineService.fetchVaccine('/vaksinasi').then((value) {
-      monitoringVaccine = value;
-      setState(() {});
-    });
-
-    imgBanner = [
-      'assets/images/banner-one.jpg',
-      'assets/images/banner-two.jpg',
-      'assets/images/banner-three.jpg',
-      'assets/images/banner-four.jpg',
-    ];
-
-    bannerURL = [
-      'https://promkes.kemkes.go.id/cegah-virus-corona-jaga-kesehatan-dengan-germas',
-      'https://kipi.covid19.go.id/',
-      'https://sehatnegeriku.kemkes.go.id/baca/umum/20200125/2832840/wni-wuhan-tak-ada-terjangkit-ncov/',
-      'https://linktr.ee/covid19.go.id',
-    ];
-  }
+  List imgBanner = [
+    'assets/images/banner-one.jpg',
+    'assets/images/banner-two.jpg',
+    'assets/images/banner-three.jpg',
+    'assets/images/banner-four.jpg',
+  ];
+  List bannerURL = [
+    'https://promkes.kemkes.go.id/cegah-virus-corona-jaga-kesehatan-dengan-germas',
+    'https://kipi.covid19.go.id/',
+    'https://sehatnegeriku.kemkes.go.id/baca/umum/20200125/2832840/wni-wuhan-tak-ada-terjangkit-ncov/',
+    'https://linktr.ee/covid19.go.id',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -83,47 +44,7 @@ class _DataPageState extends State<DataPage> {
           key: refreshData,
           color: ColorTheme.secondaryColor,
           onRefresh: () {
-            return Future.delayed(Duration(seconds: 1)).whenComplete(() {
-              userLocation = null;
-              caseTotal = null;
-              allProvince = null;
-              detailProvince = null;
-              localVaccine = null;
-              monitoringVaccine = null;
-
-              LocationService.getUserLocation().then((value) {
-                userLocation = value;
-                setState(() {});
-              });
-
-              CaseTotalService.fetchTotal('/public/api/update.json')
-                  .then((value) {
-                caseTotal = value;
-                setState(() {});
-              });
-
-              AllProvinceService.fetchAll('/public/api/prov.json')
-                  .then((value) {
-                allProvince = value;
-                setState(() {});
-              });
-
-              DetailProvinceService.fetchDetail('/public/api/prov.json')
-                  .then((value) {
-                detailProvince = value;
-                setState(() {});
-              });
-
-              LocalVaccineService.fetchVaccine('/vaksinasi').then((value) {
-                localVaccine = value;
-                setState(() {});
-              });
-
-              MonitoringVaccineService.fetchVaccine('/vaksinasi').then((value) {
-                monitoringVaccine = value;
-                setState(() {});
-              });
-            });
+            return Future.delayed(Duration(seconds: 1), () {});
           },
           child: ListView(
             children: [
@@ -332,18 +253,24 @@ class _DataPageState extends State<DataPage> {
                     color: ColorTheme.secondaryColor,
                   ),
                   SizedBox(width: SpaceConfig.shortSpace / 2),
-                  (userLocation != null)
-                      ? Container(
+                  FutureBuilder(
+                    future: LocationService.getUserLocation(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<LocationModel> snapshot) {
+                      if (snapshot.hasData) {
+                        location = snapshot.data;
+                        return Container(
                           width: Get.width / 1.75,
                           child: Text(
-                            userLocation!.address,
+                            location!.address,
                             overflow: TextOverflow.ellipsis,
                             style: TypeTheme.normalTextFont
                                 .copyWith(fontWeight: FontWeight.w600),
                             maxLines: 1,
                           ),
-                        )
-                      : Shimmer.fromColors(
+                        );
+                      } else {
+                        return Shimmer.fromColors(
                           baseColor: Colors.grey[300]!,
                           highlightColor: Colors.grey[100]!,
                           child: Container(
@@ -351,7 +278,10 @@ class _DataPageState extends State<DataPage> {
                             height: 18,
                             width: Get.width / 3,
                           ),
-                        ),
+                        );
+                      }
+                    },
+                  ),
                   Spacer(),
                   Container(
                     padding: EdgeInsets.symmetric(
@@ -510,162 +440,233 @@ class _DataPageState extends State<DataPage> {
                           }
                           return true;
                         },
-                        child: ListView.builder(
-                          itemCount: allProvince!.listData.length,
-                          itemBuilder: (context, index) {
-                            if (editingController.text.isEmpty) {
-                              return FadeInUp(
-                                delay: Duration(
-                                    milliseconds:
-                                        isScroll ? 0 : 350 * (index + 2)),
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      top: (index == 0
-                                          ? 0
-                                          : SpaceConfig.normalSpace),
-                                      bottom: (index ==
-                                              allProvince!.listData.length - 1
-                                          ? SpaceConfig.normalSpace
-                                          : 0)),
-                                  child: DetailBoxCard(
-                                    summaryPositive:
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .confirmedTotal),
-                                    updatePositive: "+" +
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .update
-                                                .confirmedUpdate),
-                                    summaryActive: NumberFormat.decimalPattern()
-                                        .format(
-                                            detailProvince![index].activeTotal),
-                                    updateActive: "-0",
-                                    summaryRecovered:
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .recoveredTotal),
-                                    updateRecovered: "+" +
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .update
-                                                .recoveredUpdate),
-                                    summaryDeaths: NumberFormat.decimalPattern()
-                                        .format(
-                                            detailProvince![index].deathsTotal),
-                                    updateDeaths: "+" +
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .update
-                                                .deathsUpdate),
-                                    provinceName:
-                                        detailProvince![index].provinceName,
-                                    lastUpdate: DateFormat.EEEE()
-                                        .add_d()
-                                        .add_yMMMM()
-                                        .format((DateTime.parse(
-                                            allProvince!.lastUpdate)))
-                                        .replaceAll('Monday', 'Senin,')
-                                        .replaceAll('Tuesday', 'Selasa,')
-                                        .replaceAll('Wednesday', 'Rabu,')
-                                        .replaceAll('Thursday', 'Kamis,')
-                                        .replaceAll('Friday', 'Jumat,')
-                                        .replaceAll('Saturday', 'Sabtu,')
-                                        .replaceAll('Sunday', 'Minggu,')
-                                        .replaceAll('January', 'Januari')
-                                        .replaceAll('February', 'Februari')
-                                        .replaceAll('March', 'Maret')
-                                        .replaceAll('April', 'April')
-                                        .replaceAll('May', 'Mei')
-                                        .replaceAll('June', 'Juni')
-                                        .replaceAll('July', 'Juli')
-                                        .replaceAll('August', 'Agustus')
-                                        .replaceAll('September', 'September')
-                                        .replaceAll('October', 'Oktober')
-                                        .replaceAll('November', 'November')
-                                        .replaceAll('December', 'Desember'),
-                                  ),
-                                ),
-                              );
-                            } else if (detailProvince![index]
-                                .provinceName
-                                .trim()
-                                .replaceAll(RegExp(r"\s+"), "")
-                                .toLowerCase()
-                                .contains(editingController.text
-                                    .trim()
-                                    .replaceAll(RegExp(r"\s+"), "")
-                                    .toLowerCase())) {
-                              return FadeInUp(
-                                delay:
-                                    Duration(milliseconds: isScroll ? 0 : 350),
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                    top: 0,
-                                    bottom: SpaceConfig.normalSpace,
-                                  ),
-                                  child: DetailBoxCard(
-                                    summaryPositive:
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .confirmedTotal),
-                                    updatePositive: "+" +
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .update
-                                                .confirmedUpdate),
-                                    summaryActive: NumberFormat.decimalPattern()
-                                        .format(
-                                            detailProvince![index].activeTotal),
-                                    updateActive: "-0",
-                                    summaryRecovered:
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .recoveredTotal),
-                                    updateRecovered: "+" +
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .update
-                                                .recoveredUpdate),
-                                    summaryDeaths: NumberFormat.decimalPattern()
-                                        .format(
-                                            detailProvince![index].deathsTotal),
-                                    updateDeaths: "+" +
-                                        NumberFormat.decimalPattern().format(
-                                            detailProvince![index]
-                                                .update
-                                                .deathsUpdate),
-                                    provinceName:
-                                        detailProvince![index].provinceName,
-                                    lastUpdate: DateFormat.EEEE()
-                                        .add_d()
-                                        .add_yMMMM()
-                                        .format((DateTime.parse(
-                                            allProvince!.lastUpdate)))
-                                        .replaceAll('Monday', 'Senin,')
-                                        .replaceAll('Tuesday', 'Selasa,')
-                                        .replaceAll('Wednesday', 'Rabu,')
-                                        .replaceAll('Thursday', 'Kamis,')
-                                        .replaceAll('Friday', 'Jumat,')
-                                        .replaceAll('Saturday', 'Sabtu,')
-                                        .replaceAll('Sunday', 'Minggu,')
-                                        .replaceAll('January', 'Januari')
-                                        .replaceAll('February', 'Februari')
-                                        .replaceAll('March', 'Maret')
-                                        .replaceAll('April', 'April')
-                                        .replaceAll('May', 'Mei')
-                                        .replaceAll('June', 'Juni')
-                                        .replaceAll('July', 'Juli')
-                                        .replaceAll('August', 'Agustus')
-                                        .replaceAll('September', 'September')
-                                        .replaceAll('October', 'Oktober')
-                                        .replaceAll('November', 'November')
-                                        .replaceAll('December', 'Desember'),
-                                  ),
-                                ),
+                        child: FutureBuilder(
+                          future: AllProvinceService.getAllProvince(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<AllProvinceModel> snapshot) {
+                            if (snapshot.hasData) {
+                              allProvince = snapshot.data;
+                              return ListView.builder(
+                                itemCount: allProvince!.listData.length,
+                                itemBuilder: (context, index) {
+                                  if (editingController.text.isEmpty) {
+                                    return FadeInUp(
+                                      delay: Duration(
+                                          milliseconds:
+                                              isScroll ? 0 : 350 * (index + 2)),
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: (index == 0
+                                                ? 0
+                                                : SpaceConfig.normalSpace),
+                                            bottom: (index ==
+                                                    allProvince!
+                                                            .listData.length -
+                                                        1
+                                                ? SpaceConfig.normalSpace
+                                                : 0)),
+                                        child: DetailBoxCard(
+                                          summaryPositive:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .confirmedTotal),
+                                          updatePositive: "+" +
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .update
+                                                      .confirmedUpdate),
+                                          summaryActive:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .activeTotal),
+                                          updateActive: "-0",
+                                          summaryRecovered:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .recoveredTotal),
+                                          updateRecovered: "+" +
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .update
+                                                      .recoveredUpdate),
+                                          summaryDeaths:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .deathsTotal),
+                                          updateDeaths: "+" +
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .update
+                                                      .deathsUpdate),
+                                          provinceName: allProvince!
+                                              .listData[index].provinceName,
+                                          lastUpdate: DateFormat.EEEE()
+                                              .add_d()
+                                              .add_yMMMM()
+                                              .format((DateTime.parse(
+                                                  allProvince!.lastUpdate)))
+                                              .replaceAll('Monday', 'Senin,')
+                                              .replaceAll('Tuesday', 'Selasa,')
+                                              .replaceAll('Wednesday', 'Rabu,')
+                                              .replaceAll('Thursday', 'Kamis,')
+                                              .replaceAll('Friday', 'Jumat,')
+                                              .replaceAll('Saturday', 'Sabtu,')
+                                              .replaceAll('Sunday', 'Minggu,')
+                                              .replaceAll('January', 'Januari')
+                                              .replaceAll(
+                                                  'February', 'Februari')
+                                              .replaceAll('March', 'Maret')
+                                              .replaceAll('April', 'April')
+                                              .replaceAll('May', 'Mei')
+                                              .replaceAll('June', 'Juni')
+                                              .replaceAll('July', 'Juli')
+                                              .replaceAll('August', 'Agustus')
+                                              .replaceAll(
+                                                  'September', 'September')
+                                              .replaceAll('October', 'Oktober')
+                                              .replaceAll(
+                                                  'November', 'November')
+                                              .replaceAll(
+                                                  'December', 'Desember'),
+                                        ),
+                                      ),
+                                    );
+                                  } else if (allProvince!
+                                      .listData[index].provinceName
+                                      .trim()
+                                      .replaceAll(RegExp(r"\s+"), "")
+                                      .toLowerCase()
+                                      .contains(editingController.text
+                                          .trim()
+                                          .replaceAll(RegExp(r"\s+"), "")
+                                          .toLowerCase())) {
+                                    return FadeInUp(
+                                      delay: Duration(
+                                          milliseconds: isScroll ? 0 : 350),
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: (index == 0
+                                                ? 0
+                                                : SpaceConfig.normalSpace),
+                                            bottom: (index ==
+                                                    allProvince!
+                                                            .listData.length -
+                                                        1
+                                                ? SpaceConfig.normalSpace
+                                                : 0)),
+                                        child: DetailBoxCard(
+                                          summaryPositive:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .confirmedTotal),
+                                          updatePositive: "+" +
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .update
+                                                      .confirmedUpdate),
+                                          summaryActive:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .activeTotal),
+                                          updateActive: "-0",
+                                          summaryRecovered:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .recoveredTotal),
+                                          updateRecovered: "+" +
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .update
+                                                      .recoveredUpdate),
+                                          summaryDeaths:
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .deathsTotal),
+                                          updateDeaths: "+" +
+                                              NumberFormat.decimalPattern()
+                                                  .format(allProvince!
+                                                      .listData[index]
+                                                      .update
+                                                      .deathsUpdate),
+                                          provinceName: allProvince!
+                                              .listData[index].provinceName,
+                                          lastUpdate: DateFormat.EEEE()
+                                              .add_d()
+                                              .add_yMMMM()
+                                              .format((DateTime.parse(
+                                                  allProvince!.lastUpdate)))
+                                              .replaceAll('Monday', 'Senin,')
+                                              .replaceAll('Tuesday', 'Selasa,')
+                                              .replaceAll('Wednesday', 'Rabu,')
+                                              .replaceAll('Thursday', 'Kamis,')
+                                              .replaceAll('Friday', 'Jumat,')
+                                              .replaceAll('Saturday', 'Sabtu,')
+                                              .replaceAll('Sunday', 'Minggu,')
+                                              .replaceAll('January', 'Januari')
+                                              .replaceAll(
+                                                  'February', 'Februari')
+                                              .replaceAll('March', 'Maret')
+                                              .replaceAll('April', 'April')
+                                              .replaceAll('May', 'Mei')
+                                              .replaceAll('June', 'Juni')
+                                              .replaceAll('July', 'Juli')
+                                              .replaceAll('August', 'Agustus')
+                                              .replaceAll(
+                                                  'September', 'September')
+                                              .replaceAll('October', 'Oktober')
+                                              .replaceAll(
+                                                  'November', 'November')
+                                              .replaceAll(
+                                                  'December', 'Desember'),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
                               );
                             } else {
-                              return Container();
+                              return FadeInUp(
+                                delay: Duration(milliseconds: 350 * 2),
+                                child: ListView.builder(
+                                  itemCount: 3,
+                                  itemBuilder: (context, index) {
+                                    return Shimmer.fromColors(
+                                      baseColor: Colors.grey[300]!,
+                                      highlightColor: Colors.grey[100]!,
+                                      child: Container(
+                                        margin: EdgeInsets.fromLTRB(
+                                          SpaceConfig.longSpace,
+                                          0,
+                                          SpaceConfig.longSpace,
+                                          SpaceConfig.normalSpace,
+                                        ),
+                                        height: 230,
+                                        width:
+                                            Get.width - SpaceConfig.shortSpace,
+                                        decoration: BoxDecoration(
+                                            color: ColorTheme.bgLight,
+                                            borderRadius: BorderRadius.circular(
+                                                SpaceConfig.normalSpace)),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
                             }
                           },
                         ),
@@ -709,37 +710,43 @@ class _DataPageState extends State<DataPage> {
                       ),
                     ],
                   ),
-                  (caseTotal != null)
-                      ? Text(
-                          "Diperbarui pada " +
-                              DateFormat.EEEE()
-                                  .add_d()
-                                  .add_yMMMM()
-                                  .addPattern('•')
-                                  .add_Hms()
-                                  .format(
-                                      (DateTime.parse(caseTotal!.lastUpdate)))
-                                  .replaceAll('Monday', 'Senin,')
-                                  .replaceAll('Tuesday', 'Selasa,')
-                                  .replaceAll('Wednesday', 'Rabu,')
-                                  .replaceAll('Thursday', 'Kamis,')
-                                  .replaceAll('Friday', 'Jumat,')
-                                  .replaceAll('Saturday', 'Sabtu,')
-                                  .replaceAll('Sunday', 'Minggu,')
-                                  .replaceAll('January', 'Januari')
-                                  .replaceAll('February', 'Februari')
-                                  .replaceAll('March', 'Maret')
-                                  .replaceAll('April', 'April')
-                                  .replaceAll('May', 'Mei')
-                                  .replaceAll('June', 'Juni')
-                                  .replaceAll('July', 'Juli')
-                                  .replaceAll('August', 'Agustus')
-                                  .replaceAll('September', 'September')
-                                  .replaceAll('October', 'Oktober')
-                                  .replaceAll('November', 'November')
-                                  .replaceAll('December', 'Desember'),
-                          style: TypeTheme.smallTextFont)
-                      : Shimmer.fromColors(
+                  FutureBuilder(
+                    future: CaseTotalService.getTotalCase(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<CaseTotalModel> snapshot) {
+                      if (snapshot.hasData) {
+                        caseTotal = snapshot.data;
+                        return Text(
+                            "Diperbarui pada " +
+                                DateFormat.EEEE()
+                                    .add_d()
+                                    .add_yMMMM()
+                                    .addPattern('•')
+                                    .add_Hms()
+                                    .format(
+                                        (DateTime.parse(caseTotal!.lastUpdate)))
+                                    .replaceAll('Monday', 'Senin,')
+                                    .replaceAll('Tuesday', 'Selasa,')
+                                    .replaceAll('Wednesday', 'Rabu,')
+                                    .replaceAll('Thursday', 'Kamis,')
+                                    .replaceAll('Friday', 'Jumat,')
+                                    .replaceAll('Saturday', 'Sabtu,')
+                                    .replaceAll('Sunday', 'Minggu,')
+                                    .replaceAll('January', 'Januari')
+                                    .replaceAll('February', 'Februari')
+                                    .replaceAll('March', 'Maret')
+                                    .replaceAll('April', 'April')
+                                    .replaceAll('May', 'Mei')
+                                    .replaceAll('June', 'Juni')
+                                    .replaceAll('July', 'Juli')
+                                    .replaceAll('August', 'Agustus')
+                                    .replaceAll('September', 'September')
+                                    .replaceAll('October', 'Oktober')
+                                    .replaceAll('November', 'November')
+                                    .replaceAll('December', 'Desember'),
+                            style: TypeTheme.smallTextFont);
+                      } else {
+                        return Shimmer.fromColors(
                           baseColor: Colors.grey[300]!,
                           highlightColor: Colors.grey[100]!,
                           child: Container(
@@ -752,14 +759,22 @@ class _DataPageState extends State<DataPage> {
                                 borderRadius: BorderRadius.circular(
                                     SpaceConfig.normalSpace)),
                           ),
-                        ),
+                        );
+                      }
+                    },
+                  )
                 ],
               ),
             ),
           ),
           SizedBox(height: SpaceConfig.normalSpace),
-          (caseTotal != null)
-              ? FadeInDown(
+          FutureBuilder(
+            future: CaseTotalService.getTotalCase(),
+            builder:
+                (BuildContext context, AsyncSnapshot<CaseTotalModel> snapshot) {
+              if (snapshot.hasData) {
+                caseTotal = snapshot.data;
+                return FadeInDown(
                   delay: Duration(milliseconds: 350 * 5),
                   child: Container(
                     margin: EdgeInsets.symmetric(
@@ -839,8 +854,9 @@ class _DataPageState extends State<DataPage> {
                       ],
                     ),
                   ),
-                )
-              : FadeInDown(
+                );
+              } else {
+                return FadeInDown(
                   delay: Duration(milliseconds: 350 * 5),
                   child: Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
@@ -888,7 +904,10 @@ class _DataPageState extends State<DataPage> {
                       }),
                     ),
                   ),
-                ),
+                );
+              }
+            },
+          )
         ],
       ),
     );
@@ -941,38 +960,47 @@ class _DataPageState extends State<DataPage> {
                               "Pelaksanaan Vaksinasi",
                               style: TypeTheme.subTitleTextFont,
                             ),
-                            (localVaccine != null)
-                                ? Text(
-                                    "Diperbarui pada " +
-                                        DateFormat.EEEE()
-                                            .add_d()
-                                            .add_yMMMM()
-                                            .addPattern('•')
-                                            .add_Hms()
-                                            .format((DateTime.parse(
-                                                localVaccine!.lastUpdate)))
-                                            .replaceAll('Monday', 'Senin,')
-                                            .replaceAll('Tuesday', 'Selasa,')
-                                            .replaceAll('Wednesday', 'Rabu,')
-                                            .replaceAll('Thursday', 'Kamis,')
-                                            .replaceAll('Friday', 'Jumat,')
-                                            .replaceAll('Saturday', 'Sabtu,')
-                                            .replaceAll('Sunday', 'Minggu,')
-                                            .replaceAll('January', 'Januari')
-                                            .replaceAll('February', 'Februari')
-                                            .replaceAll('March', 'Maret')
-                                            .replaceAll('April', 'April')
-                                            .replaceAll('May', 'Mei')
-                                            .replaceAll('June', 'Juni')
-                                            .replaceAll('July', 'Juli')
-                                            .replaceAll('August', 'Agustus')
-                                            .replaceAll(
-                                                'September', 'September')
-                                            .replaceAll('October', 'Oktober')
-                                            .replaceAll('November', 'November')
-                                            .replaceAll('December', 'Desember'),
-                                    style: TypeTheme.smallTextFont)
-                                : Shimmer.fromColors(
+                            FutureBuilder(
+                              future: LocalVaccineService.getVaccine(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot<LocalVaccineModel> snapshot) {
+                                if (snapshot.hasData) {
+                                  localVaccine = snapshot.data;
+                                  return Text(
+                                      "Diperbarui pada " +
+                                          DateFormat.EEEE()
+                                              .add_d()
+                                              .add_yMMMM()
+                                              .addPattern('•')
+                                              .add_Hms()
+                                              .format((DateTime.parse(
+                                                  localVaccine!.lastUpdate)))
+                                              .replaceAll('Monday', 'Senin,')
+                                              .replaceAll('Tuesday', 'Selasa,')
+                                              .replaceAll('Wednesday', 'Rabu,')
+                                              .replaceAll('Thursday', 'Kamis,')
+                                              .replaceAll('Friday', 'Jumat,')
+                                              .replaceAll('Saturday', 'Sabtu,')
+                                              .replaceAll('Sunday', 'Minggu,')
+                                              .replaceAll('January', 'Januari')
+                                              .replaceAll(
+                                                  'February', 'Februari')
+                                              .replaceAll('March', 'Maret')
+                                              .replaceAll('April', 'April')
+                                              .replaceAll('May', 'Mei')
+                                              .replaceAll('June', 'Juni')
+                                              .replaceAll('July', 'Juli')
+                                              .replaceAll('August', 'Agustus')
+                                              .replaceAll(
+                                                  'September', 'September')
+                                              .replaceAll('October', 'Oktober')
+                                              .replaceAll(
+                                                  'November', 'November')
+                                              .replaceAll(
+                                                  'December', 'Desember'),
+                                      style: TypeTheme.smallTextFont);
+                                } else {
+                                  return Shimmer.fromColors(
                                     baseColor: Colors.grey[300]!,
                                     highlightColor: Colors.grey[100]!,
                                     child: Container(
@@ -986,7 +1014,10 @@ class _DataPageState extends State<DataPage> {
                                           borderRadius: BorderRadius.circular(
                                               SpaceConfig.normalSpace)),
                                     ),
-                                  ),
+                                  );
+                                }
+                              },
+                            ),
                             SizedBox(height: SpaceConfig.longSpace),
                           ],
                         ),
@@ -1031,8 +1062,14 @@ class _DataPageState extends State<DataPage> {
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
-                                    (monitoringVaccine != null)
-                                        ? Column(
+                                    FutureBuilder(
+                                      future: LocalVaccineService.getVaccine(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<LocalVaccineModel>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          localVaccine = snapshot.data;
+                                          return Column(
                                             children: [
                                               Container(
                                                 margin: EdgeInsets.only(
@@ -1051,44 +1088,52 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .firstVaccine),
                                                   cases:
                                                       "Vaksinasi Nasional Dosis ke-1",
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .firstVaccine /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .totalTarget) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .firstVaccine /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .totalTarget)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .totalTarget)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .firstVaccine /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .totalTarget) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1112,42 +1157,50 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .secondVaccine),
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .secondVaccine /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .totalTarget) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .secondVaccine /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .totalTarget)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .totalTarget)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .secondVaccine /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .totalTarget) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1157,8 +1210,9 @@ class _DataPageState extends State<DataPage> {
                                                 ),
                                               ),
                                             ],
-                                          )
-                                        : Shimmer.fromColors(
+                                          );
+                                        } else {
+                                          return Shimmer.fromColors(
                                             baseColor: Colors.grey[300]!,
                                             highlightColor: Colors.grey[100]!,
                                             child: Column(
@@ -1188,7 +1242,10 @@ class _DataPageState extends State<DataPage> {
                                                 );
                                               }),
                                             ),
-                                          ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1219,8 +1276,14 @@ class _DataPageState extends State<DataPage> {
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
-                                    (monitoringVaccine != null)
-                                        ? Column(
+                                    FutureBuilder(
+                                      future: LocalVaccineService.getVaccine(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<LocalVaccineModel>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          localVaccine = snapshot.data;
+                                          return Column(
                                             children: [
                                               Container(
                                                 margin: EdgeInsets.only(
@@ -1239,44 +1302,52 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine1Medical),
                                                   cases:
                                                       "Vaksinasi Petugas Medis Dosis ke-1",
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine1Medical /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetMedical) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine1Medical /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetMedical)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetMedical)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine1Medical /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetMedical) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1301,42 +1372,50 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine2Medical),
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine2Medical /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetMedical) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine2Medical /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetMedical)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetMedical)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine2Medical /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetMedical) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1347,8 +1426,9 @@ class _DataPageState extends State<DataPage> {
                                                 ),
                                               ),
                                             ],
-                                          )
-                                        : Shimmer.fromColors(
+                                          );
+                                        } else {
+                                          return Shimmer.fromColors(
                                             baseColor: Colors.grey[300]!,
                                             highlightColor: Colors.grey[100]!,
                                             child: Column(
@@ -1378,7 +1458,10 @@ class _DataPageState extends State<DataPage> {
                                                 );
                                               }),
                                             ),
-                                          ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1409,8 +1492,14 @@ class _DataPageState extends State<DataPage> {
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
-                                    (monitoringVaccine != null)
-                                        ? Column(
+                                    FutureBuilder(
+                                      future: LocalVaccineService.getVaccine(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<LocalVaccineModel>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          localVaccine = snapshot.data;
+                                          return Column(
                                             children: [
                                               Container(
                                                 margin: EdgeInsets.only(
@@ -1429,44 +1518,52 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine1Officer),
                                                   cases:
                                                       "Vaksinasi Petugas Publik Dosis ke-1",
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine1Officer /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetOfficer) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine1Officer /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetOfficer)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetOfficer)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine1Officer /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetOfficer) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1490,42 +1587,50 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine2Officer),
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine2Officer /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetOfficer) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine2Officer /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetOfficer)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetOfficer)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine2Officer /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetOfficer) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1535,8 +1640,9 @@ class _DataPageState extends State<DataPage> {
                                                 ),
                                               ),
                                             ],
-                                          )
-                                        : Shimmer.fromColors(
+                                          );
+                                        } else {
+                                          return Shimmer.fromColors(
                                             baseColor: Colors.grey[300]!,
                                             highlightColor: Colors.grey[100]!,
                                             child: Column(
@@ -1566,7 +1672,10 @@ class _DataPageState extends State<DataPage> {
                                                 );
                                               }),
                                             ),
-                                          ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1597,8 +1706,14 @@ class _DataPageState extends State<DataPage> {
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
-                                    (monitoringVaccine != null)
-                                        ? Column(
+                                    FutureBuilder(
+                                      future: LocalVaccineService.getVaccine(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<LocalVaccineModel>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          localVaccine = snapshot.data;
+                                          return Column(
                                             children: [
                                               Container(
                                                 margin: EdgeInsets.only(
@@ -1617,44 +1732,52 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine1TeenAge),
                                                   cases:
                                                       "Vaksinasi Anak Remaja Dosis ke-1",
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine1TeenAge /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetTeenAge) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine1TeenAge /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetTeenAge)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetTeenAge)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine1TeenAge /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetTeenAge) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1678,42 +1801,50 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine2TeenAge),
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine2TeenAge /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetTeenAge) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine2TeenAge /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetTeenAge)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetTeenAge)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine2TeenAge /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetTeenAge) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1723,8 +1854,9 @@ class _DataPageState extends State<DataPage> {
                                                 ),
                                               ),
                                             ],
-                                          )
-                                        : Shimmer.fromColors(
+                                          );
+                                        } else {
+                                          return Shimmer.fromColors(
                                             baseColor: Colors.grey[300]!,
                                             highlightColor: Colors.grey[100]!,
                                             child: Column(
@@ -1754,7 +1886,10 @@ class _DataPageState extends State<DataPage> {
                                                 );
                                               }),
                                             ),
-                                          ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1785,8 +1920,14 @@ class _DataPageState extends State<DataPage> {
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
-                                    (monitoringVaccine != null)
-                                        ? Column(
+                                    FutureBuilder(
+                                      future: LocalVaccineService.getVaccine(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<LocalVaccineModel>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          localVaccine = snapshot.data;
+                                          return Column(
                                             children: [
                                               Container(
                                                 margin: EdgeInsets.only(
@@ -1805,44 +1946,52 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine1GeneralPublic),
                                                   cases:
                                                       "Vaksinasi Warga Umum Dosis ke-1",
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine1GeneralPublic /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetGeneralPublic) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine1GeneralPublic /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetGeneralPublic)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetGeneralPublic)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine1GeneralPublic /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetGeneralPublic) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1866,42 +2015,50 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine2GeneralPublic),
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine2GeneralPublic /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetGeneralPublic) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine2GeneralPublic /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetGeneralPublic)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetGeneralPublic)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine2GeneralPublic /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetGeneralPublic) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -1911,8 +2068,9 @@ class _DataPageState extends State<DataPage> {
                                                 ),
                                               ),
                                             ],
-                                          )
-                                        : Shimmer.fromColors(
+                                          );
+                                        } else {
+                                          return Shimmer.fromColors(
                                             baseColor: Colors.grey[300]!,
                                             highlightColor: Colors.grey[100]!,
                                             child: Column(
@@ -1942,7 +2100,10 @@ class _DataPageState extends State<DataPage> {
                                                 );
                                               }),
                                             ),
-                                          ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -1973,8 +2134,14 @@ class _DataPageState extends State<DataPage> {
                                       ),
                                     ),
                                     SizedBox(height: SpaceConfig.shortSpace),
-                                    (monitoringVaccine != null)
-                                        ? Column(
+                                    FutureBuilder(
+                                      future: LocalVaccineService.getVaccine(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot<LocalVaccineModel>
+                                              snapshot) {
+                                        if (snapshot.hasData) {
+                                          localVaccine = snapshot.data;
+                                          return Column(
                                             children: [
                                               Container(
                                                 margin: EdgeInsets.only(
@@ -1993,44 +2160,52 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine1Aged),
                                                   cases:
                                                       "Vaksinasi Lanjut Usia Dosis ke-1",
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine1Aged /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetAged) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine1Aged /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetAged)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetAged)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine1Aged /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetAged) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -2055,42 +2230,50 @@ class _DataPageState extends State<DataPage> {
                                                   icon: Icons.medication,
                                                   summary: NumberFormat
                                                           .decimalPattern()
-                                                      .format(monitoringVaccine![
-                                                              monitoringVaccine!
+                                                      .format(localVaccine!
+                                                          .monitoring[
+                                                              localVaccine!
+                                                                      .monitoring
                                                                       .length -
                                                                   1]
                                                           .doneVaccine2Aged),
-                                                  percent: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                  percent: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .doneVaccine2Aged /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetAged) >
                                                           1.0
                                                       ? 1.0
-                                                      : (monitoringVaccine![
-                                                                  monitoringVaccine!
-                                                                          .length -
-                                                                      1]
+                                                      : (localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
                                                               .doneVaccine2Aged /
-                                                          monitoringVaccine![
-                                                                  monitoringVaccine!
+                                                          localVaccine!
+                                                              .monitoring[localVaccine!
+                                                                      .monitoring
+                                                                      .length -
+                                                                  1]
+                                                              .targetAged)),
+                                                  update: ((localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
                                                                           .length -
                                                                       1]
-                                                              .targetAged)),
-                                                  update: ((monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
                                                                   .doneVaccine2Aged /
-                                                              monitoringVaccine![
-                                                                      monitoringVaccine!
-                                                                              .length -
-                                                                          1]
+                                                              localVaccine!
+                                                                  .monitoring[localVaccine!
+                                                                          .monitoring
+                                                                          .length -
+                                                                      1]
                                                                   .targetAged) *
                                                           100)
                                                       .toStringAsFixed(2),
@@ -2101,8 +2284,9 @@ class _DataPageState extends State<DataPage> {
                                                 ),
                                               ),
                                             ],
-                                          )
-                                        : Shimmer.fromColors(
+                                          );
+                                        } else {
+                                          return Shimmer.fromColors(
                                             baseColor: Colors.grey[300]!,
                                             highlightColor: Colors.grey[100]!,
                                             child: Column(
@@ -2132,7 +2316,10 @@ class _DataPageState extends State<DataPage> {
                                                 );
                                               }),
                                             ),
-                                          ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ],
                                 ),
                               ),
@@ -2180,37 +2367,43 @@ class _DataPageState extends State<DataPage> {
                       ),
                     ],
                   ),
-                  (localVaccine != null)
-                      ? Text(
-                          "Diperbarui pada " +
-                              DateFormat.EEEE()
-                                  .add_d()
-                                  .add_yMMMM()
-                                  .addPattern('•')
-                                  .add_Hms()
-                                  .format((DateTime.parse(
-                                      localVaccine!.lastUpdate)))
-                                  .replaceAll('Monday', 'Senin,')
-                                  .replaceAll('Tuesday', 'Selasa,')
-                                  .replaceAll('Wednesday', 'Rabu,')
-                                  .replaceAll('Thursday', 'Kamis,')
-                                  .replaceAll('Friday', 'Jumat,')
-                                  .replaceAll('Saturday', 'Sabtu,')
-                                  .replaceAll('Sunday', 'Minggu,')
-                                  .replaceAll('January', 'Januari')
-                                  .replaceAll('February', 'Februari')
-                                  .replaceAll('March', 'Maret')
-                                  .replaceAll('April', 'April')
-                                  .replaceAll('May', 'Mei')
-                                  .replaceAll('June', 'Juni')
-                                  .replaceAll('July', 'Juli')
-                                  .replaceAll('August', 'Agustus')
-                                  .replaceAll('September', 'September')
-                                  .replaceAll('October', 'Oktober')
-                                  .replaceAll('November', 'November')
-                                  .replaceAll('December', 'Desember'),
-                          style: TypeTheme.smallTextFont)
-                      : Shimmer.fromColors(
+                  FutureBuilder(
+                    future: LocalVaccineService.getVaccine(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<LocalVaccineModel> snapshot) {
+                      if (snapshot.hasData) {
+                        localVaccine = snapshot.data;
+                        return Text(
+                            "Diperbarui pada " +
+                                DateFormat.EEEE()
+                                    .add_d()
+                                    .add_yMMMM()
+                                    .addPattern('•')
+                                    .add_Hms()
+                                    .format((DateTime.parse(
+                                        localVaccine!.lastUpdate)))
+                                    .replaceAll('Monday', 'Senin,')
+                                    .replaceAll('Tuesday', 'Selasa,')
+                                    .replaceAll('Wednesday', 'Rabu,')
+                                    .replaceAll('Thursday', 'Kamis,')
+                                    .replaceAll('Friday', 'Jumat,')
+                                    .replaceAll('Saturday', 'Sabtu,')
+                                    .replaceAll('Sunday', 'Minggu,')
+                                    .replaceAll('January', 'Januari')
+                                    .replaceAll('February', 'Februari')
+                                    .replaceAll('March', 'Maret')
+                                    .replaceAll('April', 'April')
+                                    .replaceAll('May', 'Mei')
+                                    .replaceAll('June', 'Juni')
+                                    .replaceAll('July', 'Juli')
+                                    .replaceAll('August', 'Agustus')
+                                    .replaceAll('September', 'September')
+                                    .replaceAll('October', 'Oktober')
+                                    .replaceAll('November', 'November')
+                                    .replaceAll('December', 'Desember'),
+                            style: TypeTheme.smallTextFont);
+                      } else {
+                        return Shimmer.fromColors(
                           baseColor: Colors.grey[300]!,
                           highlightColor: Colors.grey[100]!,
                           child: Container(
@@ -2224,14 +2417,22 @@ class _DataPageState extends State<DataPage> {
                                   SpaceConfig.normalSpace),
                             ),
                           ),
-                        ),
+                        );
+                      }
+                    },
+                  ),
                 ],
               ),
             ),
           ),
           SizedBox(height: SpaceConfig.normalSpace),
-          (monitoringVaccine != null)
-              ? FadeInDown(
+          FutureBuilder(
+            future: LocalVaccineService.getVaccine(),
+            builder: (BuildContext context,
+                AsyncSnapshot<LocalVaccineModel> snapshot) {
+              if (snapshot.hasData) {
+                localVaccine = snapshot.data;
+                return FadeInDown(
                   delay: Duration(milliseconds: 350 * 7),
                   child: Container(
                     margin: EdgeInsets.symmetric(
@@ -2247,8 +2448,8 @@ class _DataPageState extends State<DataPage> {
                               height: 80,
                               child: SmallBoxCard(
                                 icon: Icons.timelapse,
-                                summary: NumberFormat.decimalPattern()
-                                    .format(monitoringVaccine![0].totalTarget),
+                                summary: NumberFormat.decimalPattern().format(
+                                    localVaccine!.monitoring[0].totalTarget),
                                 cases: "Total Target",
                                 color: ColorTheme.blueColor,
                               ),
@@ -2260,7 +2461,7 @@ class _DataPageState extends State<DataPage> {
                               child: SmallBoxCard(
                                 icon: Icons.medical_services,
                                 summary: NumberFormat.decimalPattern().format(
-                                    monitoringVaccine![0].targetMedical),
+                                    localVaccine!.monitoring[0].targetMedical),
                                 cases: "Petugas Medis",
                                 color: ColorTheme.greenColor,
                               ),
@@ -2278,7 +2479,7 @@ class _DataPageState extends State<DataPage> {
                               child: SmallBoxCard(
                                 icon: Icons.apartment,
                                 summary: NumberFormat.decimalPattern().format(
-                                    monitoringVaccine![0].targetOfficer),
+                                    localVaccine!.monitoring[0].targetOfficer),
                                 cases: "Petugas Publik",
                                 color: ColorTheme.greenColor,
                               ),
@@ -2289,8 +2490,8 @@ class _DataPageState extends State<DataPage> {
                               height: 80,
                               child: SmallBoxCard(
                                 icon: Icons.elderly,
-                                summary: NumberFormat.decimalPattern()
-                                    .format(monitoringVaccine![0].targetAged),
+                                summary: NumberFormat.decimalPattern().format(
+                                    localVaccine!.monitoring[0].targetAged),
                                 cases: "Lanjut Usia",
                                 color: ColorTheme.blueColor,
                               ),
@@ -2308,7 +2509,8 @@ class _DataPageState extends State<DataPage> {
                               child: SmallBoxCard(
                                 icon: Icons.people_sharp,
                                 summary: NumberFormat.decimalPattern().format(
-                                    monitoringVaccine![0].targetGeneralPublic),
+                                    localVaccine!
+                                        .monitoring[0].targetGeneralPublic),
                                 cases: "Warga Umum",
                                 color: ColorTheme.blueColor,
                               ),
@@ -2320,7 +2522,7 @@ class _DataPageState extends State<DataPage> {
                               child: SmallBoxCard(
                                 icon: Icons.accessibility_new,
                                 summary: NumberFormat.decimalPattern().format(
-                                    monitoringVaccine![0].targetTeenAge),
+                                    localVaccine!.monitoring[0].targetTeenAge),
                                 cases: "Anak Remaja",
                                 color: ColorTheme.greenColor,
                               ),
@@ -2330,8 +2532,9 @@ class _DataPageState extends State<DataPage> {
                       ],
                     ),
                   ),
-                )
-              : FadeInDown(
+                );
+              } else {
+                return FadeInDown(
                   delay: Duration(milliseconds: 350 * 7),
                   child: Shimmer.fromColors(
                     baseColor: Colors.grey[300]!,
@@ -2379,7 +2582,10 @@ class _DataPageState extends State<DataPage> {
                       }),
                     ),
                   ),
-                ),
+                );
+              }
+            },
+          ),
         ],
       ),
     );
@@ -2432,6 +2638,7 @@ class _DataPageState extends State<DataPage> {
             ),
           ),
         ),
+        SizedBox(height: SpaceConfig.normalSpace),
       ],
     );
   }
