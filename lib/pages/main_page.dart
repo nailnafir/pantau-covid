@@ -94,6 +94,7 @@ class _MainPageState extends State<MainPage> {
           color: ColorTheme.primaryColor,
           backgroundColor: ColorTheme.bgLight,
           height: 50,
+          index: _selectedPage,
           items: [
             Icon(
               Icons.home,
@@ -119,8 +120,8 @@ class _MainPageState extends State<MainPage> {
           onTap: (index) {
             setState(() {
               _selectedPage = index;
+              _pageController.jumpToPage(_selectedPage);
             });
-            _pageController.jumpToPage(_selectedPage);
           },
         ),
       ),
