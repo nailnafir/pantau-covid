@@ -10,7 +10,7 @@ class AllProvinceModel {
     return AllProvinceModel(
       lastUpdate: json['last_date'] ?? "",
       listData: List<DetailProvinceModel>.from(
-          json['list_data'].map((e) => DetailProvinceModel.fromJson(e)) ?? ""),
+          json['list_data'].map((e) => DetailProvinceModel.fromJson(e)) ?? []),
     );
   }
 }
@@ -37,12 +37,12 @@ class DetailProvinceModel {
   factory DetailProvinceModel.fromJson(Map<String, dynamic> json) {
     return DetailProvinceModel(
       provinceName: json['key'] ?? "",
-      confirmedTotal: json['jumlah_kasus'] ?? "",
-      recoveredTotal: json['jumlah_sembuh'] ?? "",
-      activeTotal: json['jumlah_dirawat'] ?? "",
-      deathsTotal: json['jumlah_meninggal'] ?? "",
-      location: Lokasi.fromJson(json['lokasi'] ?? ""),
-      update: Penambahan.fromJson(json['penambahan'] ?? ""),
+      confirmedTotal: json['jumlah_kasus'] ?? 0,
+      recoveredTotal: json['jumlah_sembuh'] ?? 0,
+      activeTotal: json['jumlah_dirawat'] ?? 0,
+      deathsTotal: json['jumlah_meninggal'] ?? 0,
+      location: Lokasi.fromJson(json['lokasi'] ?? {}),
+      update: Penambahan.fromJson(json['penambahan'] ?? {}),
     );
   }
 }
@@ -60,9 +60,9 @@ class Penambahan {
 
   factory Penambahan.fromJson(Map<String, dynamic> json) {
     return Penambahan(
-      confirmedUpdate: json['positif'] ?? "",
-      recoveredUpdate: json['sembuh'] ?? "",
-      deathsUpdate: json['meninggal'] ?? "",
+      confirmedUpdate: json['positif'] ?? 0,
+      recoveredUpdate: json['sembuh'] ?? 0,
+      deathsUpdate: json['meninggal'] ?? 0,
     );
   }
 }
@@ -75,8 +75,8 @@ class Lokasi {
 
   factory Lokasi.fromJson(Map<String, dynamic> json) {
     return Lokasi(
-      lon: json['lon'].toDouble() ?? "",
-      lat: json['lat'].toDouble() ?? "",
+      lon: json['lon'] ?? 0,
+      lat: json['lat'] ?? 0,
     );
   }
 }

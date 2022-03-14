@@ -25,14 +25,14 @@ class CaseTotalModel {
 
   factory CaseTotalModel.fromJson(Map<String, dynamic> json) {
     return CaseTotalModel(
-      confirmedTotal: json['update']['total']['jumlah_positif'] ?? "",
-      recoveredTotal: json['update']['total']['jumlah_sembuh'] ?? "",
-      activeTotal: json['update']['total']['jumlah_dirawat'] ?? "",
-      deathsTotal: json['update']['total']['jumlah_meninggal'] ?? "",
-      confirmedUpdate: json['update']['penambahan']['jumlah_positif'] ?? "",
-      recoveredUpdate: json['update']['penambahan']['jumlah_sembuh'] ?? "",
-      activeUpdate: json['update']['penambahan']['jumlah_dirawat'] ?? "",
-      deathsUpdate: json['update']['penambahan']['jumlah_meninggal'] ?? "",
+      confirmedTotal: json['update']['total']['jumlah_positif'] ?? 0,
+      recoveredTotal: json['update']['total']['jumlah_sembuh'] ?? 0,
+      activeTotal: json['update']['total']['jumlah_dirawat'] ?? 0,
+      deathsTotal: json['update']['total']['jumlah_meninggal'] ?? 0,
+      confirmedUpdate: json['update']['penambahan']['jumlah_positif'] ?? 0,
+      recoveredUpdate: json['update']['penambahan']['jumlah_sembuh'] ?? 0,
+      activeUpdate: json['update']['penambahan']['jumlah_dirawat'] ?? 0,
+      deathsUpdate: json['update']['penambahan']['jumlah_meninggal'] ?? 0,
       lastUpdate: json['update']['penambahan']['created'] ?? "",
     );
   }
