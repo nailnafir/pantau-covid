@@ -6,15 +6,19 @@ class BigBoxCard extends StatelessWidget {
   final String update;
   final String cases;
   final Color color;
+  final EdgeInsetsGeometry margin;
+  final double iconSize;
 
-  const BigBoxCard(
-      {Key? key,
-      required this.icon,
-      required this.summary,
-      required this.update,
-      required this.cases,
-      required this.color})
-      : super(key: key);
+  const BigBoxCard({
+    Key? key,
+    required this.icon,
+    required this.summary,
+    required this.update,
+    required this.cases,
+    required this.color,
+    required this.margin,
+    required this.iconSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +40,10 @@ class BigBoxCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: Container(
-              margin: EdgeInsets.only(right: SpaceConfig.shortSpace - 2),
+              margin: margin,
               child: Icon(
                 icon,
-                size: 100,
+                size: iconSize,
                 color: Colors.black.withAlpha(50),
               ),
             ),

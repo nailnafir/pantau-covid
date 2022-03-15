@@ -27,8 +27,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   curved_navigation_bar: ^1.0.1
   email_validator: ^2.0.1
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.0.1
+  font_awesome_flutter: ^9.2.0
   geocoding: ^2.0.1
   geolocator: ^8.0.0
   get: ^4.1.4

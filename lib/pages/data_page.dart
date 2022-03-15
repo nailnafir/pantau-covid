@@ -14,8 +14,8 @@ class _DataPageState extends State<DataPage> {
   TextEditingController editingController = TextEditingController();
 
   CaseTotalModel? caseTotal;
-  LocalVaccineModel? localVaccine;
-  List<MonitoringVaccineModel>? monitoringVaccine;
+  CheckModel? check;
+  VaccineModel? vaccine;
   AllProvinceModel? allProvince;
   List<DetailProvinceModel>? detailProvince;
   LocationModel? location;
@@ -307,6 +307,9 @@ class _DataPageState extends State<DataPage> {
         SizedBox(height: SpaceConfig.longSpace),
         //NOTE: VACCINE
         _vaccine(),
+        SizedBox(height: SpaceConfig.longSpace),
+        //NOTE: CHECKUP
+        _check(),
         SizedBox(height: SpaceConfig.longSpace),
         //NOTE: MAP
         _map(),
@@ -790,6 +793,9 @@ class _DataPageState extends State<DataPage> {
                               height: 120,
                               child: BigBoxCard(
                                 icon: Icons.add_circle_rounded,
+                                iconSize: 100,
+                                margin: EdgeInsets.only(
+                                    right: SpaceConfig.shortSpace - 2),
                                 summary: NumberFormat.decimalPattern()
                                     .format(caseTotal!.confirmedTotal),
                                 update: "+" +
@@ -805,6 +811,9 @@ class _DataPageState extends State<DataPage> {
                               height: 120,
                               child: BigBoxCard(
                                 icon: Icons.remove_circle_rounded,
+                                iconSize: 100,
+                                margin: EdgeInsets.only(
+                                    right: SpaceConfig.shortSpace - 2),
                                 summary: NumberFormat.decimalPattern()
                                     .format(caseTotal!.activeTotal),
                                 update: NumberFormat.decimalPattern()
@@ -825,6 +834,9 @@ class _DataPageState extends State<DataPage> {
                               height: 120,
                               child: BigBoxCard(
                                 icon: Icons.change_circle_rounded,
+                                margin: EdgeInsets.only(
+                                    right: SpaceConfig.shortSpace - 2),
+                                iconSize: 100,
                                 summary: NumberFormat.decimalPattern()
                                     .format(caseTotal!.recoveredTotal),
                                 update: "+" +
@@ -840,6 +852,9 @@ class _DataPageState extends State<DataPage> {
                               height: 120,
                               child: BigBoxCard(
                                 icon: Icons.cancel_rounded,
+                                iconSize: 100,
+                                margin: EdgeInsets.only(
+                                    right: SpaceConfig.shortSpace - 2),
                                 summary: NumberFormat.decimalPattern()
                                     .format(caseTotal!.deathsTotal),
                                 update: "+" +
@@ -914,1680 +929,413 @@ class _DataPageState extends State<DataPage> {
   }
 
   _vaccine() {
-    bool isScroll = false;
-
-    return GestureDetector(
-      onTap: () {
-        Get.bottomSheet(
-          BottomSheet(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(SpaceConfig.longSpace)),
+    return Column(
+      children: [
+        FadeInDown(
+          delay: Duration(milliseconds: 350 * 4),
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: SpaceConfig.longSpace,
             ),
-            onClosing: () {},
-            enableDrag: false,
-            builder: (context) {
-              return Container(
-                color: ColorTheme.bgLight,
-                height: Get.height / 1.5,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        width: 50,
-                        height: 6,
-                        margin: EdgeInsets.symmetric(
-                            vertical: SpaceConfig.normalSpace),
-                        decoration: BoxDecoration(
+                    Text(
+                      "Jumlah Vaksinasi",
+                      style: TypeTheme.subTitleTextFont,
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: ColorTheme.secondaryColor,
+                      highlightColor: ColorTheme.tertiaryColor,
+                      child: Text(
+                        "Lihat Semua",
+                        style: TypeTheme.smallTextFont.copyWith(
                           color: ColorTheme.secondaryColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                    FadeInUp(
-                      delay: Duration(milliseconds: 350),
-                      child: Container(
-                        margin: EdgeInsets.symmetric(
-                            horizontal: SpaceConfig.longSpace),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: SpaceConfig.normalSpace),
-                            Text(
-                              "Pelaksanaan Vaksinasi",
-                              style: TypeTheme.subTitleTextFont,
-                            ),
-                            FutureBuilder(
-                              future: LocalVaccineService.getVaccine(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot<LocalVaccineModel> snapshot) {
-                                if (snapshot.hasData) {
-                                  localVaccine = snapshot.data;
-                                  return Text(
-                                      "Diperbarui pada " +
-                                          DateFormat.EEEE()
-                                              .add_d()
-                                              .add_yMMMM()
-                                              .addPattern('•')
-                                              .add_Hms()
-                                              .format((DateTime.parse(
-                                                  localVaccine!.lastUpdate)))
-                                              .replaceAll('Monday', 'Senin,')
-                                              .replaceAll('Tuesday', 'Selasa,')
-                                              .replaceAll('Wednesday', 'Rabu,')
-                                              .replaceAll('Thursday', 'Kamis,')
-                                              .replaceAll('Friday', 'Jumat,')
-                                              .replaceAll('Saturday', 'Sabtu,')
-                                              .replaceAll('Sunday', 'Minggu,')
-                                              .replaceAll('January', 'Januari')
-                                              .replaceAll(
-                                                  'February', 'Februari')
-                                              .replaceAll('March', 'Maret')
-                                              .replaceAll('April', 'April')
-                                              .replaceAll('May', 'Mei')
-                                              .replaceAll('June', 'Juni')
-                                              .replaceAll('July', 'Juli')
-                                              .replaceAll('August', 'Agustus')
-                                              .replaceAll(
-                                                  'September', 'September')
-                                              .replaceAll('October', 'Oktober')
-                                              .replaceAll(
-                                                  'November', 'November')
-                                              .replaceAll(
-                                                  'December', 'Desember'),
-                                      style: TypeTheme.smallTextFont);
-                                } else {
-                                  return Shimmer.fromColors(
-                                    baseColor: Colors.grey[300]!,
-                                    highlightColor: Colors.grey[100]!,
-                                    child: Container(
-                                      height: 18,
-                                      width:
-                                          (MediaQuery.of(context).size.width -
-                                                  2 * SpaceConfig.longSpace) -
-                                              80,
-                                      decoration: BoxDecoration(
-                                          color: ColorTheme.bgLight,
-                                          borderRadius: BorderRadius.circular(
-                                              SpaceConfig.normalSpace)),
-                                    ),
-                                  );
-                                }
-                              },
-                            ),
-                            SizedBox(height: SpaceConfig.longSpace),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: NotificationListener(
-                        onNotification: (notification) {
-                          if (notification is ScrollStartNotification) {
-                            isScroll = true;
-                          } else if (notification is ScrollEndNotification) {
-                            isScroll = true;
-                          } else {
-                            isScroll = true;
-                          }
-                          return true;
-                        },
-                        child: ListView(
-                          children: [
-                            //NOTE: NATIONAL
-                            FadeInUp(
-                              delay: Duration(
-                                  milliseconds: isScroll ? 0 : 350 * 2),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: SpaceConfig.longSpace),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: SpaceConfig.normalSpace),
-                                      child: Text(
-                                        "Vaksinasi Nasional",
-                                        style: TypeTheme.subTitleTextFont,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.shortSpace),
-                                    FutureBuilder(
-                                      future: LocalVaccineService.getVaccine(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<LocalVaccineModel>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          localVaccine = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .firstVaccine),
-                                                  cases:
-                                                      "Vaksinasi Nasional Dosis ke-1",
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .firstVaccine /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .totalTarget) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .firstVaccine /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .totalTarget)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .firstVaccine /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .totalTarget) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  color: ColorTheme.greenColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .secondVaccine),
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .secondVaccine /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .totalTarget) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .secondVaccine /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .totalTarget)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .secondVaccine /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .totalTarget) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  cases:
-                                                      "Vaksinasi Nasional Dosis ke-2",
-                                                  color: ColorTheme.greenColor,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Column(
-                                              children:
-                                                  List.generate(2, (index) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    bottom: SpaceConfig
-                                                            .normalSpace +
-                                                        4,
-                                                    left:
-                                                        SpaceConfig.normalSpace,
-                                                    right:
-                                                        SpaceConfig.normalSpace,
-                                                  ),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              SpaceConfig
-                                                                  .normalSpace),
-                                                    ),
-                                                    width: Get.width,
-                                                    height: 120 - 4,
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SpaceConfig.normalSpace),
-                            //NOTE: MEDICAL
-                            FadeInUp(
-                              delay: Duration(
-                                  milliseconds: isScroll ? 0 : 350 * 3),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: SpaceConfig.longSpace),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: SpaceConfig.normalSpace),
-                                      child: Text(
-                                        "Vaksinasi Petugas Medis",
-                                        style: TypeTheme.subTitleTextFont,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.shortSpace),
-                                    FutureBuilder(
-                                      future: LocalVaccineService.getVaccine(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<LocalVaccineModel>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          localVaccine = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1Medical),
-                                                  cases:
-                                                      "Vaksinasi Petugas Medis Dosis ke-1",
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1Medical /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetMedical) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine1Medical /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetMedical)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1Medical /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetMedical) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  color:
-                                                      ColorTheme.secondaryColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2Medical),
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2Medical /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetMedical) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine2Medical /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetMedical)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2Medical /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetMedical) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  cases:
-                                                      "Vaksinasi Petugas Medis Dosis ke-2",
-                                                  color:
-                                                      ColorTheme.secondaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Column(
-                                              children:
-                                                  List.generate(2, (index) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    bottom: SpaceConfig
-                                                            .normalSpace +
-                                                        4,
-                                                    left:
-                                                        SpaceConfig.normalSpace,
-                                                    right:
-                                                        SpaceConfig.normalSpace,
-                                                  ),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              SpaceConfig
-                                                                  .normalSpace),
-                                                    ),
-                                                    width: Get.width,
-                                                    height: 120 - 4,
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SpaceConfig.normalSpace),
-                            //NOTE: OFFICER
-                            FadeInUp(
-                              delay: Duration(
-                                  milliseconds: isScroll ? 0 : 350 * 4),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: SpaceConfig.longSpace),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: SpaceConfig.normalSpace),
-                                      child: Text(
-                                        "Vaksinasi Petugas Publik",
-                                        style: TypeTheme.subTitleTextFont,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.shortSpace),
-                                    FutureBuilder(
-                                      future: LocalVaccineService.getVaccine(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<LocalVaccineModel>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          localVaccine = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1Officer),
-                                                  cases:
-                                                      "Vaksinasi Petugas Publik Dosis ke-1",
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1Officer /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetOfficer) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine1Officer /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetOfficer)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1Officer /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetOfficer) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  color: ColorTheme.blueColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2Officer),
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2Officer /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetOfficer) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine2Officer /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetOfficer)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2Officer /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetOfficer) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  cases:
-                                                      "Vaksinasi Petugas Publik Dosis ke-2",
-                                                  color: ColorTheme.blueColor,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Column(
-                                              children:
-                                                  List.generate(2, (index) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    bottom: SpaceConfig
-                                                            .normalSpace +
-                                                        4,
-                                                    left:
-                                                        SpaceConfig.normalSpace,
-                                                    right:
-                                                        SpaceConfig.normalSpace,
-                                                  ),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              SpaceConfig
-                                                                  .normalSpace),
-                                                    ),
-                                                    width: Get.width,
-                                                    height: 120 - 4,
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SpaceConfig.normalSpace),
-                            //NOTE: TEEN
-                            FadeInUp(
-                              delay: Duration(
-                                  milliseconds: isScroll ? 0 : 350 * 5),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: SpaceConfig.longSpace),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: SpaceConfig.normalSpace),
-                                      child: Text(
-                                        "Vaksinasi Anak Remaja",
-                                        style: TypeTheme.subTitleTextFont,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.shortSpace),
-                                    FutureBuilder(
-                                      future: LocalVaccineService.getVaccine(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<LocalVaccineModel>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          localVaccine = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1TeenAge),
-                                                  cases:
-                                                      "Vaksinasi Anak Remaja Dosis ke-1",
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1TeenAge /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetTeenAge) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine1TeenAge /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetTeenAge)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1TeenAge /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetTeenAge) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  color: ColorTheme.greenColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2TeenAge),
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2TeenAge /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetTeenAge) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine2TeenAge /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetTeenAge)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2TeenAge /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetTeenAge) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  cases:
-                                                      "Vaksinasi Anak Remaja Dosis ke-2",
-                                                  color: ColorTheme.greenColor,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Column(
-                                              children:
-                                                  List.generate(2, (index) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    bottom: SpaceConfig
-                                                            .normalSpace +
-                                                        4,
-                                                    left:
-                                                        SpaceConfig.normalSpace,
-                                                    right:
-                                                        SpaceConfig.normalSpace,
-                                                  ),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              SpaceConfig
-                                                                  .normalSpace),
-                                                    ),
-                                                    width: Get.width,
-                                                    height: 120 - 4,
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SpaceConfig.normalSpace),
-                            //NOTE: PUBLIC
-                            FadeInUp(
-                              delay: Duration(
-                                  milliseconds: isScroll ? 0 : 350 * 6),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: SpaceConfig.longSpace),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: SpaceConfig.normalSpace),
-                                      child: Text(
-                                        "Vaksinasi Warga Umum",
-                                        style: TypeTheme.subTitleTextFont,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.shortSpace),
-                                    FutureBuilder(
-                                      future: LocalVaccineService.getVaccine(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<LocalVaccineModel>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          localVaccine = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1GeneralPublic),
-                                                  cases:
-                                                      "Vaksinasi Warga Umum Dosis ke-1",
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1GeneralPublic /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetGeneralPublic) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine1GeneralPublic /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetGeneralPublic)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1GeneralPublic /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetGeneralPublic) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  color: ColorTheme.blueColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2GeneralPublic),
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2GeneralPublic /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetGeneralPublic) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine2GeneralPublic /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetGeneralPublic)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2GeneralPublic /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetGeneralPublic) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  cases:
-                                                      "Vaksinasi Warga Umum Dosis ke-2",
-                                                  color: ColorTheme.blueColor,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Column(
-                                              children:
-                                                  List.generate(2, (index) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    bottom: SpaceConfig
-                                                            .normalSpace +
-                                                        4,
-                                                    left:
-                                                        SpaceConfig.normalSpace,
-                                                    right:
-                                                        SpaceConfig.normalSpace,
-                                                  ),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              SpaceConfig
-                                                                  .normalSpace),
-                                                    ),
-                                                    width: Get.width,
-                                                    height: 120 - 4,
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SpaceConfig.normalSpace),
-                            //NOTE: AGED
-                            FadeInUp(
-                              delay: Duration(
-                                  milliseconds: isScroll ? 0 : 350 * 7),
-                              child: Card(
-                                elevation: 2,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                margin: EdgeInsets.symmetric(
-                                    horizontal: SpaceConfig.longSpace),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(height: SpaceConfig.normalSpace),
-                                    Container(
-                                      margin: EdgeInsets.symmetric(
-                                          horizontal: SpaceConfig.normalSpace),
-                                      child: Text(
-                                        "Vaksinasi Lanjut Usia",
-                                        style: TypeTheme.subTitleTextFont,
-                                      ),
-                                    ),
-                                    SizedBox(height: SpaceConfig.shortSpace),
-                                    FutureBuilder(
-                                      future: LocalVaccineService.getVaccine(),
-                                      builder: (BuildContext context,
-                                          AsyncSnapshot<LocalVaccineModel>
-                                              snapshot) {
-                                        if (snapshot.hasData) {
-                                          localVaccine = snapshot.data;
-                                          return Column(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine1Aged),
-                                                  cases:
-                                                      "Vaksinasi Lanjut Usia Dosis ke-1",
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1Aged /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetAged) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine1Aged /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetAged)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine1Aged /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetAged) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  color:
-                                                      ColorTheme.secondaryColor,
-                                                ),
-                                              ),
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                  left:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  right:
-                                                      SpaceConfig.normalSpace -
-                                                          4,
-                                                  bottom:
-                                                      SpaceConfig.shortSpace,
-                                                ),
-                                                width: Get.width,
-                                                height: 120,
-                                                child: ProgressBoxCard(
-                                                  icon: Icons.medication,
-                                                  summary: NumberFormat
-                                                          .decimalPattern()
-                                                      .format(localVaccine!
-                                                          .monitoring[
-                                                              localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                          .doneVaccine2Aged),
-                                                  percent: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2Aged /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetAged) >
-                                                          1.0
-                                                      ? 1.0
-                                                      : (localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .doneVaccine2Aged /
-                                                          localVaccine!
-                                                              .monitoring[localVaccine!
-                                                                      .monitoring
-                                                                      .length -
-                                                                  1]
-                                                              .targetAged)),
-                                                  update: ((localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .doneVaccine2Aged /
-                                                              localVaccine!
-                                                                  .monitoring[localVaccine!
-                                                                          .monitoring
-                                                                          .length -
-                                                                      1]
-                                                                  .targetAged) *
-                                                          100)
-                                                      .toStringAsFixed(2),
-                                                  cases:
-                                                      "Vaksinasi Lanjut Usia Dosis ke-2",
-                                                  color:
-                                                      ColorTheme.secondaryColor,
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        } else {
-                                          return Shimmer.fromColors(
-                                            baseColor: Colors.grey[300]!,
-                                            highlightColor: Colors.grey[100]!,
-                                            child: Column(
-                                              children:
-                                                  List.generate(2, (index) {
-                                                return Container(
-                                                  margin: EdgeInsets.only(
-                                                    bottom: SpaceConfig
-                                                            .normalSpace +
-                                                        4,
-                                                    left:
-                                                        SpaceConfig.normalSpace,
-                                                    right:
-                                                        SpaceConfig.normalSpace,
-                                                  ),
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              SpaceConfig
-                                                                  .normalSpace),
-                                                    ),
-                                                    width: Get.width,
-                                                    height: 120 - 4,
-                                                  ),
-                                                );
-                                              }),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: SpaceConfig.normalSpace),
-                          ],
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
                   ],
                 ),
-              );
-            },
-          ),
-        );
-      },
-      child: Column(
-        children: [
-          FadeInDown(
-            delay: Duration(milliseconds: 350 * 6),
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: SpaceConfig.longSpace,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Target Vaksinasi",
-                        style: TypeTheme.subTitleTextFont,
-                      ),
-                      Shimmer.fromColors(
-                        baseColor: ColorTheme.secondaryColor,
-                        highlightColor: ColorTheme.tertiaryColor,
-                        child: Text(
-                          "Lihat Semua",
-                          style: TypeTheme.smallTextFont.copyWith(
-                            color: ColorTheme.secondaryColor,
-                            fontWeight: FontWeight.w600,
-                          ),
+                FutureBuilder(
+                  future: VaccineService.getVaccine(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<VaccineModel> snapshot) {
+                    if (snapshot.hasData) {
+                      vaccine = snapshot.data;
+                      return Text(
+                          "Diperbarui pada " +
+                              DateFormat.EEEE()
+                                  .add_d()
+                                  .add_yMMMM()
+                                  .addPattern('•')
+                                  .add_Hms()
+                                  .format((DateTime.parse(vaccine!.lastUpdate)))
+                                  .replaceAll('Monday', 'Senin,')
+                                  .replaceAll('Tuesday', 'Selasa,')
+                                  .replaceAll('Wednesday', 'Rabu,')
+                                  .replaceAll('Thursday', 'Kamis,')
+                                  .replaceAll('Friday', 'Jumat,')
+                                  .replaceAll('Saturday', 'Sabtu,')
+                                  .replaceAll('Sunday', 'Minggu,')
+                                  .replaceAll('January', 'Januari')
+                                  .replaceAll('February', 'Februari')
+                                  .replaceAll('March', 'Maret')
+                                  .replaceAll('April', 'April')
+                                  .replaceAll('May', 'Mei')
+                                  .replaceAll('June', 'Juni')
+                                  .replaceAll('July', 'Juli')
+                                  .replaceAll('August', 'Agustus')
+                                  .replaceAll('September', 'September')
+                                  .replaceAll('October', 'Oktober')
+                                  .replaceAll('November', 'November')
+                                  .replaceAll('December', 'Desember'),
+                          style: TypeTheme.smallTextFont);
+                    } else {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          height: 18,
+                          width: (MediaQuery.of(context).size.width -
+                                  2 * SpaceConfig.longSpace) -
+                              80,
+                          decoration: BoxDecoration(
+                              color: ColorTheme.bgLight,
+                              borderRadius: BorderRadius.circular(
+                                  SpaceConfig.normalSpace)),
                         ),
+                      );
+                    }
+                  },
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+        FutureBuilder(
+          future: VaccineService.getVaccine(),
+          builder:
+              (BuildContext context, AsyncSnapshot<VaccineModel> snapshot) {
+            if (snapshot.hasData) {
+              vaccine = snapshot.data;
+              return FadeInDown(
+                delay: Duration(milliseconds: 350 * 5),
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: SpaceConfig.longSpace - 4),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: FontAwesomeIcons.syringe,
+                              iconSize: 80,
+                              margin: EdgeInsets.only(
+                                right: SpaceConfig.shortSpace + 6,
+                                bottom: SpaceConfig.shortSpace,
+                              ),
+                              summary: NumberFormat.decimalPattern()
+                                  .format(vaccine!.updateVaccineFirst),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(vaccine!.totalVaccineFirst),
+                              cases: "Dosis Pertama",
+                              color: ColorTheme.blueColor,
+                            ),
+                          ),
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: FontAwesomeIcons.syringe,
+                              iconSize: 80,
+                              margin: EdgeInsets.only(
+                                right: SpaceConfig.shortSpace + 6,
+                                bottom: SpaceConfig.shortSpace,
+                              ),
+                              summary: NumberFormat.decimalPattern()
+                                  .format(vaccine!.updateVaccineSecond),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(vaccine!.totalVaccineSecond),
+                              cases: "Dosis Kedua",
+                              color: ColorTheme.greenColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                  FutureBuilder(
-                    future: LocalVaccineService.getVaccine(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<LocalVaccineModel> snapshot) {
-                      if (snapshot.hasData) {
-                        localVaccine = snapshot.data;
-                        return Text(
-                            "Diperbarui pada " +
-                                DateFormat.EEEE()
-                                    .add_d()
-                                    .add_yMMMM()
-                                    .addPattern('•')
-                                    .add_Hms()
-                                    .format((DateTime.parse(
-                                        localVaccine!.lastUpdate)))
-                                    .replaceAll('Monday', 'Senin,')
-                                    .replaceAll('Tuesday', 'Selasa,')
-                                    .replaceAll('Wednesday', 'Rabu,')
-                                    .replaceAll('Thursday', 'Kamis,')
-                                    .replaceAll('Friday', 'Jumat,')
-                                    .replaceAll('Saturday', 'Sabtu,')
-                                    .replaceAll('Sunday', 'Minggu,')
-                                    .replaceAll('January', 'Januari')
-                                    .replaceAll('February', 'Februari')
-                                    .replaceAll('March', 'Maret')
-                                    .replaceAll('April', 'April')
-                                    .replaceAll('May', 'Mei')
-                                    .replaceAll('June', 'Juni')
-                                    .replaceAll('July', 'Juli')
-                                    .replaceAll('August', 'Agustus')
-                                    .replaceAll('September', 'September')
-                                    .replaceAll('October', 'Oktober')
-                                    .replaceAll('November', 'November')
-                                    .replaceAll('December', 'Desember'),
-                            style: TypeTheme.smallTextFont);
-                      } else {
-                        return Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!,
-                          child: Container(
-                            height: 18,
-                            width: (MediaQuery.of(context).size.width -
-                                    2 * SpaceConfig.longSpace) -
-                                80,
-                            decoration: BoxDecoration(
+                ),
+              );
+            } else {
+              return FadeInDown(
+                delay: Duration(milliseconds: 350 * 5),
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Column(
+                    children: List.generate(1, (index) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                          bottom: SpaceConfig.normalSpace - 4,
+                          left: SpaceConfig.longSpace,
+                          right: SpaceConfig.longSpace,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: SpaceConfig.shortSpace),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                    SpaceConfig.normalSpace),
+                              ),
+                              width:
+                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
+                                      4,
+                              height: 120 - 4,
+                            ),
+                            Container(
+                              margin:
+                                  EdgeInsets.only(left: SpaceConfig.shortSpace),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                    SpaceConfig.normalSpace),
+                              ),
+                              width:
+                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
+                                      4,
+                              height: 120 - 4,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              );
+            }
+          },
+        )
+      ],
+    );
+  }
+
+  _check() {
+    return Column(
+      children: [
+        FadeInDown(
+          delay: Duration(milliseconds: 350 * 4),
+          child: Container(
+            margin: EdgeInsets.symmetric(
+              horizontal: SpaceConfig.longSpace,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Jumlah Pemeriksaan",
+                      style: TypeTheme.subTitleTextFont,
+                    ),
+                    Shimmer.fromColors(
+                      baseColor: ColorTheme.secondaryColor,
+                      highlightColor: ColorTheme.tertiaryColor,
+                      child: Text(
+                        "Lihat Semua",
+                        style: TypeTheme.smallTextFont.copyWith(
+                          color: ColorTheme.secondaryColor,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                FutureBuilder(
+                  future: CheckService.getCheck(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<CheckModel> snapshot) {
+                    if (snapshot.hasData) {
+                      check = snapshot.data;
+                      return Text(
+                          "Diperbarui pada " +
+                              DateFormat.EEEE()
+                                  .add_d()
+                                  .add_yMMMM()
+                                  .addPattern('•')
+                                  .add_Hms()
+                                  .format((DateTime.parse(check!.lastUpdate)))
+                                  .replaceAll('Monday', 'Senin,')
+                                  .replaceAll('Tuesday', 'Selasa,')
+                                  .replaceAll('Wednesday', 'Rabu,')
+                                  .replaceAll('Thursday', 'Kamis,')
+                                  .replaceAll('Friday', 'Jumat,')
+                                  .replaceAll('Saturday', 'Sabtu,')
+                                  .replaceAll('Sunday', 'Minggu,')
+                                  .replaceAll('January', 'Januari')
+                                  .replaceAll('February', 'Februari')
+                                  .replaceAll('March', 'Maret')
+                                  .replaceAll('April', 'April')
+                                  .replaceAll('May', 'Mei')
+                                  .replaceAll('June', 'Juni')
+                                  .replaceAll('July', 'Juli')
+                                  .replaceAll('August', 'Agustus')
+                                  .replaceAll('September', 'September')
+                                  .replaceAll('October', 'Oktober')
+                                  .replaceAll('November', 'November')
+                                  .replaceAll('December', 'Desember'),
+                          style: TypeTheme.smallTextFont);
+                    } else {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          height: 18,
+                          width: (MediaQuery.of(context).size.width -
+                                  2 * SpaceConfig.longSpace) -
+                              80,
+                          decoration: BoxDecoration(
                               color: ColorTheme.bgLight,
                               borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace),
-                            ),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
+                                  SpaceConfig.normalSpace)),
+                        ),
+                      );
+                    }
+                  },
+                )
+              ],
             ),
           ),
-          SizedBox(height: SpaceConfig.normalSpace),
-          FutureBuilder(
-            future: LocalVaccineService.getVaccine(),
-            builder: (BuildContext context,
-                AsyncSnapshot<LocalVaccineModel> snapshot) {
-              if (snapshot.hasData) {
-                localVaccine = snapshot.data;
-                return FadeInDown(
-                  delay: Duration(milliseconds: 350 * 7),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: SpaceConfig.longSpace - 4),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                              height: 80,
-                              child: SmallBoxCard(
-                                icon: Icons.timelapse,
-                                summary: NumberFormat.decimalPattern().format(
-                                    localVaccine!.monitoring[0].totalTarget),
-                                cases: "Total Target",
-                                color: ColorTheme.blueColor,
+        ),
+        SizedBox(height: SpaceConfig.normalSpace),
+        FutureBuilder(
+          future: CheckService.getCheck(),
+          builder: (BuildContext context, AsyncSnapshot<CheckModel> snapshot) {
+            if (snapshot.hasData) {
+              check = snapshot.data;
+              return FadeInDown(
+                delay: Duration(milliseconds: 350 * 5),
+                child: Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: SpaceConfig.longSpace - 4),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: FontAwesomeIcons.vial,
+                              iconSize: 80,
+                              margin: EdgeInsets.only(
+                                right: SpaceConfig.shortSpace + 6,
+                                bottom: SpaceConfig.shortSpace,
                               ),
+                              summary: NumberFormat.decimalPattern()
+                                  .format(check!.updatePeoplePcr),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(check!.totalPeoplePcr),
+                              cases: "Tes PCR",
+                              color: ColorTheme.greenColor,
                             ),
-                            Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                              height: 80,
-                              child: SmallBoxCard(
-                                icon: Icons.medical_services,
-                                summary: NumberFormat.decimalPattern().format(
-                                    localVaccine!.monitoring[0].targetMedical),
-                                cases: "Petugas Medis",
-                                color: ColorTheme.greenColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: SpaceConfig.shortSpace),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                              height: 80,
-                              child: SmallBoxCard(
-                                icon: Icons.apartment,
-                                summary: NumberFormat.decimalPattern().format(
-                                    localVaccine!.monitoring[0].targetOfficer),
-                                cases: "Petugas Publik",
-                                color: ColorTheme.greenColor,
-                              ),
-                            ),
-                            Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                              height: 80,
-                              child: SmallBoxCard(
-                                icon: Icons.elderly,
-                                summary: NumberFormat.decimalPattern().format(
-                                    localVaccine!.monitoring[0].targetAged),
-                                cases: "Lanjut Usia",
-                                color: ColorTheme.blueColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: SpaceConfig.shortSpace),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                              height: 80,
-                              child: SmallBoxCard(
-                                icon: Icons.people_sharp,
-                                summary: NumberFormat.decimalPattern().format(
-                                    localVaccine!
-                                        .monitoring[0].targetGeneralPublic),
-                                cases: "Warga Umum",
-                                color: ColorTheme.blueColor,
-                              ),
-                            ),
-                            Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                              height: 80,
-                              child: SmallBoxCard(
-                                icon: Icons.accessibility_new,
-                                summary: NumberFormat.decimalPattern().format(
-                                    localVaccine!.monitoring[0].targetTeenAge),
-                                cases: "Anak Remaja",
-                                color: ColorTheme.greenColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              } else {
-                return FadeInDown(
-                  delay: Duration(milliseconds: 350 * 7),
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Column(
-                      children: List.generate(3, (index) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                            bottom: SpaceConfig.normalSpace - 4,
-                            left: SpaceConfig.longSpace,
-                            right: SpaceConfig.longSpace,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                    right: SpaceConfig.shortSpace),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                width: (Get.width - 3 * SpaceConfig.longSpace) /
-                                        2 +
-                                    4,
-                                height: 80 - 4,
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: FontAwesomeIcons.vial,
+                              iconSize: 80,
+                              margin: EdgeInsets.only(
+                                right: SpaceConfig.shortSpace + 6,
+                                bottom: SpaceConfig.shortSpace,
                               ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: SpaceConfig.shortSpace),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                width: (Get.width - 3 * SpaceConfig.longSpace) /
-                                        2 +
-                                    4,
-                                height: 80 - 4,
-                              ),
-                            ],
+                              summary: NumberFormat.decimalPattern()
+                                  .format(check!.updatePeopleAntigen),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(check!.totalPeopleAntigen),
+                              cases: "Tes Antigen",
+                              color: ColorTheme.blueColor,
+                            ),
                           ),
-                        );
-                      }),
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                );
-              }
-            },
-          ),
-        ],
-      ),
+                ),
+              );
+            } else {
+              return FadeInDown(
+                delay: Duration(milliseconds: 350 * 5),
+                child: Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Column(
+                    children: List.generate(1, (index) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                          bottom: SpaceConfig.normalSpace - 4,
+                          left: SpaceConfig.longSpace,
+                          right: SpaceConfig.longSpace,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(
+                                  right: SpaceConfig.shortSpace),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                    SpaceConfig.normalSpace),
+                              ),
+                              width:
+                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
+                                      4,
+                              height: 120 - 4,
+                            ),
+                            Container(
+                              margin:
+                                  EdgeInsets.only(left: SpaceConfig.shortSpace),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(
+                                    SpaceConfig.normalSpace),
+                              ),
+                              width:
+                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
+                                      4,
+                              height: 120 - 4,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              );
+            }
+          },
+        )
+      ],
     );
   }
 

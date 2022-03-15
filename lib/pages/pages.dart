@@ -9,6 +9,7 @@ import 'package:flutter_pantau_covid/models/models.dart';
 import 'package:flutter_pantau_covid/services/services.dart';
 import 'package:flutter_pantau_covid/utilities/utilities.dart';
 import 'package:flutter_pantau_covid/widgets/widgets.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:introduction_screen/introduction_screen.dart';
