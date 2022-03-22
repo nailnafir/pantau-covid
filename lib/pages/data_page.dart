@@ -8,17 +8,7 @@ class DataPage extends StatefulWidget {
 }
 
 class _DataPageState extends State<DataPage> {
-  final GlobalKey<RefreshIndicatorState> refreshData =
-      new GlobalKey<RefreshIndicatorState>();
-
   TextEditingController editingController = TextEditingController();
-
-  CaseTotalModel? caseTotal;
-  CheckModel? check;
-  VaccineModel? vaccine;
-  AllProvinceModel? allProvince;
-  List<DetailProvinceModel>? detailProvince;
-  LocationModel? location;
 
   int _current = 0;
 
@@ -41,10 +31,21 @@ class _DataPageState extends State<DataPage> {
       backgroundColor: ColorTheme.bgLight,
       body: SafeArea(
         child: RefreshIndicator(
-          key: refreshData,
           color: ColorTheme.secondaryColor,
-          onRefresh: () {
-            return Future.delayed(Duration(seconds: 1), () {});
+          onRefresh: () async {
+            await Future.delayed(Duration(seconds: 1), () {
+              context.read<LocationBloc>().add(LoadingLocation());
+              context.read<CaseTotalBloc>().add(LoadingCaseTotal());
+              context.read<CaseProvinceBloc>().add(LoadingCaseProvince());
+              context.read<CheckBloc>().add(LoadingCheck());
+              context.read<VaccineBloc>().add(LoadingVaccine());
+
+              context.read<LocationBloc>().add(FetchLocation());
+              context.read<CaseTotalBloc>().add(FetchCaseTotal());
+              context.read<CaseProvinceBloc>().add(FetchCaseProvince());
+              context.read<CheckBloc>().add(FetchCheck());
+              context.read<VaccineBloc>().add(FetchVaccine());
+            });
           },
           child: ListView(
             children: [
@@ -101,14 +102,8 @@ class _DataPageState extends State<DataPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FadeInDown(
-          delay: Duration(milliseconds: 350),
-          child: _greetings(),
-        ),
-        FadeInDown(
-          delay: Duration(milliseconds: 350 * 2),
-          child: _slider(),
-        ),
+        _greetings(),
+        _slider(),
         _content(),
       ],
     );
@@ -230,74 +225,69 @@ class _DataPageState extends State<DataPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: SpaceConfig.normalSpace),
-        FadeInDown(
-          delay: Duration(milliseconds: 350 * 3),
-          child: Card(
-            margin: EdgeInsets.symmetric(
-              horizontal: SpaceConfig.longSpace - 4,
+        Card(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
+          ),
+          elevation: 2,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+          child: Container(
+            padding: EdgeInsets.fromLTRB(
+              SpaceConfig.shortSpace - 2,
+              SpaceConfig.longSpace,
+              SpaceConfig.normalSpace,
+              SpaceConfig.longSpace,
             ),
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
-            child: Container(
-              padding: EdgeInsets.fromLTRB(
-                SpaceConfig.shortSpace - 2,
-                SpaceConfig.longSpace,
-                SpaceConfig.normalSpace,
-                SpaceConfig.longSpace,
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.location_on,
-                    color: ColorTheme.secondaryColor,
+            child: Row(
+              children: [
+                Icon(
+                  Icons.location_on,
+                  color: ColorTheme.secondaryColor,
+                ),
+                SizedBox(width: SpaceConfig.shortSpace / 2),
+                BlocBuilder<LocationBloc, LocationState>(
+                  builder: (context, state) {
+                    if (state is LocationLoaded) {
+                      LocationModel location = state.location;
+                      return Container(
+                        width: Get.width / 1.75,
+                        child: Text(
+                          location.address,
+                          overflow: TextOverflow.ellipsis,
+                          style: TypeTheme.normalTextFont
+                              .copyWith(fontWeight: FontWeight.w600),
+                          maxLines: 1,
+                        ),
+                      );
+                    } else {
+                      return Shimmer.fromColors(
+                        baseColor: Colors.grey[300]!,
+                        highlightColor: Colors.grey[100]!,
+                        child: Container(
+                          color: Colors.grey[300]!,
+                          height: 18,
+                          width: Get.width / 3,
+                        ),
+                      );
+                    }
+                  },
+                ),
+                Spacer(),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: SpaceConfig.shortSpace,
+                    vertical: SpaceConfig.shortSpace / 2,
                   ),
-                  SizedBox(width: SpaceConfig.shortSpace / 2),
-                  FutureBuilder(
-                    future: LocationService.getUserLocation(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<LocationModel> snapshot) {
-                      if (snapshot.hasData) {
-                        location = snapshot.data;
-                        return Container(
-                          width: Get.width / 1.75,
-                          child: Text(
-                            location!.address,
-                            overflow: TextOverflow.ellipsis,
-                            style: TypeTheme.normalTextFont
-                                .copyWith(fontWeight: FontWeight.w600),
-                            maxLines: 1,
-                          ),
-                        );
-                      } else {
-                        return Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!,
-                          child: Container(
-                            color: Colors.grey[300]!,
-                            height: 18,
-                            width: Get.width / 3,
-                          ),
-                        );
-                      }
-                    },
+                  decoration: BoxDecoration(
+                      color: ColorTheme.secondaryColor.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(4)),
+                  child: Text(
+                    "Lokasimu",
+                    style: TypeTheme.smallTextFont,
                   ),
-                  Spacer(),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.shortSpace,
-                      vertical: SpaceConfig.shortSpace / 2,
-                    ),
-                    decoration: BoxDecoration(
-                        color: ColorTheme.secondaryColor.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(4)),
-                    child: Text(
-                      "Lokasimu",
-                      style: TypeTheme.smallTextFont,
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
@@ -370,9 +360,7 @@ class _DataPageState extends State<DataPage> {
                             color: Colors.white,
                             child: Container(
                               height: 50,
-                              width: MediaQuery.of(context).size.width -
-                                  2 * SpaceConfig.longSpace -
-                                  50,
+                              width: Get.width - (2 * SpaceConfig.longSpace),
                               child: TextFormField(
                                 textAlignVertical: TextAlignVertical.center,
                                 style: TypeTheme.normalTextFont,
@@ -383,6 +371,10 @@ class _DataPageState extends State<DataPage> {
                                   });
                                 },
                                 decoration: InputDecoration(
+                                    prefixIcon: Icon(
+                                      Icons.search,
+                                      color: ColorTheme.secondaryColor,
+                                    ),
                                     suffixIcon: isTyping
                                         ? IconButton(
                                             color: ColorTheme.redColor,
@@ -402,32 +394,6 @@ class _DataPageState extends State<DataPage> {
                               ),
                             ),
                           ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {});
-                            },
-                            child: Card(
-                              margin: EdgeInsets.fromLTRB(
-                                0,
-                                SpaceConfig.normalSpace,
-                                SpaceConfig.longSpace - 4,
-                                SpaceConfig.normalSpace,
-                              ),
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace)),
-                              color: ColorTheme.secondaryColor,
-                              child: Container(
-                                width: 50,
-                                height: 50,
-                                child: Icon(
-                                  Icons.search,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     ),
@@ -443,14 +409,13 @@ class _DataPageState extends State<DataPage> {
                           }
                           return true;
                         },
-                        child: FutureBuilder(
-                          future: AllProvinceService.getAllProvince(),
-                          builder: (BuildContext context,
-                              AsyncSnapshot<AllProvinceModel> snapshot) {
-                            if (snapshot.hasData) {
-                              allProvince = snapshot.data;
+                        child: BlocBuilder<CaseProvinceBloc, CaseProvinceState>(
+                          builder: (context, state) {
+                            if (state is CaseProvinceLoaded) {
+                              CaseProvinceModel caseProvince =
+                                  state.caseProvince;
                               return ListView.builder(
-                                itemCount: allProvince!.listData.length,
+                                itemCount: caseProvince.listData.length,
                                 itemBuilder: (context, index) {
                                   if (editingController.text.isEmpty) {
                                     return FadeInUp(
@@ -463,7 +428,7 @@ class _DataPageState extends State<DataPage> {
                                                 ? 0
                                                 : SpaceConfig.normalSpace),
                                             bottom: (index ==
-                                                    allProvince!
+                                                    caseProvince
                                                             .listData.length -
                                                         1
                                                 ? SpaceConfig.normalSpace
@@ -471,50 +436,50 @@ class _DataPageState extends State<DataPage> {
                                         child: DetailBoxCard(
                                           summaryPositive:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .confirmedTotal),
                                           updatePositive: "+" +
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .update
                                                       .confirmedUpdate),
                                           summaryActive:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .activeTotal),
                                           updateActive: "-0",
                                           summaryRecovered:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .recoveredTotal),
                                           updateRecovered: "+" +
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .update
                                                       .recoveredUpdate),
                                           summaryDeaths:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .deathsTotal),
                                           updateDeaths: "+" +
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .update
                                                       .deathsUpdate),
-                                          provinceName: allProvince!
+                                          provinceName: caseProvince
                                               .listData[index].provinceName,
                                           lastUpdate: DateFormat.EEEE()
                                               .add_d()
                                               .add_yMMMM()
                                               .format((DateTime.parse(
-                                                  allProvince!.lastUpdate)))
+                                                  caseProvince.lastUpdate)))
                                               .replaceAll('Monday', 'Senin,')
                                               .replaceAll('Tuesday', 'Selasa,')
                                               .replaceAll('Wednesday', 'Rabu,')
@@ -541,7 +506,7 @@ class _DataPageState extends State<DataPage> {
                                         ),
                                       ),
                                     );
-                                  } else if (allProvince!
+                                  } else if (caseProvince
                                       .listData[index].provinceName
                                       .trim()
                                       .replaceAll(RegExp(r"\s+"), "")
@@ -559,7 +524,7 @@ class _DataPageState extends State<DataPage> {
                                                 ? 0
                                                 : SpaceConfig.normalSpace),
                                             bottom: (index ==
-                                                    allProvince!
+                                                    caseProvince
                                                             .listData.length -
                                                         1
                                                 ? SpaceConfig.normalSpace
@@ -567,50 +532,50 @@ class _DataPageState extends State<DataPage> {
                                         child: DetailBoxCard(
                                           summaryPositive:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .confirmedTotal),
                                           updatePositive: "+" +
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .update
                                                       .confirmedUpdate),
                                           summaryActive:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .activeTotal),
                                           updateActive: "-0",
                                           summaryRecovered:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .recoveredTotal),
                                           updateRecovered: "+" +
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .update
                                                       .recoveredUpdate),
                                           summaryDeaths:
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .deathsTotal),
                                           updateDeaths: "+" +
                                               NumberFormat.decimalPattern()
-                                                  .format(allProvince!
+                                                  .format(caseProvince
                                                       .listData[index]
                                                       .update
                                                       .deathsUpdate),
-                                          provinceName: allProvince!
+                                          provinceName: caseProvince
                                               .listData[index].provinceName,
                                           lastUpdate: DateFormat.EEEE()
                                               .add_d()
                                               .add_yMMMM()
                                               .format((DateTime.parse(
-                                                  allProvince!.lastUpdate)))
+                                                  caseProvince.lastUpdate)))
                                               .replaceAll('Monday', 'Senin,')
                                               .replaceAll('Tuesday', 'Selasa,')
                                               .replaceAll('Wednesday', 'Rabu,')
@@ -648,24 +613,9 @@ class _DataPageState extends State<DataPage> {
                                 child: ListView.builder(
                                   itemCount: 3,
                                   itemBuilder: (context, index) {
-                                    return Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      child: Container(
-                                        margin: EdgeInsets.fromLTRB(
-                                          SpaceConfig.longSpace,
-                                          0,
-                                          SpaceConfig.longSpace,
-                                          SpaceConfig.normalSpace,
-                                        ),
-                                        height: 230,
-                                        width:
-                                            Get.width - SpaceConfig.shortSpace,
-                                        decoration: BoxDecoration(
-                                            color: ColorTheme.bgLight,
-                                            borderRadius: BorderRadius.circular(
-                                                SpaceConfig.normalSpace)),
-                                      ),
+                                    return ShimmerLoading(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 120,
                                     );
                                   },
                                 ),
@@ -682,44 +632,243 @@ class _DataPageState extends State<DataPage> {
           ),
         );
       },
-      child: Column(
-        children: [
-          FadeInDown(
-            delay: Duration(milliseconds: 350 * 4),
-            child: Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: SpaceConfig.longSpace,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Container(
+        margin: EdgeInsets.symmetric(
+          horizontal: SpaceConfig.longSpace,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Jumlah Kasus",
+                  style: TypeTheme.subTitleTextFont,
+                ),
+                Shimmer.fromColors(
+                  baseColor: ColorTheme.secondaryColor,
+                  highlightColor: ColorTheme.tertiaryColor,
+                  child: Text(
+                    "Lihat Semua",
+                    style: TypeTheme.smallTextFont.copyWith(
+                      color: ColorTheme.secondaryColor,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            BlocBuilder<CaseTotalBloc, CaseTotalState>(
+              builder: (context, state) {
+                if (state is CaseTotalLoaded) {
+                  CaseTotalModel? caseTotal = state.caseTotal;
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Jumlah Kasus",
-                        style: TypeTheme.subTitleTextFont,
-                      ),
-                      Shimmer.fromColors(
-                        baseColor: ColorTheme.secondaryColor,
-                        highlightColor: ColorTheme.tertiaryColor,
-                        child: Text(
-                          "Lihat Semua",
-                          style: TypeTheme.smallTextFont.copyWith(
-                            color: ColorTheme.secondaryColor,
-                            fontWeight: FontWeight.w600,
+                          "Diperbarui pada " +
+                              DateFormat.EEEE()
+                                  .add_d()
+                                  .add_yMMMM()
+                                  .addPattern('•')
+                                  .add_Hms()
+                                  .format(
+                                      (DateTime.parse(caseTotal.lastUpdate)))
+                                  .replaceAll('Monday', 'Senin,')
+                                  .replaceAll('Tuesday', 'Selasa,')
+                                  .replaceAll('Wednesday', 'Rabu,')
+                                  .replaceAll('Thursday', 'Kamis,')
+                                  .replaceAll('Friday', 'Jumat,')
+                                  .replaceAll('Saturday', 'Sabtu,')
+                                  .replaceAll('Sunday', 'Minggu,')
+                                  .replaceAll('January', 'Januari')
+                                  .replaceAll('February', 'Februari')
+                                  .replaceAll('March', 'Maret')
+                                  .replaceAll('April', 'April')
+                                  .replaceAll('May', 'Mei')
+                                  .replaceAll('June', 'Juni')
+                                  .replaceAll('July', 'Juli')
+                                  .replaceAll('August', 'Agustus')
+                                  .replaceAll('September', 'September')
+                                  .replaceAll('October', 'Oktober')
+                                  .replaceAll('November', 'November')
+                                  .replaceAll('December', 'Desember'),
+                          style: TypeTheme.smallTextFont),
+                      SizedBox(height: SpaceConfig.normalSpace),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: Icons.add_circle_rounded,
+                              iconSize: 100,
+                              margin: EdgeInsets.only(
+                                  right: SpaceConfig.shortSpace - 2),
+                              summary: NumberFormat.decimalPattern()
+                                  .format(caseTotal.confirmedTotal),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(caseTotal.confirmedUpdate),
+                              cases: "Positif",
+                              color: ColorTheme.secondaryColor,
+                            ),
                           ),
-                        ),
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: Icons.remove_circle_rounded,
+                              iconSize: 100,
+                              margin: EdgeInsets.only(
+                                  right: SpaceConfig.shortSpace - 2),
+                              summary: NumberFormat.decimalPattern()
+                                  .format(caseTotal.activeTotal),
+                              update: NumberFormat.decimalPattern()
+                                  .format(caseTotal.activeUpdate),
+                              cases: "Dirawat",
+                              color: ColorTheme.blueColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: SpaceConfig.shortSpace),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: Icons.change_circle_rounded,
+                              margin: EdgeInsets.only(
+                                  right: SpaceConfig.shortSpace - 2),
+                              iconSize: 100,
+                              summary: NumberFormat.decimalPattern()
+                                  .format(caseTotal.recoveredTotal),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(caseTotal.recoveredUpdate),
+                              cases: "Sembuh",
+                              color: ColorTheme.greenColor,
+                            ),
+                          ),
+                          Container(
+                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                            child: BigBoxCard(
+                              icon: Icons.cancel_rounded,
+                              iconSize: 100,
+                              margin: EdgeInsets.only(
+                                  right: SpaceConfig.shortSpace - 2),
+                              summary: NumberFormat.decimalPattern()
+                                  .format(caseTotal.deathsTotal),
+                              update: "+" +
+                                  NumberFormat.decimalPattern()
+                                      .format(caseTotal.deathsUpdate),
+                              cases: "Meninggal",
+                              color: ColorTheme.redColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
+                  );
+                } else {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ShimmerLoading(
+                        width: MediaQuery.of(context).size.width -
+                            (SpaceConfig.longSpace * 4),
+                        height: 14,
+                        margin: EdgeInsets.only(
+                          top: SpaceConfig.shortSpace / 2,
+                          bottom: SpaceConfig.normalSpace,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ShimmerLoading(
+                            width:
+                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                          ),
+                          ShimmerLoading(
+                            width:
+                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: SpaceConfig.normalSpace),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          ShimmerLoading(
+                            width:
+                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                          ),
+                          ShimmerLoading(
+                            width:
+                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            height: 120,
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                }
+              },
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  _vaccine() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Jumlah Vaksinasi",
+                    style: TypeTheme.subTitleTextFont,
                   ),
-                  FutureBuilder(
-                    future: CaseTotalService.getTotalCase(),
-                    builder: (BuildContext context,
-                        AsyncSnapshot<CaseTotalModel> snapshot) {
-                      if (snapshot.hasData) {
-                        caseTotal = snapshot.data;
-                        return Text(
+                  Shimmer.fromColors(
+                    baseColor: ColorTheme.secondaryColor,
+                    highlightColor: ColorTheme.tertiaryColor,
+                    child: Text(
+                      "Lihat Semua",
+                      style: TypeTheme.smallTextFont.copyWith(
+                        color: ColorTheme.secondaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              BlocBuilder<VaccineBloc, VaccineState>(
+                builder: (context, state) {
+                  if (state is VaccineLoaded) {
+                    VaccineModel? vaccine = state.vaccine;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
                             "Diperbarui pada " +
                                 DateFormat.EEEE()
                                     .add_d()
@@ -727,7 +876,7 @@ class _DataPageState extends State<DataPage> {
                                     .addPattern('•')
                                     .add_Hms()
                                     .format(
-                                        (DateTime.parse(caseTotal!.lastUpdate)))
+                                        (DateTime.parse(vaccine.lastUpdate)))
                                     .replaceAll('Monday', 'Senin,')
                                     .replaceAll('Tuesday', 'Selasa,')
                                     .replaceAll('Wednesday', 'Rabu,')
@@ -747,43 +896,8 @@ class _DataPageState extends State<DataPage> {
                                     .replaceAll('October', 'Oktober')
                                     .replaceAll('November', 'November')
                                     .replaceAll('December', 'Desember'),
-                            style: TypeTheme.smallTextFont);
-                      } else {
-                        return Shimmer.fromColors(
-                          baseColor: Colors.grey[300]!,
-                          highlightColor: Colors.grey[100]!,
-                          child: Container(
-                            height: 18,
-                            width: (MediaQuery.of(context).size.width -
-                                    2 * SpaceConfig.longSpace) -
-                                80,
-                            decoration: BoxDecoration(
-                                color: ColorTheme.bgLight,
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace)),
-                          ),
-                        );
-                      }
-                    },
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: SpaceConfig.normalSpace),
-          FutureBuilder(
-            future: CaseTotalService.getTotalCase(),
-            builder:
-                (BuildContext context, AsyncSnapshot<CaseTotalModel> snapshot) {
-              if (snapshot.hasData) {
-                caseTotal = snapshot.data;
-                return FadeInDown(
-                  delay: Duration(milliseconds: 350 * 5),
-                  child: Container(
-                    margin: EdgeInsets.symmetric(
-                        horizontal: SpaceConfig.longSpace - 4),
-                    child: Column(
-                      children: [
+                            style: TypeTheme.smallTextFont),
+                        SizedBox(height: SpaceConfig.normalSpace),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -792,17 +906,19 @@ class _DataPageState extends State<DataPage> {
                                   (Get.width - 2 * SpaceConfig.longSpace) / 2,
                               height: 120,
                               child: BigBoxCard(
-                                icon: Icons.add_circle_rounded,
-                                iconSize: 100,
+                                icon: FontAwesomeIcons.syringe,
+                                iconSize: 80,
                                 margin: EdgeInsets.only(
-                                    right: SpaceConfig.shortSpace - 2),
+                                  right: SpaceConfig.shortSpace + 6,
+                                  bottom: SpaceConfig.shortSpace,
+                                ),
                                 summary: NumberFormat.decimalPattern()
-                                    .format(caseTotal!.confirmedTotal),
+                                    .format(vaccine.totalVaccineFirst),
                                 update: "+" +
                                     NumberFormat.decimalPattern()
-                                        .format(caseTotal!.confirmedUpdate),
-                                cases: "Positif",
-                                color: ColorTheme.secondaryColor,
+                                        .format(vaccine.updateVaccineFirst),
+                                cases: "Dosis Pertama",
+                                color: ColorTheme.blueColor,
                               ),
                             ),
                             Container(
@@ -810,21 +926,131 @@ class _DataPageState extends State<DataPage> {
                                   (Get.width - 2 * SpaceConfig.longSpace) / 2,
                               height: 120,
                               child: BigBoxCard(
-                                icon: Icons.remove_circle_rounded,
-                                iconSize: 100,
+                                icon: FontAwesomeIcons.syringe,
+                                iconSize: 80,
                                 margin: EdgeInsets.only(
-                                    right: SpaceConfig.shortSpace - 2),
+                                  right: SpaceConfig.shortSpace + 6,
+                                  bottom: SpaceConfig.shortSpace,
+                                ),
                                 summary: NumberFormat.decimalPattern()
-                                    .format(caseTotal!.activeTotal),
-                                update: NumberFormat.decimalPattern()
-                                    .format(caseTotal!.activeUpdate),
-                                cases: "Dirawat",
-                                color: ColorTheme.blueColor,
+                                    .format(vaccine.totalVaccineSecond),
+                                update: "+" +
+                                    NumberFormat.decimalPattern()
+                                        .format(vaccine.updateVaccineSecond),
+                                cases: "Dosis Kedua",
+                                color: ColorTheme.greenColor,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: SpaceConfig.shortSpace),
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ShimmerLoading(
+                          width: MediaQuery.of(context).size.width -
+                              (SpaceConfig.longSpace * 4),
+                          height: 14,
+                          margin: EdgeInsets.only(
+                            top: SpaceConfig.shortSpace / 2,
+                            bottom: SpaceConfig.normalSpace,
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ShimmerLoading(
+                              width:
+                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              height: 120,
+                            ),
+                            ShimmerLoading(
+                              width:
+                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              height: 120,
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }
+                },
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  _check() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Jumlah Pemeriksaan",
+                    style: TypeTheme.subTitleTextFont,
+                  ),
+                  Shimmer.fromColors(
+                    baseColor: ColorTheme.secondaryColor,
+                    highlightColor: ColorTheme.tertiaryColor,
+                    child: Text(
+                      "Lihat Semua",
+                      style: TypeTheme.smallTextFont.copyWith(
+                        color: ColorTheme.secondaryColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              BlocBuilder<CheckBloc, CheckState>(
+                builder: (context, state) {
+                  if (state is CheckLoaded) {
+                    CheckModel? check = state.check;
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "Diperbarui pada " +
+                                DateFormat.EEEE()
+                                    .add_d()
+                                    .add_yMMMM()
+                                    .addPattern('•')
+                                    .add_Hms()
+                                    .format((DateTime.parse(check.lastUpdate)))
+                                    .replaceAll('Monday', 'Senin,')
+                                    .replaceAll('Tuesday', 'Selasa,')
+                                    .replaceAll('Wednesday', 'Rabu,')
+                                    .replaceAll('Thursday', 'Kamis,')
+                                    .replaceAll('Friday', 'Jumat,')
+                                    .replaceAll('Saturday', 'Sabtu,')
+                                    .replaceAll('Sunday', 'Minggu,')
+                                    .replaceAll('January', 'Januari')
+                                    .replaceAll('February', 'Februari')
+                                    .replaceAll('March', 'Maret')
+                                    .replaceAll('April', 'April')
+                                    .replaceAll('May', 'Mei')
+                                    .replaceAll('June', 'Juni')
+                                    .replaceAll('July', 'Juli')
+                                    .replaceAll('August', 'Agustus')
+                                    .replaceAll('September', 'September')
+                                    .replaceAll('October', 'Oktober')
+                                    .replaceAll('November', 'November')
+                                    .replaceAll('December', 'Desember'),
+                            style: TypeTheme.smallTextFont),
+                        SizedBox(height: SpaceConfig.normalSpace),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -833,16 +1059,18 @@ class _DataPageState extends State<DataPage> {
                                   (Get.width - 2 * SpaceConfig.longSpace) / 2,
                               height: 120,
                               child: BigBoxCard(
-                                icon: Icons.change_circle_rounded,
+                                icon: FontAwesomeIcons.vial,
+                                iconSize: 80,
                                 margin: EdgeInsets.only(
-                                    right: SpaceConfig.shortSpace - 2),
-                                iconSize: 100,
+                                  right: SpaceConfig.shortSpace + 6,
+                                  bottom: SpaceConfig.shortSpace,
+                                ),
                                 summary: NumberFormat.decimalPattern()
-                                    .format(caseTotal!.recoveredTotal),
+                                    .format(check.totalPeoplePcr),
                                 update: "+" +
                                     NumberFormat.decimalPattern()
-                                        .format(caseTotal!.recoveredUpdate),
-                                cases: "Sembuh",
+                                        .format(check.updatePeoplePcr),
+                                cases: "Tes PCR",
                                 color: ColorTheme.greenColor,
                               ),
                             ),
@@ -851,490 +1079,61 @@ class _DataPageState extends State<DataPage> {
                                   (Get.width - 2 * SpaceConfig.longSpace) / 2,
                               height: 120,
                               child: BigBoxCard(
-                                icon: Icons.cancel_rounded,
-                                iconSize: 100,
+                                icon: FontAwesomeIcons.vial,
+                                iconSize: 80,
                                 margin: EdgeInsets.only(
-                                    right: SpaceConfig.shortSpace - 2),
+                                  right: SpaceConfig.shortSpace + 6,
+                                  bottom: SpaceConfig.shortSpace,
+                                ),
                                 summary: NumberFormat.decimalPattern()
-                                    .format(caseTotal!.deathsTotal),
+                                    .format(check.totalPeopleAntigen),
                                 update: "+" +
                                     NumberFormat.decimalPattern()
-                                        .format(caseTotal!.deathsUpdate),
-                                cases: "Meninggal",
-                                color: ColorTheme.redColor,
+                                        .format(check.updatePeopleAntigen),
+                                cases: "Tes Antigen",
+                                color: ColorTheme.blueColor,
                               ),
                             ),
                           ],
                         ),
                       ],
-                    ),
-                  ),
-                );
-              } else {
-                return FadeInDown(
-                  delay: Duration(milliseconds: 350 * 5),
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.grey[300]!,
-                    highlightColor: Colors.grey[100]!,
-                    child: Column(
-                      children: List.generate(2, (index) {
-                        return Container(
+                    );
+                  } else {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ShimmerLoading(
+                          width: MediaQuery.of(context).size.width -
+                              (SpaceConfig.longSpace * 4),
+                          height: 14,
                           margin: EdgeInsets.only(
-                            bottom: SpaceConfig.normalSpace - 4,
-                            left: SpaceConfig.longSpace,
-                            right: SpaceConfig.longSpace,
+                            top: SpaceConfig.shortSpace / 2,
+                            bottom: SpaceConfig.normalSpace,
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                margin: EdgeInsets.only(
-                                    right: SpaceConfig.shortSpace),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                width: (Get.width - 3 * SpaceConfig.longSpace) /
-                                        2 +
-                                    4,
-                                height: 120 - 4,
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    left: SpaceConfig.shortSpace),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(
-                                      SpaceConfig.normalSpace),
-                                ),
-                                width: (Get.width - 3 * SpaceConfig.longSpace) /
-                                        2 +
-                                    4,
-                                height: 120 - 4,
-                              ),
-                            ],
-                          ),
-                        );
-                      }),
-                    ),
-                  ),
-                );
-              }
-            },
-          )
-        ],
-      ),
-    );
-  }
-
-  _vaccine() {
-    return Column(
-      children: [
-        FadeInDown(
-          delay: Duration(milliseconds: 350 * 4),
-          child: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: SpaceConfig.longSpace,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Jumlah Vaksinasi",
-                      style: TypeTheme.subTitleTextFont,
-                    ),
-                    Shimmer.fromColors(
-                      baseColor: ColorTheme.secondaryColor,
-                      highlightColor: ColorTheme.tertiaryColor,
-                      child: Text(
-                        "Lihat Semua",
-                        style: TypeTheme.smallTextFont.copyWith(
-                          color: ColorTheme.secondaryColor,
-                          fontWeight: FontWeight.w600,
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                FutureBuilder(
-                  future: VaccineService.getVaccine(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<VaccineModel> snapshot) {
-                    if (snapshot.hasData) {
-                      vaccine = snapshot.data;
-                      return Text(
-                          "Diperbarui pada " +
-                              DateFormat.EEEE()
-                                  .add_d()
-                                  .add_yMMMM()
-                                  .addPattern('•')
-                                  .add_Hms()
-                                  .format((DateTime.parse(vaccine!.lastUpdate)))
-                                  .replaceAll('Monday', 'Senin,')
-                                  .replaceAll('Tuesday', 'Selasa,')
-                                  .replaceAll('Wednesday', 'Rabu,')
-                                  .replaceAll('Thursday', 'Kamis,')
-                                  .replaceAll('Friday', 'Jumat,')
-                                  .replaceAll('Saturday', 'Sabtu,')
-                                  .replaceAll('Sunday', 'Minggu,')
-                                  .replaceAll('January', 'Januari')
-                                  .replaceAll('February', 'Februari')
-                                  .replaceAll('March', 'Maret')
-                                  .replaceAll('April', 'April')
-                                  .replaceAll('May', 'Mei')
-                                  .replaceAll('June', 'Juni')
-                                  .replaceAll('July', 'Juli')
-                                  .replaceAll('August', 'Agustus')
-                                  .replaceAll('September', 'September')
-                                  .replaceAll('October', 'Oktober')
-                                  .replaceAll('November', 'November')
-                                  .replaceAll('December', 'Desember'),
-                          style: TypeTheme.smallTextFont);
-                    } else {
-                      return Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          height: 18,
-                          width: (MediaQuery.of(context).size.width -
-                                  2 * SpaceConfig.longSpace) -
-                              80,
-                          decoration: BoxDecoration(
-                              color: ColorTheme.bgLight,
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace)),
-                        ),
-                      );
-                    }
-                  },
-                )
-              ],
-            ),
-          ),
-        ),
-        SizedBox(height: SpaceConfig.normalSpace),
-        FutureBuilder(
-          future: VaccineService.getVaccine(),
-          builder:
-              (BuildContext context, AsyncSnapshot<VaccineModel> snapshot) {
-            if (snapshot.hasData) {
-              vaccine = snapshot.data;
-              return FadeInDown(
-                delay: Duration(milliseconds: 350 * 5),
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.longSpace - 4),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                            height: 120,
-                            child: BigBoxCard(
-                              icon: FontAwesomeIcons.syringe,
-                              iconSize: 80,
-                              margin: EdgeInsets.only(
-                                right: SpaceConfig.shortSpace + 6,
-                                bottom: SpaceConfig.shortSpace,
-                              ),
-                              summary: NumberFormat.decimalPattern()
-                                  .format(vaccine!.updateVaccineFirst),
-                              update: "+" +
-                                  NumberFormat.decimalPattern()
-                                      .format(vaccine!.totalVaccineFirst),
-                              cases: "Dosis Pertama",
-                              color: ColorTheme.blueColor,
-                            ),
-                          ),
-                          Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                            height: 120,
-                            child: BigBoxCard(
-                              icon: FontAwesomeIcons.syringe,
-                              iconSize: 80,
-                              margin: EdgeInsets.only(
-                                right: SpaceConfig.shortSpace + 6,
-                                bottom: SpaceConfig.shortSpace,
-                              ),
-                              summary: NumberFormat.decimalPattern()
-                                  .format(vaccine!.updateVaccineSecond),
-                              update: "+" +
-                                  NumberFormat.decimalPattern()
-                                      .format(vaccine!.totalVaccineSecond),
-                              cases: "Dosis Kedua",
-                              color: ColorTheme.greenColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return FadeInDown(
-                delay: Duration(milliseconds: 350 * 5),
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Column(
-                    children: List.generate(1, (index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                          bottom: SpaceConfig.normalSpace - 4,
-                          left: SpaceConfig.longSpace,
-                          right: SpaceConfig.longSpace,
-                        ),
-                        child: Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  right: SpaceConfig.shortSpace),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace),
-                              ),
+                            ShimmerLoading(
                               width:
-                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
-                                      4,
-                              height: 120 - 4,
+                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              height: 120,
                             ),
-                            Container(
-                              margin:
-                                  EdgeInsets.only(left: SpaceConfig.shortSpace),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace),
-                              ),
+                            ShimmerLoading(
                               width:
-                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
-                                      4,
-                              height: 120 - 4,
+                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              height: 120,
                             ),
                           ],
                         ),
-                      );
-                    }),
-                  ),
-                ),
-              );
-            }
-          },
-        )
-      ],
-    );
-  }
-
-  _check() {
-    return Column(
-      children: [
-        FadeInDown(
-          delay: Duration(milliseconds: 350 * 4),
-          child: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: SpaceConfig.longSpace,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Jumlah Pemeriksaan",
-                      style: TypeTheme.subTitleTextFont,
-                    ),
-                    Shimmer.fromColors(
-                      baseColor: ColorTheme.secondaryColor,
-                      highlightColor: ColorTheme.tertiaryColor,
-                      child: Text(
-                        "Lihat Semua",
-                        style: TypeTheme.smallTextFont.copyWith(
-                          color: ColorTheme.secondaryColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                FutureBuilder(
-                  future: CheckService.getCheck(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<CheckModel> snapshot) {
-                    if (snapshot.hasData) {
-                      check = snapshot.data;
-                      return Text(
-                          "Diperbarui pada " +
-                              DateFormat.EEEE()
-                                  .add_d()
-                                  .add_yMMMM()
-                                  .addPattern('•')
-                                  .add_Hms()
-                                  .format((DateTime.parse(check!.lastUpdate)))
-                                  .replaceAll('Monday', 'Senin,')
-                                  .replaceAll('Tuesday', 'Selasa,')
-                                  .replaceAll('Wednesday', 'Rabu,')
-                                  .replaceAll('Thursday', 'Kamis,')
-                                  .replaceAll('Friday', 'Jumat,')
-                                  .replaceAll('Saturday', 'Sabtu,')
-                                  .replaceAll('Sunday', 'Minggu,')
-                                  .replaceAll('January', 'Januari')
-                                  .replaceAll('February', 'Februari')
-                                  .replaceAll('March', 'Maret')
-                                  .replaceAll('April', 'April')
-                                  .replaceAll('May', 'Mei')
-                                  .replaceAll('June', 'Juni')
-                                  .replaceAll('July', 'Juli')
-                                  .replaceAll('August', 'Agustus')
-                                  .replaceAll('September', 'September')
-                                  .replaceAll('October', 'Oktober')
-                                  .replaceAll('November', 'November')
-                                  .replaceAll('December', 'Desember'),
-                          style: TypeTheme.smallTextFont);
-                    } else {
-                      return Shimmer.fromColors(
-                        baseColor: Colors.grey[300]!,
-                        highlightColor: Colors.grey[100]!,
-                        child: Container(
-                          height: 18,
-                          width: (MediaQuery.of(context).size.width -
-                                  2 * SpaceConfig.longSpace) -
-                              80,
-                          decoration: BoxDecoration(
-                              color: ColorTheme.bgLight,
-                              borderRadius: BorderRadius.circular(
-                                  SpaceConfig.normalSpace)),
-                        ),
-                      );
-                    }
-                  },
-                )
-              ],
-            ),
+                      ],
+                    );
+                  }
+                },
+              )
+            ],
           ),
         ),
-        SizedBox(height: SpaceConfig.normalSpace),
-        FutureBuilder(
-          future: CheckService.getCheck(),
-          builder: (BuildContext context, AsyncSnapshot<CheckModel> snapshot) {
-            if (snapshot.hasData) {
-              check = snapshot.data;
-              return FadeInDown(
-                delay: Duration(milliseconds: 350 * 5),
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                      horizontal: SpaceConfig.longSpace - 4),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                            height: 120,
-                            child: BigBoxCard(
-                              icon: FontAwesomeIcons.vial,
-                              iconSize: 80,
-                              margin: EdgeInsets.only(
-                                right: SpaceConfig.shortSpace + 6,
-                                bottom: SpaceConfig.shortSpace,
-                              ),
-                              summary: NumberFormat.decimalPattern()
-                                  .format(check!.updatePeoplePcr),
-                              update: "+" +
-                                  NumberFormat.decimalPattern()
-                                      .format(check!.totalPeoplePcr),
-                              cases: "Tes PCR",
-                              color: ColorTheme.greenColor,
-                            ),
-                          ),
-                          Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
-                            height: 120,
-                            child: BigBoxCard(
-                              icon: FontAwesomeIcons.vial,
-                              iconSize: 80,
-                              margin: EdgeInsets.only(
-                                right: SpaceConfig.shortSpace + 6,
-                                bottom: SpaceConfig.shortSpace,
-                              ),
-                              summary: NumberFormat.decimalPattern()
-                                  .format(check!.updatePeopleAntigen),
-                              update: "+" +
-                                  NumberFormat.decimalPattern()
-                                      .format(check!.totalPeopleAntigen),
-                              cases: "Tes Antigen",
-                              color: ColorTheme.blueColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            } else {
-              return FadeInDown(
-                delay: Duration(milliseconds: 350 * 5),
-                child: Shimmer.fromColors(
-                  baseColor: Colors.grey[300]!,
-                  highlightColor: Colors.grey[100]!,
-                  child: Column(
-                    children: List.generate(1, (index) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                          bottom: SpaceConfig.normalSpace - 4,
-                          left: SpaceConfig.longSpace,
-                          right: SpaceConfig.longSpace,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                  right: SpaceConfig.shortSpace),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace),
-                              ),
-                              width:
-                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
-                                      4,
-                              height: 120 - 4,
-                            ),
-                            Container(
-                              margin:
-                                  EdgeInsets.only(left: SpaceConfig.shortSpace),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace),
-                              ),
-                              width:
-                                  (Get.width - 3 * SpaceConfig.longSpace) / 2 +
-                                      4,
-                              height: 120 - 4,
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-                  ),
-                ),
-              );
-            }
-          },
-        )
       ],
     );
   }
@@ -1343,43 +1142,37 @@ class _DataPageState extends State<DataPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FadeInDown(
-          delay: Duration(milliseconds: 350 * 8),
-          child: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: SpaceConfig.longSpace,
-            ),
-            child: Text(
-              "Peta Sebaran",
-              style: TypeTheme.subTitleTextFont,
-            ),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace,
+          ),
+          child: Text(
+            "Peta Sebaran",
+            style: TypeTheme.subTitleTextFont,
           ),
         ),
         SizedBox(height: SpaceConfig.normalSpace),
-        FadeInDown(
-          delay: Duration(milliseconds: 350 * 9),
-          child: Container(
-            margin: EdgeInsets.symmetric(
-              horizontal: SpaceConfig.longSpace - 4,
-            ),
-            child: Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SpaceConfig.longSpace - 4,
+          ),
+          child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
+            child: Container(
+              padding: EdgeInsets.all(SpaceConfig.normalSpace),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
+              ),
               child: Container(
-                padding: EdgeInsets.all(SpaceConfig.normalSpace),
+                height: 125,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-                ),
-                child: Container(
-                  height: 125,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/image-map-indonesia-covid.jpg"),
-                      fit: BoxFit.cover,
-                    ),
+                  image: DecorationImage(
+                    image: AssetImage(
+                        "assets/images/image-map-indonesia-covid.jpg"),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

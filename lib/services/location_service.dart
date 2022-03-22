@@ -1,7 +1,7 @@
 part of 'services.dart';
 
 class LocationService {
-  static Future<LocationModel> getUserLocation() async {
+  static Future<LocationModel> getLocation() async {
     LocationPermission permission;
 
     permission = await Geolocator.checkPermission();
