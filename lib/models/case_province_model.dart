@@ -1,13 +1,13 @@
 part of 'models.dart';
 
-class AllProvinceModel {
+class CaseProvinceModel {
   String lastUpdate;
   List<DetailProvinceModel> listData;
 
-  AllProvinceModel({required this.lastUpdate, required this.listData});
+  CaseProvinceModel({required this.lastUpdate, required this.listData});
 
-  factory AllProvinceModel.fromJson(Map<String, dynamic> json) {
-    return AllProvinceModel(
+  factory CaseProvinceModel.fromJson(Map<String, dynamic> json) {
+    return CaseProvinceModel(
       lastUpdate: json['last_date'] ?? "",
       listData: List<DetailProvinceModel>.from(
           json['list_data'].map((e) => DetailProvinceModel.fromJson(e)) ?? []),

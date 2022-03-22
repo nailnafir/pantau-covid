@@ -6,6 +6,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 part 'case_total_service.dart';
-part 'province_service.dart';
-part 'check_vaccine_service.dart';
+part 'case_province_service.dart';
+part 'check_service.dart';
+part 'vaccine_service.dart';
 part 'location_service.dart';
+part 'news_service.dart';

@@ -6,7 +6,7 @@ class ContactUrl {
 }
 
 class ApiUrl {
-  static String apiLocalURL = 'data.covid19.go.id';
-  static String apiVaccineURL = 'cekdiri.id';
+  static String apiCovidURL = 'data.covid19.go.id';
+  static String apiNewsURL = 'newsapi.org';
   static String apiGlobalURL = 'covid19.mathdro.id';
 }
