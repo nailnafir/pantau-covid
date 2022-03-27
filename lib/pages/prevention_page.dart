@@ -14,7 +14,7 @@ class PreventionPage extends StatelessWidget {
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -78,29 +78,26 @@ class PreventionPage extends StatelessWidget {
   _description() {
     return Container(
       padding: EdgeInsets.all(SpaceConfig.longSpace),
-      child: FadeInDown(
-        delay: Duration(milliseconds: 350),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Text(
-              "Patuhi Protokol Kesehatan!",
-              style: TypeTheme.subTitleTextFont.copyWith(
-                color: Colors.black.withOpacity(0.5),
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Patuhi Protokol Kesehatan!",
+            style: TypeTheme.subTitleTextFont.copyWith(
+              color: Colors.black.withOpacity(0.5),
             ),
-            SizedBox(height: SpaceConfig.shortSpace),
-            Text(
-              "Lindungi diri Anda dan orang lain di sekitar Anda dengan mengetahui fakta-fakta terkait virus ini dan mengambil langkah pencegahan yang sesuai. Ikuti saran yang diberikan oleh otoritas kesehatan setempat.",
-              style: TypeTheme.normalTextFont.copyWith(
-                color: Colors.black.withOpacity(0.5),
-              ),
-              textAlign: TextAlign.justify,
+          ),
+          SizedBox(height: SpaceConfig.shortSpace),
+          Text(
+            "Lindungi diri Anda dan orang lain di sekitar Anda dengan mengetahui fakta-fakta terkait virus ini dan mengambil langkah pencegahan yang sesuai. Ikuti saran yang diberikan oleh otoritas kesehatan setempat.",
+            style: TypeTheme.normalTextFont.copyWith(
+              color: Colors.black.withOpacity(0.5),
             ),
-            SizedBox(height: SpaceConfig.normalSpace),
-          ],
-        ),
+            textAlign: TextAlign.justify,
+          ),
+          SizedBox(height: SpaceConfig.normalSpace),
+        ],
       ),
     );
   }
@@ -116,7 +113,7 @@ class PreventionPage extends StatelessWidget {
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(SpaceConfig.longSpace)),
       ),
-      child: FadeInDown(
+      child: FadeInUp(
         delay: Duration(milliseconds: 350 * 2),
         child: Column(
           children: [

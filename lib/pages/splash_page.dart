@@ -12,8 +12,8 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Future.delayed(Duration(seconds: 3)).then((value) {
       loadData().then((name) {
-        Get.offAll(
-            (name == null) ? OnBoardingPage() : MainPage(initialPage: 0));
+        Navigator.popAndPushNamed(
+            context, (name == null) ? "/onboarding" : "/main");
       });
     });
 

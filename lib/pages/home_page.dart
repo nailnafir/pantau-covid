@@ -156,97 +156,92 @@ class _HomePageState extends State<HomePage> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FadeInDown(
-                delay: Duration(milliseconds: 350 * 3),
-                child: Container(
-                  height: (Get.height + Get.width) / 10 + 4,
-                  margin: EdgeInsets.symmetric(
-                    vertical: SpaceConfig.longSpace,
-                    horizontal: SpaceConfig.longSpace - 4,
-                  ),
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: SpaceConfig.shortSpace,
-                    mainAxisSpacing: SpaceConfig.shortSpace,
-                    primary: false,
-                    childAspectRatio: 1.58,
-                    children: [
-                      InkWell(
-                        onTap: () async {
-                          if (await canLaunch(
-                              'https://alodokter.com/cari-rumah-sakit/kedokteran-umum/swab-antigen')) {
-                            await launch(
-                              'https://alodokter.com/cari-rumah-sakit/kedokteran-umum/swab-antigen',
-                              enableJavaScript: true,
-                              forceWebView: true,
-                              enableDomStorage: true,
-                            );
-                          } else {
-                            throw Exception(
-                                'Tidak dapat mengalihkan ke tujuan');
-                          }
-                        },
-                        child: NormalBoxCard(
-                          iconImage: Container(
-                            margin: EdgeInsets.only(top: 4),
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/icon-swab.png")),
-                            ),
+              Container(
+                height: (MediaQuery.of(context).size.height +
+                            MediaQuery.of(context).size.width) /
+                        10 +
+                    4,
+                margin: EdgeInsets.symmetric(
+                  vertical: SpaceConfig.longSpace,
+                  horizontal: SpaceConfig.longSpace - 4,
+                ),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: SpaceConfig.shortSpace,
+                  mainAxisSpacing: SpaceConfig.shortSpace,
+                  primary: false,
+                  childAspectRatio: 1.58,
+                  children: [
+                    InkWell(
+                      onTap: () async {
+                        if (await canLaunch(
+                            'https://alodokter.com/cari-rumah-sakit/kedokteran-umum/swab-antigen')) {
+                          await launch(
+                            'https://alodokter.com/cari-rumah-sakit/kedokteran-umum/swab-antigen',
+                            enableJavaScript: true,
+                            forceWebView: true,
+                            enableDomStorage: true,
+                          );
+                        } else {
+                          throw Exception('Tidak dapat mengalihkan ke tujuan');
+                        }
+                      },
+                      child: NormalBoxCard(
+                        iconImage: Container(
+                          margin: EdgeInsets.only(top: 4),
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image:
+                                    AssetImage("assets/images/icon-swab.png")),
                           ),
-                          title: "Swab Test",
-                          backgroundColor: ColorTheme.blueColor,
-                          textColor: Colors.white,
                         ),
+                        title: "Swab Test",
+                        backgroundColor: ColorTheme.blueColor,
+                        textColor: Colors.white,
                       ),
-                      InkWell(
-                        onTap: () async {
-                          if (await canLaunch(
-                              'https://covid19.go.id/faskesvaksin/')) {
-                            await launch(
-                              'https://covid19.go.id/faskesvaksin/',
-                              enableJavaScript: true,
-                              forceWebView: true,
-                              enableDomStorage: true,
-                            );
-                          } else {
-                            throw Exception(
-                                'Tidak dapat mengalihkan ke tujuan');
-                          }
-                        },
-                        child: NormalBoxCard(
-                          iconImage: Container(
-                            margin: EdgeInsets.only(top: 4),
-                            width: 30,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      "assets/images/icon-syringe.png")),
-                            ),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        if (await canLaunch(
+                            'https://covid19.go.id/faskesvaksin/')) {
+                          await launch(
+                            'https://covid19.go.id/faskesvaksin/',
+                            enableJavaScript: true,
+                            forceWebView: true,
+                            enableDomStorage: true,
+                          );
+                        } else {
+                          throw Exception('Tidak dapat mengalihkan ke tujuan');
+                        }
+                      },
+                      child: NormalBoxCard(
+                        iconImage: Container(
+                          margin: EdgeInsets.only(top: 4),
+                          width: 30,
+                          height: 30,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    "assets/images/icon-syringe.png")),
                           ),
-                          title: "Vaksinasi",
-                          backgroundColor: ColorTheme.greenColor,
-                          textColor: Colors.white,
                         ),
+                        title: "Vaksinasi",
+                        backgroundColor: ColorTheme.greenColor,
+                        textColor: Colors.white,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              FadeInDown(
-                delay: Duration(milliseconds: 350 * 4),
-                child: Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: SpaceConfig.longSpace,
-                  ),
-                  child: Text(
-                    "Semua Tentang COVID-19",
-                    style: TypeTheme.subTitleTextFont,
-                  ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SpaceConfig.longSpace,
+                ),
+                child: Text(
+                  "Semua Tentang COVID-19",
+                  style: TypeTheme.subTitleTextFont,
                 ),
               ),
               SizedBox(height: SpaceConfig.shortSpace),
@@ -256,48 +251,39 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Column(
                   children: [
-                    FadeInDown(
-                      delay: Duration(milliseconds: 350 * 5),
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(DefinitionPage());
-                        },
-                        child: ListCardOneLine(
-                          backgroundIconColor: ColorTheme.blueColor,
-                          tileColor: Colors.white,
-                          title: "Kenali virus corona",
-                          icon: Icons.adjust,
-                        ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/definition");
+                      },
+                      child: ListCardOneLine(
+                        backgroundIconColor: ColorTheme.blueColor,
+                        tileColor: Colors.white,
+                        title: "Kenali virus corona",
+                        icon: Icons.adjust,
                       ),
                     ),
                     SizedBox(height: SpaceConfig.shortSpace),
-                    FadeInDown(
-                      delay: Duration(milliseconds: 350 * 6),
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(SymptompsPage());
-                        },
-                        child: ListCardOneLine(
-                          backgroundIconColor: ColorTheme.redColor,
-                          tileColor: Colors.white,
-                          title: "Gejala terinfeksi",
-                          icon: Icons.people_outline,
-                        ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/symptom");
+                      },
+                      child: ListCardOneLine(
+                        backgroundIconColor: ColorTheme.redColor,
+                        tileColor: Colors.white,
+                        title: "Gejala terinfeksi",
+                        icon: Icons.people_outline,
                       ),
                     ),
                     SizedBox(height: SpaceConfig.shortSpace),
-                    FadeInDown(
-                      delay: Duration(milliseconds: 350 * 7),
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(PreventionPage());
-                        },
-                        child: ListCardOneLine(
-                          backgroundIconColor: ColorTheme.greenColor,
-                          tileColor: Colors.white,
-                          title: "Cara mencegah",
-                          icon: Icons.admin_panel_settings_outlined,
-                        ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/prevention");
+                      },
+                      child: ListCardOneLine(
+                        backgroundIconColor: ColorTheme.greenColor,
+                        tileColor: Colors.white,
+                        title: "Cara mencegah",
+                        icon: Icons.admin_panel_settings_outlined,
                       ),
                     ),
                   ],

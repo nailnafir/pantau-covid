@@ -1,7 +1,7 @@
 part of 'pages.dart';
 
-class SymptompsPage extends StatelessWidget {
-  const SymptompsPage({Key? key}) : super(key: key);
+class SymptompPage extends StatelessWidget {
+  const SymptompPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,7 @@ class SymptompsPage extends StatelessWidget {
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -59,79 +59,73 @@ class SymptompsPage extends StatelessWidget {
                 ),
               ),
             ),
-            _buildBody(),
+            _buildBody(context),
           ],
         ),
       ),
     );
   }
 
-  _buildBody() {
+  _buildBody(context) {
     return ListView(
       children: [
-        _description(),
+        _description(context),
         _content(),
       ],
     );
   }
 
-  _description() {
+  _description(context) {
     return Container(
       padding: EdgeInsets.all(SpaceConfig.longSpace),
       child: Column(
         children: [
-          FadeInDown(
-            delay: Duration(milliseconds: 350),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Apa kamu merasa sakit?",
-                  style: TypeTheme.subTitleTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Apa kamu merasa sakit?",
+                style: TypeTheme.subTitleTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
                 ),
-                SizedBox(height: SpaceConfig.shortSpace),
-                Text(
-                  "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
-                  style: TypeTheme.normalTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                  textAlign: TextAlign.justify,
+              ),
+              SizedBox(height: SpaceConfig.shortSpace),
+              Text(
+                "Masing-masing orang memiliki respons yang berbeda terhadap COVID-19. Sebagian besar orang yang terpapar virus ini akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa perlu dirawat di rumah sakit.",
+                style: TypeTheme.normalTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
                 ),
-              ],
-            ),
+                textAlign: TextAlign.justify,
+              ),
+            ],
           ),
           SizedBox(height: SpaceConfig.longSpace),
-          FadeInDown(
-            delay: Duration(milliseconds: 350 * 2),
-            child: Container(
-              width: Get.width,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(SpaceConfig.normalSpace)),
-                  elevation: 2,
-                  primary: ColorTheme.redColor,
-                ),
-                onPressed: () async {
-                  if (await canLaunch(
-                      "https://covid19.go.id/pelaporan-mandiri")) {
-                    await launch(
-                      "https://covid19.go.id/pelaporan-mandiri",
-                      enableDomStorage: true,
-                      enableJavaScript: true,
-                      forceWebView: true,
-                    );
-                  } else {
-                    throw Exception("Gagal mengalihkan ke telepon");
-                  }
-                },
-                child: Text("Lapor Mandiri", style: TypeTheme.subTitleTextFont),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 50,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(SpaceConfig.normalSpace)),
+                elevation: 2,
+                primary: ColorTheme.redColor,
               ),
+              onPressed: () async {
+                if (await canLaunch(
+                    "https://covid19.go.id/pelaporan-mandiri")) {
+                  await launch(
+                    "https://covid19.go.id/pelaporan-mandiri",
+                    enableDomStorage: true,
+                    enableJavaScript: true,
+                    forceWebView: true,
+                  );
+                } else {
+                  throw Exception("Gagal mengalihkan ke telepon");
+                }
+              },
+              child: Text("Lapor Mandiri", style: TypeTheme.subTitleTextFont),
             ),
           ),
           SizedBox(height: SpaceConfig.normalSpace),
@@ -151,8 +145,8 @@ class SymptompsPage extends StatelessWidget {
         borderRadius:
             BorderRadius.vertical(top: Radius.circular(SpaceConfig.longSpace)),
       ),
-      child: FadeInDown(
-        delay: Duration(milliseconds: 350 * 3),
+      child: FadeInUp(
+        delay: Duration(milliseconds: 350 * 2),
         child: Column(
           children: [
             GridView.count(

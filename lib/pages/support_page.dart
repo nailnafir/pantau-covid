@@ -56,7 +56,7 @@ class SupportPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                _buildBody(),
+                _buildBody(context),
               ],
             ),
           ],
@@ -65,12 +65,12 @@ class SupportPage extends StatelessWidget {
     );
   }
 
-  _buildBody() {
+  _buildBody(context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _banner(),
-        _content(),
+        _content(context),
       ],
     );
   }
@@ -135,7 +135,7 @@ class SupportPage extends StatelessWidget {
     );
   }
 
-  _content() {
+  _content(context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -154,135 +154,129 @@ class SupportPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: SpaceConfig.longSpace),
-                FadeInDown(
-                  delay: Duration(milliseconds: 350 * 3),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(FaqPage());
-                    },
-                    child: ListCardTwoLines(
-                      backgroundIconColor: ColorTheme.redColor,
-                      tileColor: Colors.white,
-                      title: "Pertanyaan Terkait",
-                      subtitle: "Kumpulan pertanyaan",
-                      icon: Icons.question_answer,
-                    ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/faq");
+                  },
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.redColor,
+                    tileColor: Colors.white,
+                    title: "Pertanyaan Terkait",
+                    subtitle: "Kumpulan pertanyaan",
+                    icon: Icons.question_answer,
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
-                FadeInDown(
-                  delay: Duration(milliseconds: 350 * 4),
-                  child: InkWell(
-                    onTap: () {
-                      Get.bottomSheet(
-                        BottomSheet(
-                          clipBehavior: Clip.antiAliasWithSaveLayer,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(SpaceConfig.longSpace)),
-                          ),
-                          onClosing: () {},
-                          enableDrag: false,
-                          builder: (context) {
-                            return Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: SpaceConfig.longSpace),
-                              color: ColorTheme.bgLight,
-                              height: 240,
-                              child: Column(
-                                children: [
-                                  Stack(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.topCenter,
-                                        child: Container(
-                                          width: 50,
-                                          height: 6,
-                                          margin: EdgeInsets.symmetric(
-                                              vertical:
-                                                  SpaceConfig.normalSpace),
-                                          decoration: BoxDecoration(
-                                            color: ColorTheme.secondaryColor,
-                                            borderRadius:
-                                                BorderRadius.circular(8),
+                InkWell(
+                  onTap: () {
+                    showBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return BottomSheet(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(SpaceConfig.longSpace)),
+                            ),
+                            onClosing: () {},
+                            enableDrag: false,
+                            builder: (context) {
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: SpaceConfig.longSpace),
+                                color: ColorTheme.bgLight,
+                                height: 240,
+                                child: Column(
+                                  children: [
+                                    Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.topCenter,
+                                          child: Container(
+                                            width: 50,
+                                            height: 6,
+                                            margin: EdgeInsets.symmetric(
+                                                vertical:
+                                                    SpaceConfig.normalSpace),
+                                            decoration: BoxDecoration(
+                                              color: ColorTheme.secondaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(8),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: SpaceConfig.normalSpace),
-                                  FadeInUp(
-                                    delay: Duration(milliseconds: 350),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        if (await canLaunch("tel:119")) {
-                                          await launch("tel:119");
-                                        } else {
-                                          throw Exception(
-                                              'Gagal mengalihkan ke tujuan');
-                                        }
-                                      },
-                                      child: ListCardOneLine(
-                                        backgroundIconColor:
-                                            ColorTheme.redColor,
-                                        tileColor: Colors.white,
-                                        title: "Kontak Darurat",
-                                        icon: Icons.call,
+                                      ],
+                                    ),
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    FadeInUp(
+                                      delay: Duration(milliseconds: 350),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          if (await canLaunch("tel:119")) {
+                                            await launch("tel:119");
+                                          } else {
+                                            throw Exception(
+                                                'Gagal mengalihkan ke tujuan');
+                                          }
+                                        },
+                                        child: ListCardOneLine(
+                                          backgroundIconColor:
+                                              ColorTheme.redColor,
+                                          tileColor: Colors.white,
+                                          title: "Kontak Darurat",
+                                          icon: Icons.call,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  SizedBox(height: SpaceConfig.normalSpace),
-                                  FadeInUp(
-                                    delay: Duration(milliseconds: 350 * 2),
-                                    child: InkWell(
-                                      onTap: () async {
-                                        if (await canLaunch(
-                                            ContactUrl.telegramURL)) {
-                                          await launch(ContactUrl.telegramURL);
-                                        } else {
-                                          throw Exception(
-                                              'Gagal mengalihkan ke tujuan');
-                                        }
-                                      },
-                                      child: ListCardOneLine(
-                                        backgroundIconColor:
-                                            ColorTheme.blueColor,
-                                        tileColor: Colors.white,
-                                        title: "Kontak Saya",
-                                        icon: Icons.call,
+                                    SizedBox(height: SpaceConfig.normalSpace),
+                                    FadeInUp(
+                                      delay: Duration(milliseconds: 350 * 2),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          if (await canLaunch(
+                                              ContactUrl.telegramURL)) {
+                                            await launch(
+                                                ContactUrl.telegramURL);
+                                          } else {
+                                            throw Exception(
+                                                'Gagal mengalihkan ke tujuan');
+                                          }
+                                        },
+                                        child: ListCardOneLine(
+                                          backgroundIconColor:
+                                              ColorTheme.blueColor,
+                                          tileColor: Colors.white,
+                                          title: "Kontak Saya",
+                                          icon: Icons.call,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    },
-                    child: ListCardTwoLines(
-                      backgroundIconColor: ColorTheme.greenColor,
-                      tileColor: Colors.white,
-                      title: "Hubungi Kami",
-                      subtitle: "Bantuan lebih lanjut",
-                      icon: Icons.call,
-                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        });
+                  },
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.greenColor,
+                    tileColor: Colors.white,
+                    title: "Hubungi Kami",
+                    subtitle: "Bantuan lebih lanjut",
+                    icon: Icons.call,
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),
-                FadeInDown(
-                  delay: Duration(milliseconds: 350 * 5),
-                  child: InkWell(
-                    onTap: () {
-                      Get.to(AboutPage());
-                    },
-                    child: ListCardTwoLines(
-                      backgroundIconColor: ColorTheme.blueColor,
-                      tileColor: Colors.white,
-                      title: "Tentang Aplikasi",
-                      subtitle: "Informasi aplikasi",
-                      icon: Icons.perm_device_info,
-                    ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/about");
+                  },
+                  child: ListCardTwoLines(
+                    backgroundIconColor: ColorTheme.blueColor,
+                    tileColor: Colors.white,
+                    title: "Tentang Aplikasi",
+                    subtitle: "Informasi aplikasi",
+                    icon: Icons.perm_device_info,
                   ),
                 ),
                 SizedBox(height: SpaceConfig.normalSpace),

@@ -57,7 +57,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         ),
       ],
       onDone: () {
-        Get.to(RegisterPage());
+        Navigator.pushNamed(context, "/register");
       },
       showSkipButton: true,
       color: ColorTheme.secondaryColor,

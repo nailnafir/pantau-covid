@@ -159,24 +159,15 @@ class _RegisterPageState extends State<RegisterPage> {
                       onPressed: () {
                         if (isNameFilled && isEmailValid) {
                           saveData();
-                          Get.offAll(MainPage(initialPage: 0));
+                          Navigator.popAndPushNamed(context, "/main");
                         } else {
-                          Get.snackbar(
-                            "",
-                            "",
-                            snackPosition: SnackPosition.TOP,
-                            backgroundColor: ColorTheme.redColor,
-                            overlayBlur: 8,
-                            icon: Icon(Icons.cancel),
-                            titleText: Text(
-                              "Gagal",
-                              style: TypeTheme.bigTextFont,
-                            ),
-                            messageText: Text(
-                              "Harap isi semua data",
+                          var snackBar = SnackBar(
+                            content: Text(
+                              "Mohon isi data dengan benar",
                               style: TypeTheme.normalTextFont,
                             ),
                           );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         }
                       },
                       child: Text("Masuk", style: TypeTheme.bigTextFont),
