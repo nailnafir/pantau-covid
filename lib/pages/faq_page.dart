@@ -30,7 +30,7 @@ class FaqPage extends StatelessWidget {
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -54,7 +54,7 @@ class FaqPage extends StatelessWidget {
                 top: -50,
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: FadeInDown(
+                  child: FadeInUp(
                     child: Container(
                       height: 300,
                       child:
@@ -68,46 +68,43 @@ class FaqPage extends StatelessWidget {
                     EdgeInsets.only(top: 220, bottom: SpaceConfig.longSpace),
                 child: Column(
                   children: List.generate(title.length, (index) {
-                    return FadeInDown(
-                      delay: Duration(milliseconds: 350 * (index + 2)),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          top: (index == 0) ? 0 : SpaceConfig.shortSpace / 2,
-                          bottom: (index == title.length - 1)
-                              ? 0
-                              : SpaceConfig.shortSpace / 2,
+                    return Container(
+                      margin: EdgeInsets.only(
+                        top: (index == 0) ? 0 : SpaceConfig.shortSpace / 2,
+                        bottom: (index == title.length - 1)
+                            ? 0
+                            : SpaceConfig.shortSpace / 2,
+                      ),
+                      color: Colors.white,
+                      child: ExpansionTile(
+                        leading: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: SpaceConfig.normalSpace,
+                            horizontal: SpaceConfig.normalSpace - 5,
+                          ),
+                          child: Icon(Icons.help),
                         ),
-                        color: Colors.white,
-                        child: ExpansionTile(
-                          leading: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: SpaceConfig.normalSpace,
-                              horizontal: SpaceConfig.normalSpace - 5,
-                            ),
-                            child: Icon(Icons.help),
+                        childrenPadding: EdgeInsets.symmetric(
+                          vertical: SpaceConfig.shortSpace,
+                          horizontal: SpaceConfig.longSpace,
+                        ),
+                        iconColor: Colors.black,
+                        collapsedIconColor: ColorTheme.primaryColor,
+                        title: Text(
+                          title[index],
+                          style: TypeTheme.normalTextFont.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
                           ),
-                          childrenPadding: EdgeInsets.symmetric(
-                            vertical: SpaceConfig.shortSpace,
-                            horizontal: SpaceConfig.longSpace,
-                          ),
-                          iconColor: Colors.black,
-                          collapsedIconColor: ColorTheme.primaryColor,
-                          title: Text(
-                            title[index],
+                        ),
+                        children: [
+                          Text(
+                            subtitle[index],
                             style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                              color: Colors.black.withOpacity(0.75),
                             ),
                           ),
-                          children: [
-                            Text(
-                              subtitle[index],
-                              style: TypeTheme.normalTextFont.copyWith(
-                                color: Colors.black.withOpacity(0.75),
-                              ),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
                     );
                   }),

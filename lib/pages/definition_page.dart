@@ -14,7 +14,7 @@ class DefinitionPage extends StatelessWidget {
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -62,7 +62,7 @@ class DefinitionPage extends StatelessWidget {
             Stack(
               children: [
                 _description(),
-                _content(),
+                _content(context),
               ],
             ),
           ],
@@ -76,52 +76,46 @@ class DefinitionPage extends StatelessWidget {
       padding: EdgeInsets.all(SpaceConfig.longSpace),
       child: Column(
         children: [
-          FadeInDown(
-            delay: Duration(milliseconds: 350),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Apa Itu Virus Corona?",
-                  style: TypeTheme.subTitleTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Apa Itu Virus Corona?",
+                style: TypeTheme.subTitleTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
                 ),
-                SizedBox(height: SpaceConfig.shortSpace),
-                Text(
-                  "Virus corona (COVID-19) adalah penyakit menular yang disebabkan oleh virus corona yang baru-baru ini ditemukan. Sebagian besar orang yang tertular COVID-19 akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa penanganan khusus.",
-                  style: TypeTheme.normalTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                  textAlign: TextAlign.justify,
+              ),
+              SizedBox(height: SpaceConfig.shortSpace),
+              Text(
+                "Virus corona (COVID-19) adalah penyakit menular yang disebabkan oleh virus corona yang baru-baru ini ditemukan. Sebagian besar orang yang tertular COVID-19 akan mengalami gejala ringan hingga sedang, dan akan pulih tanpa penanganan khusus.",
+                style: TypeTheme.normalTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
                 ),
-              ],
-            ),
+                textAlign: TextAlign.justify,
+              ),
+            ],
           ),
           SizedBox(height: SpaceConfig.longSpace),
-          FadeInDown(
-            delay: Duration(milliseconds: 350 * 2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Cara Penyebaran Virus",
-                  style: TypeTheme.subTitleTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                "Cara Penyebaran Virus",
+                style: TypeTheme.subTitleTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
                 ),
-                SizedBox(height: SpaceConfig.shortSpace),
-                Text(
-                  "Virus yang menyebabkan COVID-19 disebarkan melalui droplet (percikan air liur) yang dihasilkan saat orang yang terinfeksi batuk, bersin, atau bernapas. Droplet ini terlalu berat dan tidak bisa bertahan di udara, sehingga dengan cepat jatuh dan menempel pada suatu permukaan. Anda dapat tertular saat menghirup udara yang mengandung virus atau menyentuh permukaan benda yang terkontaminasi lalu menyentuh mata, hidung, atau mulut Anda.",
-                  style: TypeTheme.normalTextFont.copyWith(
-                    color: Colors.black.withOpacity(0.5),
-                  ),
-                  textAlign: TextAlign.justify,
+              ),
+              SizedBox(height: SpaceConfig.shortSpace),
+              Text(
+                "Virus yang menyebabkan COVID-19 disebarkan melalui droplet (percikan air liur) yang dihasilkan saat orang yang terinfeksi batuk, bersin, atau bernapas. Droplet ini terlalu berat dan tidak bisa bertahan di udara, sehingga dengan cepat jatuh dan menempel pada suatu permukaan. Anda dapat tertular saat menghirup udara yang mengandung virus atau menyentuh permukaan benda yang terkontaminasi lalu menyentuh mata, hidung, atau mulut Anda.",
+                style: TypeTheme.normalTextFont.copyWith(
+                  color: Colors.black.withOpacity(0.5),
                 ),
-              ],
-            ),
+                textAlign: TextAlign.justify,
+              ),
+            ],
           ),
           SizedBox(height: SpaceConfig.normalSpace),
         ],
@@ -129,12 +123,13 @@ class DefinitionPage extends StatelessWidget {
     );
   }
 
-  _content() {
+  _content(BuildContext context) {
     return FadeInUp(
-      delay: Duration(milliseconds: 350 * 3),
+      delay: Duration(milliseconds: 350 * 2),
       child: DraggableScrollableSheet(
-        initialChildSize: (Get.height > 720) ? 0.45 : 0.18,
-        maxChildSize: (Get.height > 720) ? 0.64 : 0.80,
+        initialChildSize:
+            (MediaQuery.of(context).size.height > 720) ? 0.45 : 0.18,
+        maxChildSize: (MediaQuery.of(context).size.height > 720) ? 0.64 : 0.80,
         minChildSize: 0.18,
         builder: (context, scrollController) {
           return NotificationListener<OverscrollIndicatorNotification>(

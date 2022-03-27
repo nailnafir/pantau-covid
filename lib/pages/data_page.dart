@@ -251,7 +251,7 @@ class _DataPageState extends State<DataPage> {
                     if (state is LocationLoaded) {
                       LocationModel location = state.location;
                       return Container(
-                        width: Get.width / 1.75,
+                        width: MediaQuery.of(context).size.width / 1.75,
                         child: Text(
                           location.address,
                           overflow: TextOverflow.ellipsis,
@@ -267,7 +267,7 @@ class _DataPageState extends State<DataPage> {
                         child: Container(
                           color: Colors.grey[300]!,
                           height: 18,
-                          width: Get.width / 3,
+                          width: MediaQuery.of(context).size.width / 3,
                         ),
                       );
                     }
@@ -314,323 +314,374 @@ class _DataPageState extends State<DataPage> {
 
     return GestureDetector(
       onTap: () {
-        Get.bottomSheet(
-          BottomSheet(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(SpaceConfig.longSpace)),
-            ),
-            onClosing: () {},
-            enableDrag: false,
-            backgroundColor: ColorTheme.bgLight,
+        showBottomSheet(
+            context: context,
             builder: (context) {
-              return StatefulBuilder(builder: (BuildContext context, setState) {
-                return Column(
-                  children: [
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Container(
-                        width: 50,
-                        height: 6,
-                        margin: EdgeInsets.symmetric(
-                            vertical: SpaceConfig.normalSpace),
-                        decoration: BoxDecoration(
-                          color: ColorTheme.secondaryColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                    FadeInUp(
-                      delay: Duration(milliseconds: 350),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              return BottomSheet(
+                onClosing: () {},
+                enableDrag: false,
+                backgroundColor: ColorTheme.bgLight,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(SpaceConfig.longSpace)),
+                ),
+                builder: (context) {
+                  return SizedBox(
+                    height: MediaQuery.of(context).size.height / 2,
+                    child: StatefulBuilder(
+                        builder: (BuildContext context, setState) {
+                      return Column(
                         children: [
-                          Card(
-                            margin: EdgeInsets.fromLTRB(
-                              SpaceConfig.longSpace - 4,
-                              SpaceConfig.normalSpace,
-                              0,
-                              SpaceConfig.normalSpace,
-                            ),
-                            elevation: 2,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                    SpaceConfig.normalSpace)),
-                            color: Colors.white,
+                          Align(
+                            alignment: Alignment.topCenter,
                             child: Container(
-                              height: 50,
-                              width: Get.width - (2 * SpaceConfig.longSpace),
-                              child: TextFormField(
-                                textAlignVertical: TextAlignVertical.center,
-                                style: TypeTheme.normalTextFont,
-                                controller: editingController,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isTyping = value.length >= 1;
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                    prefixIcon: Icon(
-                                      Icons.search,
-                                      color: ColorTheme.secondaryColor,
-                                    ),
-                                    suffixIcon: isTyping
-                                        ? IconButton(
-                                            color: ColorTheme.redColor,
-                                            icon: Icon(Icons.close),
-                                            onPressed: () {
-                                              setState(() {
-                                                editingController.text = '';
+                              width: 50,
+                              height: 6,
+                              margin: EdgeInsets.symmetric(
+                                  vertical: SpaceConfig.normalSpace),
+                              decoration: BoxDecoration(
+                                color: ColorTheme.secondaryColor,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
+                          FadeInUp(
+                            delay: Duration(milliseconds: 350),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Card(
+                                  margin: EdgeInsets.fromLTRB(
+                                    SpaceConfig.longSpace - 4,
+                                    SpaceConfig.normalSpace,
+                                    0,
+                                    SpaceConfig.normalSpace,
+                                  ),
+                                  elevation: 2,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          SpaceConfig.normalSpace)),
+                                  color: Colors.white,
+                                  child: Container(
+                                    height: 50,
+                                    width: MediaQuery.of(context).size.width -
+                                        (2 * SpaceConfig.longSpace),
+                                    child: TextFormField(
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      style: TypeTheme.normalTextFont,
+                                      controller: editingController,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isTyping = value.length >= 1;
+                                        });
+                                      },
+                                      decoration: InputDecoration(
+                                          prefixIcon: Icon(
+                                            Icons.search,
+                                            color: ColorTheme.secondaryColor,
+                                          ),
+                                          suffixIcon: isTyping
+                                              ? IconButton(
+                                                  color: ColorTheme.redColor,
+                                                  icon: Icon(Icons.close),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      editingController.text =
+                                                          '';
 
-                                                isTyping = !isTyping;
-                                              });
-                                            },
-                                          )
-                                        : SizedBox(),
-                                    border: OutlineInputBorder(
-                                        borderSide: BorderSide.none),
-                                    hintText: "Cari Provinsi...."),
+                                                      isTyping = !isTyping;
+                                                    });
+                                                  },
+                                                )
+                                              : SizedBox(),
+                                          border: OutlineInputBorder(
+                                              borderSide: BorderSide.none),
+                                          hintText: "Cari Provinsi...."),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: NotificationListener(
+                              onNotification: (notification) {
+                                if (notification is ScrollStartNotification) {
+                                  isScroll = true;
+                                } else if (notification
+                                    is ScrollEndNotification) {
+                                  isScroll = true;
+                                } else {
+                                  isScroll = true;
+                                }
+                                return true;
+                              },
+                              child: BlocBuilder<CaseProvinceBloc,
+                                  CaseProvinceState>(
+                                builder: (context, state) {
+                                  if (state is CaseProvinceLoaded) {
+                                    CaseProvinceModel caseProvince =
+                                        state.caseProvince;
+                                    return ListView.builder(
+                                      itemCount: caseProvince.listData.length,
+                                      itemBuilder: (context, index) {
+                                        if (editingController.text.isEmpty) {
+                                          return FadeInUp(
+                                            delay: Duration(
+                                                milliseconds: isScroll
+                                                    ? 0
+                                                    : 350 * (index + 2)),
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  top: (index == 0
+                                                      ? 0
+                                                      : SpaceConfig
+                                                          .normalSpace),
+                                                  bottom: (index ==
+                                                          caseProvince.listData
+                                                                  .length -
+                                                              1
+                                                      ? SpaceConfig.normalSpace
+                                                      : 0)),
+                                              child: DetailBoxCard(
+                                                summaryPositive: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .confirmedTotal),
+                                                updatePositive: "+" +
+                                                    NumberFormat
+                                                            .decimalPattern()
+                                                        .format(caseProvince
+                                                            .listData[index]
+                                                            .update
+                                                            .confirmedUpdate),
+                                                summaryActive: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .activeTotal),
+                                                updateActive: "-0",
+                                                summaryRecovered: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .recoveredTotal),
+                                                updateRecovered: "+" +
+                                                    NumberFormat
+                                                            .decimalPattern()
+                                                        .format(caseProvince
+                                                            .listData[index]
+                                                            .update
+                                                            .recoveredUpdate),
+                                                summaryDeaths: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .deathsTotal),
+                                                updateDeaths: "+" +
+                                                    NumberFormat
+                                                            .decimalPattern()
+                                                        .format(caseProvince
+                                                            .listData[index]
+                                                            .update
+                                                            .deathsUpdate),
+                                                provinceName: caseProvince
+                                                    .listData[index]
+                                                    .provinceName,
+                                                lastUpdate: DateFormat.EEEE()
+                                                    .add_d()
+                                                    .add_yMMMM()
+                                                    .format((DateTime.parse(
+                                                        caseProvince
+                                                            .lastUpdate)))
+                                                    .replaceAll(
+                                                        'Monday', 'Senin,')
+                                                    .replaceAll(
+                                                        'Tuesday', 'Selasa,')
+                                                    .replaceAll(
+                                                        'Wednesday', 'Rabu,')
+                                                    .replaceAll(
+                                                        'Thursday', 'Kamis,')
+                                                    .replaceAll(
+                                                        'Friday', 'Jumat,')
+                                                    .replaceAll(
+                                                        'Saturday', 'Sabtu,')
+                                                    .replaceAll(
+                                                        'Sunday', 'Minggu,')
+                                                    .replaceAll(
+                                                        'January', 'Januari')
+                                                    .replaceAll(
+                                                        'February', 'Februari')
+                                                    .replaceAll(
+                                                        'March', 'Maret')
+                                                    .replaceAll(
+                                                        'April', 'April')
+                                                    .replaceAll('May', 'Mei')
+                                                    .replaceAll('June', 'Juni')
+                                                    .replaceAll('July', 'Juli')
+                                                    .replaceAll(
+                                                        'August', 'Agustus')
+                                                    .replaceAll('September',
+                                                        'September')
+                                                    .replaceAll(
+                                                        'October', 'Oktober')
+                                                    .replaceAll(
+                                                        'November', 'November')
+                                                    .replaceAll(
+                                                        'December', 'Desember'),
+                                              ),
+                                            ),
+                                          );
+                                        } else if (caseProvince
+                                            .listData[index].provinceName
+                                            .trim()
+                                            .replaceAll(RegExp(r"\s+"), "")
+                                            .toLowerCase()
+                                            .contains(editingController.text
+                                                .trim()
+                                                .replaceAll(RegExp(r"\s+"), "")
+                                                .toLowerCase())) {
+                                          return FadeInUp(
+                                            delay: Duration(
+                                                milliseconds:
+                                                    isScroll ? 0 : 350),
+                                            child: Container(
+                                              margin: EdgeInsets.only(
+                                                  top: (index == 0
+                                                      ? 0
+                                                      : SpaceConfig
+                                                          .normalSpace),
+                                                  bottom: (index ==
+                                                          caseProvince.listData
+                                                                  .length -
+                                                              1
+                                                      ? SpaceConfig.normalSpace
+                                                      : 0)),
+                                              child: DetailBoxCard(
+                                                summaryPositive: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .confirmedTotal),
+                                                updatePositive: "+" +
+                                                    NumberFormat
+                                                            .decimalPattern()
+                                                        .format(caseProvince
+                                                            .listData[index]
+                                                            .update
+                                                            .confirmedUpdate),
+                                                summaryActive: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .activeTotal),
+                                                updateActive: "-0",
+                                                summaryRecovered: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .recoveredTotal),
+                                                updateRecovered: "+" +
+                                                    NumberFormat
+                                                            .decimalPattern()
+                                                        .format(caseProvince
+                                                            .listData[index]
+                                                            .update
+                                                            .recoveredUpdate),
+                                                summaryDeaths: NumberFormat
+                                                        .decimalPattern()
+                                                    .format(caseProvince
+                                                        .listData[index]
+                                                        .deathsTotal),
+                                                updateDeaths: "+" +
+                                                    NumberFormat
+                                                            .decimalPattern()
+                                                        .format(caseProvince
+                                                            .listData[index]
+                                                            .update
+                                                            .deathsUpdate),
+                                                provinceName: caseProvince
+                                                    .listData[index]
+                                                    .provinceName,
+                                                lastUpdate: DateFormat.EEEE()
+                                                    .add_d()
+                                                    .add_yMMMM()
+                                                    .format((DateTime.parse(
+                                                        caseProvince
+                                                            .lastUpdate)))
+                                                    .replaceAll(
+                                                        'Monday', 'Senin,')
+                                                    .replaceAll(
+                                                        'Tuesday', 'Selasa,')
+                                                    .replaceAll(
+                                                        'Wednesday', 'Rabu,')
+                                                    .replaceAll(
+                                                        'Thursday', 'Kamis,')
+                                                    .replaceAll(
+                                                        'Friday', 'Jumat,')
+                                                    .replaceAll(
+                                                        'Saturday', 'Sabtu,')
+                                                    .replaceAll(
+                                                        'Sunday', 'Minggu,')
+                                                    .replaceAll(
+                                                        'January', 'Januari')
+                                                    .replaceAll(
+                                                        'February', 'Februari')
+                                                    .replaceAll(
+                                                        'March', 'Maret')
+                                                    .replaceAll(
+                                                        'April', 'April')
+                                                    .replaceAll('May', 'Mei')
+                                                    .replaceAll('June', 'Juni')
+                                                    .replaceAll('July', 'Juli')
+                                                    .replaceAll(
+                                                        'August', 'Agustus')
+                                                    .replaceAll('September',
+                                                        'September')
+                                                    .replaceAll(
+                                                        'October', 'Oktober')
+                                                    .replaceAll(
+                                                        'November', 'November')
+                                                    .replaceAll(
+                                                        'December', 'Desember'),
+                                              ),
+                                            ),
+                                          );
+                                        } else {
+                                          return Container();
+                                        }
+                                      },
+                                    );
+                                  } else {
+                                    return FadeInUp(
+                                      delay: Duration(milliseconds: 350 * 2),
+                                      child: ListView.builder(
+                                        itemCount: 3,
+                                        itemBuilder: (context, index) {
+                                          return ShimmerLoading(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 120,
+                                          );
+                                        },
+                                      ),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ),
                         ],
-                      ),
-                    ),
-                    Expanded(
-                      child: NotificationListener(
-                        onNotification: (notification) {
-                          if (notification is ScrollStartNotification) {
-                            isScroll = true;
-                          } else if (notification is ScrollEndNotification) {
-                            isScroll = true;
-                          } else {
-                            isScroll = true;
-                          }
-                          return true;
-                        },
-                        child: BlocBuilder<CaseProvinceBloc, CaseProvinceState>(
-                          builder: (context, state) {
-                            if (state is CaseProvinceLoaded) {
-                              CaseProvinceModel caseProvince =
-                                  state.caseProvince;
-                              return ListView.builder(
-                                itemCount: caseProvince.listData.length,
-                                itemBuilder: (context, index) {
-                                  if (editingController.text.isEmpty) {
-                                    return FadeInUp(
-                                      delay: Duration(
-                                          milliseconds:
-                                              isScroll ? 0 : 350 * (index + 2)),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            top: (index == 0
-                                                ? 0
-                                                : SpaceConfig.normalSpace),
-                                            bottom: (index ==
-                                                    caseProvince
-                                                            .listData.length -
-                                                        1
-                                                ? SpaceConfig.normalSpace
-                                                : 0)),
-                                        child: DetailBoxCard(
-                                          summaryPositive:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .confirmedTotal),
-                                          updatePositive: "+" +
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .update
-                                                      .confirmedUpdate),
-                                          summaryActive:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .activeTotal),
-                                          updateActive: "-0",
-                                          summaryRecovered:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .recoveredTotal),
-                                          updateRecovered: "+" +
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .update
-                                                      .recoveredUpdate),
-                                          summaryDeaths:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .deathsTotal),
-                                          updateDeaths: "+" +
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .update
-                                                      .deathsUpdate),
-                                          provinceName: caseProvince
-                                              .listData[index].provinceName,
-                                          lastUpdate: DateFormat.EEEE()
-                                              .add_d()
-                                              .add_yMMMM()
-                                              .format((DateTime.parse(
-                                                  caseProvince.lastUpdate)))
-                                              .replaceAll('Monday', 'Senin,')
-                                              .replaceAll('Tuesday', 'Selasa,')
-                                              .replaceAll('Wednesday', 'Rabu,')
-                                              .replaceAll('Thursday', 'Kamis,')
-                                              .replaceAll('Friday', 'Jumat,')
-                                              .replaceAll('Saturday', 'Sabtu,')
-                                              .replaceAll('Sunday', 'Minggu,')
-                                              .replaceAll('January', 'Januari')
-                                              .replaceAll(
-                                                  'February', 'Februari')
-                                              .replaceAll('March', 'Maret')
-                                              .replaceAll('April', 'April')
-                                              .replaceAll('May', 'Mei')
-                                              .replaceAll('June', 'Juni')
-                                              .replaceAll('July', 'Juli')
-                                              .replaceAll('August', 'Agustus')
-                                              .replaceAll(
-                                                  'September', 'September')
-                                              .replaceAll('October', 'Oktober')
-                                              .replaceAll(
-                                                  'November', 'November')
-                                              .replaceAll(
-                                                  'December', 'Desember'),
-                                        ),
-                                      ),
-                                    );
-                                  } else if (caseProvince
-                                      .listData[index].provinceName
-                                      .trim()
-                                      .replaceAll(RegExp(r"\s+"), "")
-                                      .toLowerCase()
-                                      .contains(editingController.text
-                                          .trim()
-                                          .replaceAll(RegExp(r"\s+"), "")
-                                          .toLowerCase())) {
-                                    return FadeInUp(
-                                      delay: Duration(
-                                          milliseconds: isScroll ? 0 : 350),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            top: (index == 0
-                                                ? 0
-                                                : SpaceConfig.normalSpace),
-                                            bottom: (index ==
-                                                    caseProvince
-                                                            .listData.length -
-                                                        1
-                                                ? SpaceConfig.normalSpace
-                                                : 0)),
-                                        child: DetailBoxCard(
-                                          summaryPositive:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .confirmedTotal),
-                                          updatePositive: "+" +
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .update
-                                                      .confirmedUpdate),
-                                          summaryActive:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .activeTotal),
-                                          updateActive: "-0",
-                                          summaryRecovered:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .recoveredTotal),
-                                          updateRecovered: "+" +
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .update
-                                                      .recoveredUpdate),
-                                          summaryDeaths:
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .deathsTotal),
-                                          updateDeaths: "+" +
-                                              NumberFormat.decimalPattern()
-                                                  .format(caseProvince
-                                                      .listData[index]
-                                                      .update
-                                                      .deathsUpdate),
-                                          provinceName: caseProvince
-                                              .listData[index].provinceName,
-                                          lastUpdate: DateFormat.EEEE()
-                                              .add_d()
-                                              .add_yMMMM()
-                                              .format((DateTime.parse(
-                                                  caseProvince.lastUpdate)))
-                                              .replaceAll('Monday', 'Senin,')
-                                              .replaceAll('Tuesday', 'Selasa,')
-                                              .replaceAll('Wednesday', 'Rabu,')
-                                              .replaceAll('Thursday', 'Kamis,')
-                                              .replaceAll('Friday', 'Jumat,')
-                                              .replaceAll('Saturday', 'Sabtu,')
-                                              .replaceAll('Sunday', 'Minggu,')
-                                              .replaceAll('January', 'Januari')
-                                              .replaceAll(
-                                                  'February', 'Februari')
-                                              .replaceAll('March', 'Maret')
-                                              .replaceAll('April', 'April')
-                                              .replaceAll('May', 'Mei')
-                                              .replaceAll('June', 'Juni')
-                                              .replaceAll('July', 'Juli')
-                                              .replaceAll('August', 'Agustus')
-                                              .replaceAll(
-                                                  'September', 'September')
-                                              .replaceAll('October', 'Oktober')
-                                              .replaceAll(
-                                                  'November', 'November')
-                                              .replaceAll(
-                                                  'December', 'Desember'),
-                                        ),
-                                      ),
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                },
-                              );
-                            } else {
-                              return FadeInUp(
-                                delay: Duration(milliseconds: 350 * 2),
-                                child: ListView.builder(
-                                  itemCount: 3,
-                                  itemBuilder: (context, index) {
-                                    return ShimmerLoading(
-                                      width: MediaQuery.of(context).size.width,
-                                      height: 120,
-                                    );
-                                  },
-                                ),
-                              );
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              });
-            },
-          ),
-        );
+                      );
+                    }),
+                  );
+                },
+              );
+            });
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -700,7 +751,9 @@ class _DataPageState extends State<DataPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                             child: BigBoxCard(
                               icon: Icons.add_circle_rounded,
@@ -717,7 +770,9 @@ class _DataPageState extends State<DataPage> {
                             ),
                           ),
                           Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                             child: BigBoxCard(
                               icon: Icons.remove_circle_rounded,
@@ -739,7 +794,9 @@ class _DataPageState extends State<DataPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                             child: BigBoxCard(
                               icon: Icons.change_circle_rounded,
@@ -756,7 +813,9 @@ class _DataPageState extends State<DataPage> {
                             ),
                           ),
                           Container(
-                            width: (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                             child: BigBoxCard(
                               icon: Icons.cancel_rounded,
@@ -793,13 +852,15 @@ class _DataPageState extends State<DataPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ShimmerLoading(
-                            width:
-                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2.5 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                           ),
                           ShimmerLoading(
-                            width:
-                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2.5 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                           ),
                         ],
@@ -809,13 +870,15 @@ class _DataPageState extends State<DataPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           ShimmerLoading(
-                            width:
-                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2.5 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                           ),
                           ShimmerLoading(
-                            width:
-                                (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                            width: (MediaQuery.of(context).size.width -
+                                    2.5 * SpaceConfig.longSpace) /
+                                2,
                             height: 120,
                           ),
                         ],
@@ -902,8 +965,9 @@ class _DataPageState extends State<DataPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                               child: BigBoxCard(
                                 icon: FontAwesomeIcons.syringe,
@@ -922,8 +986,9 @@ class _DataPageState extends State<DataPage> {
                               ),
                             ),
                             Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                               child: BigBoxCard(
                                 icon: FontAwesomeIcons.syringe,
@@ -962,13 +1027,15 @@ class _DataPageState extends State<DataPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ShimmerLoading(
-                              width:
-                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2.5 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                             ),
                             ShimmerLoading(
-                              width:
-                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2.5 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                             ),
                           ],
@@ -1055,8 +1122,9 @@ class _DataPageState extends State<DataPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                               child: BigBoxCard(
                                 icon: FontAwesomeIcons.vial,
@@ -1075,8 +1143,9 @@ class _DataPageState extends State<DataPage> {
                               ),
                             ),
                             Container(
-                              width:
-                                  (Get.width - 2 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                               child: BigBoxCard(
                                 icon: FontAwesomeIcons.vial,
@@ -1115,13 +1184,15 @@ class _DataPageState extends State<DataPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             ShimmerLoading(
-                              width:
-                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2.5 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                             ),
                             ShimmerLoading(
-                              width:
-                                  (Get.width - 2.5 * SpaceConfig.longSpace) / 2,
+                              width: (MediaQuery.of(context).size.width -
+                                      2.5 * SpaceConfig.longSpace) /
+                                  2,
                               height: 120,
                             ),
                           ],

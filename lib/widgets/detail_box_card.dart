@@ -35,7 +35,7 @@ class DetailBoxCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(SpaceConfig.normalSpace)),
       child: Container(
         padding: EdgeInsets.all(SpaceConfig.normalSpace),
-        width: Get.width,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -52,7 +52,7 @@ class DetailBoxCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: (Get.width -
+                  width: (MediaQuery.of(context).size.width -
                           2 * SpaceConfig.longSpace -
                           2 * SpaceConfig.normalSpace) /
                       2,
@@ -69,7 +69,7 @@ class DetailBoxCard extends StatelessWidget {
                           margin: EdgeInsets.only(right: 6),
                           child: Icon(
                             Icons.add_circle_rounded,
-                            size: Get.width / 6 - 6,
+                            size: MediaQuery.of(context).size.width / 6 - 6,
                             color: Colors.black.withAlpha(50),
                           ),
                         ),
@@ -105,7 +105,7 @@ class DetailBoxCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: (Get.width -
+                  width: (MediaQuery.of(context).size.width -
                           2 * SpaceConfig.longSpace -
                           2 * SpaceConfig.normalSpace) /
                       2,
@@ -122,7 +122,7 @@ class DetailBoxCard extends StatelessWidget {
                           margin: EdgeInsets.only(right: 6),
                           child: Icon(
                             Icons.remove_circle_rounded,
-                            size: Get.width / 6 - 6,
+                            size: MediaQuery.of(context).size.width / 6 - 6,
                             color: Colors.black.withAlpha(50),
                           ),
                         ),
@@ -164,7 +164,7 @@ class DetailBoxCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  width: (Get.width -
+                  width: (MediaQuery.of(context).size.width -
                           2 * SpaceConfig.longSpace -
                           2 * SpaceConfig.normalSpace) /
                       2,
@@ -181,7 +181,7 @@ class DetailBoxCard extends StatelessWidget {
                           margin: EdgeInsets.only(right: 6),
                           child: Icon(
                             Icons.change_circle_rounded,
-                            size: Get.width / 6 - 6,
+                            size: MediaQuery.of(context).size.width / 6 - 6,
                             color: Colors.black.withAlpha(50),
                           ),
                         ),
@@ -217,7 +217,7 @@ class DetailBoxCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: (Get.width -
+                  width: (MediaQuery.of(context).size.width -
                           2 * SpaceConfig.longSpace -
                           2 * SpaceConfig.normalSpace) /
                       2,
@@ -234,7 +234,7 @@ class DetailBoxCard extends StatelessWidget {
                           margin: EdgeInsets.only(right: 6),
                           child: Icon(
                             Icons.cancel_rounded,
-                            size: Get.width / 6 - 6,
+                            size: MediaQuery.of(context).size.width / 6 - 6,
                             color: Colors.black.withAlpha(50),
                           ),
                         ),

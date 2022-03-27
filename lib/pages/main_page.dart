@@ -24,53 +24,57 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Get.dialog(
-          AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
-            ),
-            title: Text(
-              "Konfirmasi",
-              style: TypeTheme.subTitleTextFont,
-            ),
-            content: Text(
-              "Yakin mau keluar aplikasi?",
-              style: TypeTheme.normalTextFont,
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  "Tidak",
-                  style: TypeTheme.normalTextFont
-                      .copyWith(color: ColorTheme.greenColor),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop(false); // tidak keluar
-                },
+        return await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(SpaceConfig.normalSpace),
               ),
-              TextButton(
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(SpaceConfig.shortSpace),
-                    color: ColorTheme.redColor,
-                  ),
+              title: Text(
+                "Konfirmasi",
+                style: TypeTheme.subTitleTextFont,
+              ),
+              content: Text(
+                "Yakin mau keluar aplikasi?",
+                style: TypeTheme.normalTextFont,
+              ),
+              actions: <Widget>[
+                TextButton(
                   child: Text(
-                    "Keluar",
-                    style:
-                        TypeTheme.normalTextFont.copyWith(color: Colors.white),
+                    "Tidak",
+                    style: TypeTheme.normalTextFont
+                        .copyWith(color: ColorTheme.greenColor),
                   ),
+                  onPressed: () {
+                    Navigator.of(context).pop(false); // tidak keluar
+                  },
                 ),
-                onPressed: () {
-                  // Navigator.pop(context); // keluar
-                  // Navigator.pop(context, true);
-                  SystemNavigator.pop(animated: true);
-                },
-              ),
-            ],
-          ),
+                TextButton(
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          BorderRadius.circular(SpaceConfig.shortSpace),
+                      color: ColorTheme.redColor,
+                    ),
+                    child: Text(
+                      "Keluar",
+                      style: TypeTheme.normalTextFont
+                          .copyWith(color: Colors.white),
+                    ),
+                  ),
+                  onPressed: () {
+                    // Navigator.pop(context); // keluar
+                    // Navigator.pop(context, true);
+                    // SystemNavigator.pop(animated: true);
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ],
+            );
+          },
         );
-        return false;
       },
       child: Scaffold(
         backgroundColor: ColorTheme.secondaryColor,

@@ -276,7 +276,7 @@ class NewsPage extends StatelessWidget {
         ),
         BlocBuilder<NewsBloc, NewsState>(builder: (context, state) {
           if (state is NewsLoaded) {
-            List<ArticleModel> articles = state.news.articles.sublist(10, 20);
+            List<ArticleModel> articles = state.news.articles.sublist(10);
             return Column(
               children: List.generate(
                 articles.length,

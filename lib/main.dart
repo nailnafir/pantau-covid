@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_pantau_covid/bloc/blocs.dart';
 import 'package:flutter_pantau_covid/pages/pages.dart';
-import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,8 +23,21 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CheckBloc()..add(FetchCheck())),
         BlocProvider(create: (context) => NewsBloc()..add(FetchNews())),
       ],
-      child: GetMaterialApp(
+      child: MaterialApp(
         home: SplashPage(),
+        initialRoute: '/',
+        routes: {
+          '/splash': (context) => SplashPage(),
+          '/onboarding': (context) => OnBoardingPage(),
+          '/register': (context) => RegisterPage(),
+          '/definition': (context) => DefinitionPage(),
+          '/prevention': (context) => PreventionPage(),
+          '/symptom': (context) => SymptompPage(),
+          '/main': (context) => MainPage(initialPage: 0),
+          '/faq': (context) => FaqPage(),
+          '/about': (context) => AboutPage(),
+          '/support': (context) => SupportPage(),
+        },
       ),
     );
   }

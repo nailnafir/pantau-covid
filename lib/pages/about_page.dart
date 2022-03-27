@@ -41,7 +41,7 @@ class AboutPage extends StatelessWidget {
           margin: EdgeInsets.only(left: SpaceConfig.normalSpace),
           child: IconButton(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
             icon: Icon(
               Icons.arrow_back,
@@ -78,49 +78,45 @@ class AboutPage extends StatelessWidget {
                 margin: EdgeInsets.only(top: 220),
                 child: Column(
                   children: List.generate(title.length, (index) {
-                    return FadeInDown(
-                      delay: Duration(milliseconds: 350 * (index + 2)),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                          top: (index == 0) ? 0 : SpaceConfig.shortSpace / 2,
-                          bottom: (index == title.length - 1)
-                              ? 0
-                              : SpaceConfig.shortSpace / 2,
+                    return Container(
+                      margin: EdgeInsets.only(
+                        top: (index == 0) ? 0 : SpaceConfig.shortSpace / 2,
+                        bottom: (index == title.length - 1)
+                            ? 0
+                            : SpaceConfig.shortSpace / 2,
+                      ),
+                      color: Colors.white,
+                      child: ExpansionTile(
+                        expandedCrossAxisAlignment: CrossAxisAlignment.stretch,
+                        leading: Container(
+                          padding: EdgeInsets.symmetric(
+                            vertical: SpaceConfig.normalSpace,
+                            horizontal: SpaceConfig.normalSpace - 5,
+                          ),
+                          child: Icon(icon[index]),
                         ),
-                        color: Colors.white,
-                        child: ExpansionTile(
-                          expandedCrossAxisAlignment:
-                              CrossAxisAlignment.stretch,
-                          leading: Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: SpaceConfig.normalSpace,
-                              horizontal: SpaceConfig.normalSpace - 5,
-                            ),
-                            child: Icon(icon[index]),
+                        childrenPadding: EdgeInsets.symmetric(
+                          vertical: SpaceConfig.shortSpace,
+                          horizontal: SpaceConfig.longSpace,
+                        ),
+                        iconColor: Colors.black,
+                        collapsedIconColor: ColorTheme.primaryColor,
+                        title: Text(
+                          title[index],
+                          style: TypeTheme.normalTextFont.copyWith(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
                           ),
-                          childrenPadding: EdgeInsets.symmetric(
-                            vertical: SpaceConfig.shortSpace,
-                            horizontal: SpaceConfig.longSpace,
-                          ),
-                          iconColor: Colors.black,
-                          collapsedIconColor: ColorTheme.primaryColor,
-                          title: Text(
-                            title[index],
+                        ),
+                        children: [
+                          Text(
+                            subtitle[index],
                             style: TypeTheme.normalTextFont.copyWith(
-                              color: Colors.black,
-                              fontWeight: FontWeight.w500,
+                              color: Colors.black.withOpacity(0.75),
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
-                          children: [
-                            Text(
-                              subtitle[index],
-                              style: TypeTheme.normalTextFont.copyWith(
-                                color: Colors.black.withOpacity(0.75),
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
+                        ],
                       ),
                     );
                   }),
@@ -128,18 +124,15 @@ class AboutPage extends StatelessWidget {
               ),
             ],
           ),
-          FadeInDown(
-            delay: Duration(milliseconds: 350 * 8),
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
-              child: Text(
-                "Versi 3.1.0\nHak Cipta @2020-${DateTime.now().year}. Nailul Firdaus",
-                style: TypeTheme.normalTextFont.copyWith(
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w300,
-                ),
-                textAlign: TextAlign.center,
+          Container(
+            margin: EdgeInsets.symmetric(vertical: SpaceConfig.longSpace),
+            child: Text(
+              "Versi 3.5.0\nHak Cipta @2020-${DateTime.now().year}. Nailul Firdaus",
+              style: TypeTheme.normalTextFont.copyWith(
+                color: Colors.grey,
+                fontWeight: FontWeight.w300,
               ),
+              textAlign: TextAlign.center,
             ),
           ),
         ],
