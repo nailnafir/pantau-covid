@@ -1,4 +1,4 @@
-package com.example.flutter_pantau_covid
+package com.nailnafir.pantaucovid
 
 import io.flutter.embedding.android.FlutterActivity
 

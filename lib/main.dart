@@ -4,7 +4,7 @@ import 'package:flutter_pantau_covid/bloc/blocs.dart';
 import 'package:flutter_pantau_covid/pages/pages.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -24,19 +24,19 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => NewsBloc()..add(FetchNews())),
       ],
       child: MaterialApp(
-        home: SplashPage(),
+        home: const SplashPage(),
         initialRoute: '/',
         routes: {
-          '/splash': (context) => SplashPage(),
-          '/onboarding': (context) => OnBoardingPage(),
-          '/register': (context) => RegisterPage(),
-          '/definition': (context) => DefinitionPage(),
-          '/prevention': (context) => PreventionPage(),
-          '/symptom': (context) => SymptompPage(),
-          '/main': (context) => MainPage(initialPage: 0),
-          '/faq': (context) => FaqPage(),
-          '/about': (context) => AboutPage(),
-          '/support': (context) => SupportPage(),
+          '/splash': (context) => const SplashPage(),
+          '/onboarding': (context) => const OnBoardingPage(),
+          '/register': (context) => const RegisterPage(),
+          '/definition': (context) => const DefinitionPage(),
+          '/prevention': (context) => const PreventionPage(),
+          '/symptom': (context) => const SymptompPage(),
+          '/main': (context) => const MainPage(initialPage: 0),
+          '/faq': (context) => const FaqPage(),
+          '/about': (context) => const AboutPage(),
+          '/support': (context) => const SupportPage(),
         },
       ),
     );

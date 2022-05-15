@@ -43,7 +43,7 @@ dependencies:
   intl: ^0.17.0
   introduction_screen: ^2.1.0
   lottie: ^1.0.1
-  percent_indicator: ^3.0.1
+  percent_indicator: ^4.2.2
   shared_preferences: ^2.0.11
   shimmer: ^2.0.0
   url_launcher: ^6.0.12
